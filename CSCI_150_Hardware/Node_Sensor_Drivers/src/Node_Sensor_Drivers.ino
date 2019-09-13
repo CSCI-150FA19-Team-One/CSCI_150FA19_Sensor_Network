@@ -1,8 +1,8 @@
 /*
  * Project Node_Sensor_Drivers
- * Description:
- * Author:
- * Date:
+ * Description: Driver code for sensors on each node
+ * Author: Gilbert Barr
+ * Date: 9/13/19
  */
 
 // setup() runs once, when the device is first turned on.
