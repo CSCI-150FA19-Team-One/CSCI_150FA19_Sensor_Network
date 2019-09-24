@@ -26,8 +26,10 @@ const test_file_dir = require('/home/richard/Documents/sensorApp/CSCI_150FA19_Se
 const client = new MongoClient(local_url, {useNewUrlParser: true, useUnifiedTopology: true});
 
 
-
-app.use(routes);
+// Connects all routes to the app
+// Anything that visits '/' URI gets sent to the routers defined in 
+// routes directory
+app.use('/', routes);
 
 
 
@@ -78,8 +80,7 @@ client.connect( (err) => {
 
 
 
-//Starts the server on specified port, callback function
-//That outputs to console.log the message
+//Starts the server on specified port
 app.listen(port, () => {
 	console.log(`Express server started on port: ${port}` );
 });

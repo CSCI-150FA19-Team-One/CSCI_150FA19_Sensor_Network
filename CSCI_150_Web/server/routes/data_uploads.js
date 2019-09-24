@@ -1,30 +1,31 @@
 const express = require('express');
 const router = express.Router();
 const busboy = require('connect-busboy'); // for file uploads, middleware
-const file_path = require('path');
+const path = require('path');
 const fs = require('fs');
 
+//Middleware to be used
+router.use(busboy());
 
-
-router.get('/data_uploads', (req, res) => {
+// Routing for the webpage where files will be uploaded to the server
+// once it has been visited.
+router.get('/', (req, res) => {
 	res.send('Showing that this path works');
 });
 
 /*
-//The file name will depend on the html code
-//For now assume it is called readings
-app.post('/data_uploads', (res,req) => {
-	if(req.busboy){
-		req.busboy.on('file', function(fieldName, file, fileName){
-			var fstream = fs.createWriteStream((path.join(__dirname, '/test_files', fileName)));
-
+router.post('/', (req, res) => {
+	var file_stream;
+	req.pipe(req.busboy);
+	req.busboy.on('file', function(fieldName, file, fileName) {
+		var file_path = path.join(__dirname, '/../temp_files/', fileName);
+		fstream = fs.createWriteStream(file_path);
+		file.pip(fstream);
+		fstream.on('close', () => {
+			console.log(`The file has been saved at:  ${file_path}`);
 		});
-	}
-
-
-
+	});
 });
 */
-
 
 module.exports = router;
