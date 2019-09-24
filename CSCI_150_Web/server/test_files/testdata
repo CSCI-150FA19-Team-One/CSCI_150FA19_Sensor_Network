@@ -1,0 +1,12 @@
+[
+	{
+		name: bobert,
+		lastname: bob,
+		DOB: 1970
+	},
+	{
+		name: robert,
+		lastname: roberto,
+		DOB: 1971
+	}
+]
