@@ -13,6 +13,7 @@
     "connect-busboy": "0.0.2",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.6-alpha.4",
+    "formidable": "^1.2.1",
     "mongoose": "^5.7.0"
   }
 }

@@ -5,7 +5,7 @@ const MongoClient = require('mongodb').MongoClient;
 const uploads = require('express-fileupload'); // Not in use
 const mongoose = require('mongoose'); // Not in use right now
 const assert = require('assert'); // ?
-
+const path = require('path');
 
 const routes = require('./routes');
 
@@ -79,7 +79,7 @@ client.connect( (err) => {
 
 
 
-
+const save_location = path.join(__dirname);
 //Starts the server on specified port
 app.listen(port, () => {
 	console.log(`Express server started on port: ${port}` );
