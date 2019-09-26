@@ -34,9 +34,12 @@ router.post('/', (req, res) => {
 		console.log("ERROR!", err);
 	});
 
-	form.on('end', (req, res) => {
+	form.on('end', () => {
 		res.sendFile(upload_page);
-	});
+		console.log("SUCESS!");
+	})
+
+	//res.sendFile(upload_page);
 
 
 });
