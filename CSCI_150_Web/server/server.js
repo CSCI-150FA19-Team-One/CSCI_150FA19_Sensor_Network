@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
+const http = require("http");
+const https = require("https");
 
 const uploads = require('express-fileupload'); // Not in use
 const mongoose = require('mongoose'); // Not in use right now
@@ -25,12 +27,10 @@ const test_file_dir = require('/home/richard/Documents/sensorApp/CSCI_150FA19_Se
 //Creating the database instance
 const client = new MongoClient(local_url, {useNewUrlParser: true, useUnifiedTopology: true});
 
-
 // Connects all routes to the app
 // Anything that visits '/' URI gets sent to the routers defined in 
 // routes directory
 app.use('/', routes);
-
 
 
 /* Disabling the MongoDB section for now.
@@ -79,7 +79,6 @@ client.connect( (err) => {
 
 
 
-const save_location = path.join(__dirname);
 //Starts the server on specified port
 app.listen(port, () => {
 	console.log(`Express server started on port: ${port}` );
