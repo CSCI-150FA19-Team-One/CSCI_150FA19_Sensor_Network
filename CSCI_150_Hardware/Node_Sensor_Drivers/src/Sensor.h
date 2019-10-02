@@ -1,11 +1,10 @@
 
-//main Sensor class
+// main Sensor class
 
-class Sensor{
-    public:
-    double readSensorData();
-    double returnSensorData();
+class Sensor {
+public:
+  double readSensorData();
+  double returnSensorData();
 
-    private:
-
+private:
 };
