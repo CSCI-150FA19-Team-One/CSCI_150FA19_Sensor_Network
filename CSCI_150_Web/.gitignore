@@ -1,0 +1,6 @@
+# Ignoring package-lock.json files
+./server/package-lock.json
+./server/package.json
+
+#Ignoring todo list txt file
+todo.txt
