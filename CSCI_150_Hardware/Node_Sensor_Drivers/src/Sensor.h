@@ -3,7 +3,8 @@
 
 class Sensor{
     public:
-    int getSensorData();
+    double readSensorData();
+    double returnSensorData();
 
     private:
 

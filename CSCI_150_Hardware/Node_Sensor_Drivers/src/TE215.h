@@ -9,7 +9,3 @@ class TE215 : public Sensor{
     private:
 
 };
-
-TE215::TE215(){
-
-}
