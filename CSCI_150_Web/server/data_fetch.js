@@ -59,7 +59,7 @@ function get_requests(token, deviceID, host){
 
 
 
-			/* Disabling for now, too much output
+			//Disabling for now, too much output
 			//Save data as a new record
 			var current_temperature = new temperature(data);
 			current_temperature.save((err) => {
@@ -70,7 +70,7 @@ function get_requests(token, deviceID, host){
 					console.log("Data has been saved into DB!")
 				}
 			});
-			*/
+			
 			/*
 			//output all documents under the model temperature
 			temperature.find((err, docs) => {
