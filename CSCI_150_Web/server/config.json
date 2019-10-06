@@ -1,5 +1,6 @@
 {
 	"host": "api.particle.io",
 	"device_ID": ["50ff6f065067545626430587"],
-	"token": "895043e69c01b80b464cdd995e913efa4b25c3a3"
+	"token": "895043e69c01b80b464cdd995e913efa4b25c3a3",
+	"mongoDB_path": "mongodb://127.0.0.1:27017"
 }

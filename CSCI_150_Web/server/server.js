@@ -1,31 +1,15 @@
+//3rd party modules
 const express = require('express');
 const app = express();
-const MongoClient = require('mongodb').MongoClient;
-const http = require("http");
-const https = require("https");
 
-const uploads = require('express-fileupload'); // Not in use
-const mongoose = require('mongoose'); // Not in use right now
-const assert = require('assert'); // ?
-const path = require('path');
-
+//Local modules
 const routes = require('./routes');
-
-
+const grab_data = require('./data_fetch.js');
 
 
 // The port which the web server will start on
 const port = 3000;
 
-//The mongoDB connection - LOCAL, and DB name
-const local_url = 'mongodb://127.0.0.1:27017';
-const database = 'sensor_data';
-
-//test file location - DEVELOPMENT PURPOSES ONLY
-const test_file_dir = require('/home/richard/Documents/sensorApp/CSCI_150FA19_Sensor_Network/CSCI_150_Web/server/test_files/testdatatemps.json');
-
-//Creating the database instance
-const client = new MongoClient(local_url, {useNewUrlParser: true, useUnifiedTopology: true});
 
 // Connects all routes to the app
 // Anything that visits '/' URI gets sent to the routers defined in 
@@ -33,49 +17,9 @@ const client = new MongoClient(local_url, {useNewUrlParser: true, useUnifiedTopo
 app.use('/', routes);
 
 
-/* Disabling the MongoDB section for now.
-
-//Connecting to MongoDB
-client.connect( (err) => {
-	assert.equal(null, err);
-	console.log('Established connection to MongoDB server');
-	const db = client.db(database);
-
-	//Drop any collection in data before creating a new one
-	//Should make it not rely on having to need a fixed data name
-	db.collection("data").drop({}, () => {
-		console.log("Dropped all collections");
-	});
-
-	//Creating the collection group
-	db.createCollection("data", () => {
-		console.log("data collection created!");
-	});
-
-	const collection = db.collection("data");
-
-	//Everytime the server.js is run, it adds this file into
-	//the DB
-	collection.insertOne(test_file_dir, (err, result) => {
-		if(err){
-			console.log("Oops! Something went wrong");
-		}
-		else{
-			console.log("json file added into collection");
-		}
-	});
-
-	//Finds all documents and output to console
-	collection.find({}).toArray( (err, temp) => {
-		console.log(JSON.stringify(temp,null, 2));
-	});
-
-
-	client.close( () => {
-		console.log("Session ended!");
-	});
-});
-*/
+//Timer event, makes requests to all the sensor devices that
+//are found in config.json
+setInterval(grab_data.loop_through_devices, 3000);
 
 
 
@@ -83,6 +27,9 @@ client.connect( (err) => {
 app.listen(port, () => {
 	console.log(`Express server started on port: ${port}` );
 });
+
+
+
 
 
 

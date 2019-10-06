@@ -1,45 +1,223 @@
-const MongoClient = require('mongodb').MongoClient;
 const http = require("http");	//For requests
 const https = require("https");	//For requests to secure websites
-const fs = require('fs'); //For writing the obtained string from the get req
-						 // To a file
-const mv = require('mv') //For moving the files
+const mongoose = require('mongoose');
 
-//Config settings
+//local modules
 const settings = require('./config.json');
+const temperature = require('./models/sensor_data.js');
+
+
+/*********************************************************/
+const liveAgent = new https.Agent({keepAlive: true});
+/*********************************************************/
+
+
+
 
 //Function that will make GET requests to grab data
 //Needs the authenticatoin token, device id, and the host
-function grab_data(token, deviceID, host) {
-	//var host_name = host
-	//var device_id = deviceID
-	//var auth_token = token //never expires
+function get_requests(token, deviceID, host){
 	var path_dir = "/v1/devices/" + deviceID + "/temp?access_token=" + token
 
 	var options = {
 	host: `${host}`,
 	path: `${path_dir}`,
-	method: "GET"
+	method: "GET",
+	agent:liveAgent,
+	headers: {Connection: 'keep-alive'}
 	};
 
 
 	var req = https.request(options, (res) => {
-		//reponse_data is used to hold the retrieved object
-		var response_data;
+		console.log(`connection status: ${res.statusCode}`);
+		var response_data = ""
 
-		//Status Code 200 = OK
-		console.log(`status code: ${res.statusCode}`);
-		
+		//Getting the data from the get request
 		res.on('data', (data) => {
-			response_data = data;
-			console.log(`${response_data}`;
+			console.log("Grabbing data!");
+			response_data += data;	//response_data is a string
+
+		});//End of res.on('data')
+
+		//All data has been grabbed from the response, store in DB
+		res.on('end', () =>{
+			var data = JSON.parse(response_data);	//turn data in JSON
 			
-			//Write the string to a file and save it - async method
-			fs.writeFile(`data_${deviceID}.json`, response_data, (err) => {
-				if (err) console.log("Not working!", err);
-				console.log("Saved data to a file!");
+
+			//Connecting to MongoDB
+			mongoose.connect(settings.mongoDB_path, {useNewUrlParser: false,useUnifiedTopology: true});
+
+			//Getting the DB object
+			const db = mongoose.connection;
+
+			//If couldn't connect to database, output error
+			db.on('error', console.error.bind(console, "MongoDB error"));
+
+			db.on('open', () => {
+				console.log("Connected to mongodb!");
 			});
 
+
+
+			/* Disabling for now, too much output
+			//Save data as a new record
+			var current_temperature = new temperature(data);
+			current_temperature.save((err) => {
+				if (err){
+					console.log(err);
+				}
+				else{
+					console.log("Data has been saved into DB!")
+				}
+			});
+			*/
+			/*
+			//output all documents under the model temperature
+			temperature.find((err, docs) => {
+				if (err)
+				{
+					console.log(err);
+				}
+				else {
+					console.log(docs);
+				}
+			});
+
+			temperature.find({name: 'temp'}, (err, docs) => {
+					if (err)
+					{
+						console.log(err);
+					}
+					else {
+						console.log(docs);
+					}	
+			});
+			*/
+
+			//Output all documents with with a specific ID
+			temperature.find({'coreInfo.deviceID': '50ff6f065067545626430587'} , (err, docs) => {
+					if (err)
+					{
+						console.log(err);
+					}
+					else {
+						console.log(docs);
+						mongoose.disconnect();
+					}	
+			});
+
+
+			console.log('Ended Session!');
+		});//End of res.on('end')
+
+
+	});//End of https.request
+
+	req.end();
+}//End of function get_requests
+
+
+exports.loop_through_devices = function() {
+	for (var i = 0; i < settings.device_ID.length; i++){
+		get_requests(settings.token, settings.device_ID[i], settings.host)
+	}
+	return console.log("Finished making all requests");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+			var parsed_data = JSON.parse(response_data);
+
+			//Connecting to MongoDB
+			mongoose.connect(settings.mongoDB_path, {useNewUrlParser: false,useUnifiedTopology: true});
+
+			//Getting the DB object
+			const db = mongoose.connection;
+
+			//If couldn't connect to database, output error
+			db.on('error', console.error.bind(console, "MongoDB error"));
+
+			db.once('open', () => {
+				//Save data into MongoDB
+				data.save( (err, data) => {
+						if (error){ 
+							return console.log(err);
+						}
+						else {
+							console.log("Temp value saved: " + data.result);
+						}
+					});
+				});
+
+
+
+
+
+
+
+
+			/*
+		*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			/* Possibly not needed anymore
 			//Move the newly created json file to the destination dir. No dupes
 			mv(`data_${deviceID}.json`, __dirname + `/temp_files/data_${deviceID}`, {clobber: false}, (err) => {
 				//If file already exists in dest location, delete the file new file
@@ -58,24 +236,85 @@ function grab_data(token, deviceID, host) {
 				else console.log("It works?");
 			});
 
+		*/
 
-		});
 
 
-		res.on('end', () => {
-			console.log("Ended Session!");
-		});
+
+
+
+
+
+
+
+
+
+/*
+
+
+
+
+
+
+
+
+//Creating the schema for the acceptable data from the devices
+const Schema = mongoose.Schema
+
+
+
+
+//Mongoose will create model for SensorDatas collection
+const data_model = mongoose.model('dataModel', data_schema);
+const model_instance = new data_model({name: 'Data'});
+model_instance.save( () => {
+
 
 });
 
-req.end();
-
-}
 
 
-//For loop to make get requests to gather data from the sensor devices
-for (var i = 0; i < settings.device_ID.length; i++){
-	grab_data(settings.token, settings.device_ID[i], settings.host)
 
 
-}//End of for loop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//The allowed data must contain a deviceID string found
+//In config.js
+const data_schema = new Schema({
+	uniqueID: Schema.ObjectId;
+	cmd: String,
+	name: {type: String, required: true}
+	result: {type: Number, min: -10, max: 130, required: true},
+	coreInfo: 
+			{
+				last_app: String,
+				last_heard: Date,
+				connected: Boolean,
+				last_handshake_at: Date,
+				deviceID: 
+					{
+						type: String, 
+						required: true,
+						enum: [settings.deviceID[0]]
+					},
+				product_id: Number
+			}
+});
+
+
+
+
+
+*/

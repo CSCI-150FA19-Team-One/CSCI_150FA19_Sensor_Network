@@ -4,3 +4,8 @@
 
 #Ignoring todo list txt file
 todo.txt
+
+
+#ignoring a coule of local js files
+fetch.js
+./temp_files/data_50ff6f065067545626430587.json
