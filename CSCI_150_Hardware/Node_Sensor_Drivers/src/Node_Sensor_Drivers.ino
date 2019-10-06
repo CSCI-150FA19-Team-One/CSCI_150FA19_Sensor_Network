@@ -4,15 +4,21 @@
  * Author: Gilbert Barr
  * Date: 9/13/19
  */
+#include "SHT15.h"
 
-// setup() runs once, when the device is first turned on.
+SHT15 sensor0_1(D1, D0);
+
+
 void setup() {
-  // Put initialization like pinMode and begin functions here.
+  //add some wifi for later
+  WiFi.setCredentials("MASTER_LAPTOP", "passwrd100");
 
+  // register functions with cloud
+  //Particle.function("cloud name",function)
+
+  Particle.function("getTemp", modeControl);
 }
 
-// loop() runs over and over again, as quickly as it can execute.
 void loop() {
-  // The core of your code will likely live here.
 
 }
