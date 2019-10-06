@@ -1,0 +1,6 @@
+{
+    "C_Cpp.clang_format_fallbackStyle": "LLVM",
+    "particle.targetDevice": "master_node",
+    "particle.firmwareVersion": "1.4.0",
+    "particle.targetPlatform": "argon"
+}
