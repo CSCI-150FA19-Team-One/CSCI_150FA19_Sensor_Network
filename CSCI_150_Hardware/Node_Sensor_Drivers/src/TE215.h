@@ -1,10 +1,19 @@
 
-#include "Sensor.h"
 // TE215 sensor class
+#include "Particle.h"
+class TE215 {
+ public:
 
-class TE215 : public Sensor {
-public:
-  TE215();
+  TE215 (uint8_t analogRPin){
+    _analogPin = analogRPin;
+  }
 
-private:
+  // if we want to use digital feature of sensor
+  //TE215(uint8_t analogPin, uint8_t digitalPin);
+  double getGMoisture();
+
+ private:
+  uint8_t _analogPin;
+  uint8_t _digitalPin;
+ 
 };

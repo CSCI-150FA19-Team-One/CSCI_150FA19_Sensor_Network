@@ -1,28 +1,73 @@
 
 #include "SHT15.h"
 
-SHT15::SHT15(int dataPin, int clockPin) {
+SHT15::SHT15 (int dataPin, int clockPin) {
   _dataPin = dataPin;
-  _clockPin = dataPin;
+  _clockPin = clockPin;
+  pinMode(_dataPin, OUTPUT);
+  pinMode(_clockPin, OUTPUT);
+  digitalWrite(_dataPin,HIGH);		//dataPin = 1
+  digitalWrite(_clockPin,LOW);		//clkPin  = 0
 }
 
+//cloud doesnt support returning doubles from functions. so dumb
+/*
+void SHT15::cloudRegister(){
+  // Example registering class method
+  // Particle.function("brew", &CoffeeMaker::brew, this);
+  Particle.function("getTempF", &SHT15::getTemperatureF, this);
+  Particle.function("getTempC", &SHT15::getTemperatureC, this);
+}
+*/
+
+#ifdef MYDEBUG
+//Start Debug Functions
+// ensure that serial port is setup
+void SHT15::printVariables(){
+  Serial.print("Variable _rawDataT: ");
+  Serial.print(_rawDataT);
+  Serial.print(" Variable _rawDataH: ");
+  Serial.println(_rawDataH);
+}
+//End Debug Functions
+#endif
+
+// current temperature in degrees Fahrenheit
 double SHT15::getTemperatureF() {
-  _tempuratureF = ((double)_rawDataT * 0.018) -
-                  39.4; // current temperature in degrees Fahrenheit
+  _tempuratureF = ((double) _rawDataT * 0.018) - 39.4; 
   return _tempuratureF;
 }
 
-//
+// current temperature in degrees C
 double SHT15::getTemperatureC() {
-  _tempuratureC =
-      ((double)_rawDataT * 0.01) - 39.65; // current temperature in degrees C
+  _tempuratureC = ((double) _rawDataT * 0.01) - 39.65; 
   return _tempuratureC;
 }
+
+/*
+double SHT15::getHumidity(){
+
+}
+*/
+
+void SHT15::Tick(){
+  //read temp sensor
+  _readDataRaw(0);
+  delay(1000);
+  //read humidity sensor
+  _readDataRaw(1);
+}
+
 
 // get unprocessed Sensor reading from SHT
 void SHT15::_readDataRaw(bool sensor) {
   // 0 = tempurature; 1 = humidity
-  uint8_t cmd = sensor ? _getHumidityCmd : _getTempCmd;
+  int cmd = sensor ? _getHumidityCmd : _getTempCmd;
+
+  #ifdef MYDEBUG
+  Serial.printlnf("_readDataRaw cmd: %u", cmd);
+  #endif
+
   _sendCommandSHT(cmd);
   _waitForResultSHT();
   _getData16SHT(sensor);
@@ -55,21 +100,30 @@ void SHT15::_sendCommandSHT(uint8_t cmd) {
   ACK = digitalRead(_dataPin);
   if (ACK != LOW) {
     // send error message
+
+    #ifdef MYDEBUG
+    Serial.printlnf("_sendCommandSHT ACK 0 error");
+    #endif
+
   }
   digitalWrite(_clockPin, LOW);
   ACK = digitalRead(_dataPin);
   if (ACK != HIGH) {
     // send error message here too
+
+    #ifdef MYDEBUG
+    Serial.printlnf("_sendCommandSHT ACK 1 error");
+    #endif
   }
 }
 
 // poll data pin for SHT to begin data Transmission
 void SHT15::_waitForResultSHT() {
 
-  int ACK;
+  bool ACK;
   pinMode(_dataPin, INPUT);
   // poll data pin for sensor to pull low
-  for (uint8_t i = 0; i < 100; i++) {
+  for (int i = 0; i < 100; i++) {
     delay(10);
     ACK = digitalRead(_dataPin);
     if (ACK == LOW) {
@@ -79,6 +133,9 @@ void SHT15::_waitForResultSHT() {
 
   if (ACK == HIGH) {
     // error out here
+    #ifdef MYDEBUG
+    Serial.printlnf("_waitForResultSHT error");
+    #endif
   }
 }
 
@@ -90,7 +147,16 @@ void SHT15::_getData16SHT(bool sensor) {
   pinMode(_dataPin, INPUT);
   pinMode(_clockPin, OUTPUT);
   *_rawData = _dataShiftIn(8);
-  *_rawData << 8; // shift msb over for later
+
+  #ifdef MYDEBUG
+  Serial.printlnf("*_rawData MSB Contents: %i", *_rawData);
+  #endif
+
+  *_rawData *= 256; // shift msb over for later
+
+  #ifdef MYDEBUG
+  Serial.printlnf("*_rawData MSB Shifted Contents: %i", *_rawData);
+  #endif
 
   // send ACK
   pinMode(_dataPin, OUTPUT);
@@ -102,6 +168,10 @@ void SHT15::_getData16SHT(bool sensor) {
   // get the LSB and OR it
   pinMode(_dataPin, INPUT);
   *_rawData |= _dataShiftIn(8);
+
+  #ifdef MYDEBUG
+  Serial.printlnf("*_rawData Contents: %i", *_rawData);
+  #endif
 }
 
 // ends SHT Transmission without sending CRC
@@ -119,7 +189,7 @@ void SHT15::_skipCrcSHT() {
 uint32_t SHT15::_dataShiftIn(uint8_t numBits) {
   uint32_t bitval = 0;
 
-  for (uint8_t i = 0; i < numBits; i++) {
+  for (int i = 0; i < numBits; i++) {
     digitalWrite(_clockPin, HIGH);
     delay(10);
     // shift over bitval while ANDing new reading
