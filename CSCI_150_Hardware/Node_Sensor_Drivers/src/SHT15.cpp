@@ -176,7 +176,6 @@ void SHT15::_getData16SHT(bool sensor) {
 
 // ends SHT Transmission without sending CRC
 void SHT15::_skipCrcSHT() {
-  // Skip acknowledge to end trans (no CRC)
   pinMode(_dataPin, OUTPUT);
   pinMode(_clockPin, OUTPUT);
 
@@ -185,11 +184,11 @@ void SHT15::_skipCrcSHT() {
   digitalWrite(_clockPin, LOW);
 }
 
-// custom shiftin fucntion for SHT
+// custom shiftin function for SHT
 uint32_t SHT15::_dataShiftIn(uint8_t numBits) {
   uint32_t bitval = 0;
 
-  for (int i = 0; i < numBits; i++) {
+  for (uint8_t i = 0; i < numBits; i++) {
     digitalWrite(_clockPin, HIGH);
     delay(10);
     // shift over bitval while ANDing new reading
