@@ -44,11 +44,20 @@ double SHT15::getTemperatureC() {
   return _tempuratureC;
 }
 
-/*
-double SHT15::getHumidity(){
-
+//get linear humidity reading
+double SHT15::getHumidityLinear(){
+  //expecting 12 bit humidity reading
+  _humdityLinear =  -2.0468 + 0.0367 * _rawDataH + -1.5955E-6 * pow(_rawDataH,2.0);
+  return _humdityLinear;
 }
-*/
+
+//get true humidity reading // needs linear reading first
+double SHT15::getHumidityTrue(){
+  //expecting 12 bit humidity reading
+  getHumidityLinear();
+  _humdityTrue = (_tempuratureC-25.0) * (0.01 + 0.00008 * _rawDataH) + _humdityLinear;
+  return _humdityTrue;
+}
 
 void SHT15::Tick(){
   //read temp sensor
