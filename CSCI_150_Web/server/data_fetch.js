@@ -36,27 +36,60 @@ function get_requests(token, deviceID, host, temp){
 		res.on('end', () =>{
 			var data = JSON.parse(response_data);	//turn data in JSON
 			
-			filter = {
+			//Creating date object to find out current date information
+			var current_date = new Date();
+
+
+			var current_year = current_date.getFullYear(); //Gets current year i.e 2019
+			var current_month = current_date.getMonth() + 1; //1-12
+			var current_day = current_date.getDate(); //1-31
+			var current_hour = current_date.getHours();  //gets the current hour 
+			var current_minute = current_date.getMinutes() //gets the current minutes
+
+			//Convert month and day to strings to use in gatheredAt field
+			var timestamp = current_hour.toString() +":"+ current_minute.toString();
+
+
+
+			//Primary keys used to find the document to update
+			var filter = {
+				year_timestamp: current_year,
 				deviceID: data.coreInfo.deviceID,
 				name: data.name
 			}
 
+			//options for the update - Upsert creates a document if none found
+			//New returns the updated document
+			var options = {upsert: true, new: true};
 
-			// Looks for a doc matching filter properties. If none found,
-			// Inserts a doc with filter and push properties.
-			// Otherwise just updates the results array of the doc, adding 
-			// Another element to it.
-			database_data.findOneAndUpdate(filter, {"$push": { "results": data.result}} 
-				, {upsert: true, new: true},(err, docs) => {
-				if(err){
-					console.log("Could not find or update the document");
-				}
-				/*
-				else{
-					console.log(docs)
-				}
-				*/
-			});
+
+			//The path to update can not contain variables or string concats
+			//must use object literal? to get around this issue
+			var updateKey = "results.month."+current_month+".day."+current_day;
+			var temp = {};
+			temp[updateKey] = {gatheredAt: timestamp, value: data.result};
+
+
+			//Will look for a document matching the filter. If none found, will insert
+			//a new document with filter and update properties. Otherwise, update
+			//the given property only	
+			database_data.findOneAndUpdate(filter, {$push: temp}, options, (err, docs) => {
+					if(err){
+						console.log("Could not find or update the document");
+					}
+				});
+			
+
+			/*WORKING
+			database_data.findOneAndUpdate(filter, {$push: {"results.month.3.day.2":  
+				{gatheredAt: timestamp, value: data.result}}}, 
+				options, (err, docs) => {
+					if(err){
+						console.log("Could not find or update the document");
+					}
+				});
+			*/
+
 
 			console.log('End of get Request!');
 		});//End of res.on('end')
