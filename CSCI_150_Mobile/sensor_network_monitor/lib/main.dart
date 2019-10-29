@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+        home: routeTest(),
+      //home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -110,3 +111,49 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+  class routeTest extends StatelessWidget
+  {
+    @override
+    Widget build(BuildContext context)
+    {
+      return Scaffold(
+        appBar: AppBar(
+            title: Text('First Route'),
+          ),
+        body: Center(
+          child: RaisedButton(
+            child: Text('Button?'),
+            onPressed: ()
+            {
+              //NAVIGATE TO SECOND ROUTE HERE
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => routeTest2()),
+              );
+            },
+            ),
+          ),
+        );
+    }
+  }
+  class routeTest2 extends StatelessWidget
+  {
+    @override
+    Widget build(BuildContext context)
+    {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Next Route"),
+        ),
+        body: Center(
+          child: RaisedButton(
+            onPressed: () {
+              //NAVIGATION BACK
+              Navigator.pop(context);
+            },
+          child: Text('Goin Back?'),
+            ),
+          ),
+        );
+    }
+  }
