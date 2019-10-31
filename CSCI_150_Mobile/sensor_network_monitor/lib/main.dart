@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-        home: routeTest(),
+        home: routeHome(), //Goes to main home page
       //home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -111,31 +111,59 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-  class routeTest extends StatelessWidget
+  class routeHome extends StatelessWidget
   {
+    int _currentIndex = 0;
+    final List<Widget> _children = [];
     @override
     Widget build(BuildContext context)
     {
       return Scaffold(
         appBar: AppBar(
-            title: Text('First Route'),
+            title: Text('Sensor Home Page'),
           ),
-        body: Center(
-          child: RaisedButton(
-            child: Text('Button?'),
-            onPressed: ()
-            {
-              //NAVIGATE TO SECOND ROUTE HERE
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => routeTest2()),
-              );
-            },
+        //body: _children[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar( //Creates Navigation Bar
+          //onTap: onTabTapped,
+          currentIndex: 0,
+          items: [
+            BottomNavigationBarItem( //Navigation Bar 1
+              icon: new Icon(Icons.home),
+              title: new Text('Home'),
             ),
+            BottomNavigationBarItem( //Navigation Bar 2
+              icon: new Icon(Icons.settings),
+              title: new Text('Settings'),
+            )
+          ]
           ),
         );
     }
   }
+/*
+  class PlaceholderWidget extents StatelessWidget
+  {
+    final Color color;
+
+    PlaceholderWidget(this.color);
+
+    @override
+    Widget build(BuildContext context)
+    {
+      return Container(
+        color: color,
+      );
+    }
+  }
+  void onTabTapped(int index)
+  {
+    setState(()
+    {
+      _currentIndex = index;
+    });
+  }
+*/
+  /* PREVIOUS ROUTE CODE - POSSIBLY DELETE???
   class routeTest2 extends StatelessWidget
   {
     @override
@@ -156,4 +184,4 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         );
     }
-  }
+  }*/
