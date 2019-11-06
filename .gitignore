@@ -4,3 +4,4 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+/CSCI_150_Hardware/Node_Sensor_Drivers/target
