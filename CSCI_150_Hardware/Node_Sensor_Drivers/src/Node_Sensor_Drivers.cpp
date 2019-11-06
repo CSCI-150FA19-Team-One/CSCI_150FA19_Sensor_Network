@@ -23,9 +23,9 @@ void loop();
 #define TickRate 10000
 
 SHT15 sensor0_1(D1, D0);
-//TE215 sensor2(A1);
+TE215 sensor2(A1);
 
-double tempF, tempC, humidityLinear, humidityTrue;
+double tempF, tempC, humidityLinear, humidityTrue, GMoisturePercentage;
 
 void setup() {
 
@@ -35,12 +35,13 @@ void setup() {
   WiFi.setCredentials("IEEE-THERMALTAK 4824", "3250eJ+9");
   #endif
 
-  // register functions with cloud
+  // register functions/variables with cloud
   // sensor0_1.cloudRegister();
   Particle.variable("TempF", tempF);
   Particle.variable("TempC", tempC);
   Particle.variable("HumidityL", humidityLinear);
   Particle.variable("HumidityT", humidityTrue);
+  Particle.variable("GMoistureP", GMoisturePercentage);
 
 #ifdef MYDEBUG
   // Debug Setup Code Start
@@ -59,6 +60,8 @@ void loop() {
   tempC = sensor0_1.getTemperatureC();
   humidityLinear = sensor0_1.getHumidityLinear();
   humidityTrue = sensor0_1.getHumidityTrue();
+  sensor2.tick();
+  GMoisturePercentage = sensor2.getGMoisture();
 
 #ifdef MYDEBUG
   Serial.print("Variable tempF: ");
