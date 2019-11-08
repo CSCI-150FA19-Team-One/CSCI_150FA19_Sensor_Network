@@ -1,16 +1,64 @@
+import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+//http post request class
+class Post
+{
+  final int userID;
+  final int id;
+  final String title;
+  final String body;
 
+  Post({this.userID, this.id, this.title, this.body});
+
+  factory Post.fromJson(Map<String, dynamic> json)
+  {
+    return Post(
+      userID: json['userId'],
+      id: json['id'],
+      title: json['title'],
+      body: json['body'],
+    );
+  }
+} //end post class
+
+//http fetchpost request class
+Future<Post> fetchPost() async
+{
+  final response =
+  await http.get('https://jsonplaceholder.typicode.com/posts/1');
+
+  //Checks to see if the server sent an "OK" response
+  if(response.statusCode == 200)
+  {
+    return Post.fromJson(json.decode(response.body));
+  }
+  //Throws an exception if the server did NOT send an "OK" response
+  else
+  {
+    throw Exception('Failed to load post');
+  }
+} //end fetchPost class
+
+//runs the program
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+//main form of the app. Also calls routeHome class
+class MyApp extends StatefulWidget {
+
+  MyApp({Key key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+  /*
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     //my first edit
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -27,8 +75,9 @@ class MyApp extends StatelessWidget {
       //home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
-}
+} //end of MyApp class
 
+//Unused, Demo class
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -47,6 +96,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+//Unused, Demo class
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
@@ -113,35 +163,75 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-  class routeHome extends StatelessWidget
+*/
+
+//routeHome that provides http fetch functionality as well as bottom navigation
+  class _MyAppState extends State<MyApp>
   {
+    //bottom navigation variables
     int _currentIndex = 0;
     final List<Widget> _children = [];
+
+    //http fetch function stuff
+    Future<Post> post;
+    @override
+    void initState()
+    {
+      super.initState();
+      post = fetchPost();
+    }
+
     @override
     Widget build(BuildContext context)
     {
-      return Scaffold(
-        appBar: AppBar(
-            title: Text('Sensor Home Page'),
-          ),
-        //body: _children[_currentIndex],
-        bottomNavigationBar: BottomNavigationBar( //Creates Navigation Bar
-          //onTap: onTabTapped,
-          currentIndex: 0,
-          items: [
-            BottomNavigationBarItem( //Navigation Bar 1
-              icon: new Icon(Icons.home),
-              title: new Text('Home'),
+      return MaterialApp(
+        title: 'For the love of god work mf',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: Scaffold(
+          appBar: AppBar(
+              title: Text('Sensor Home Page'),
             ),
-            BottomNavigationBarItem( //Navigation Bar 2
-              icon: new Icon(Icons.settings),
-              title: new Text('Settings'),
-            )
-          ]
+          //body: _children[_currentIndex],
+          body: Center( //Create the fetch Request
+            child: FutureBuilder<Post>(
+              future: post,
+              builder: (context, snapshot)
+              {
+                if (snapshot.hasData)
+                {
+                  return Text(snapshot.data.title);
+                }
+                else if (snapshot.hasError)
+                {
+                  return Text("${snapshot.error}");
+                }
+
+                return CircularProgressIndicator(); //Defaults to a circular loading indicator
+              },
+            ),
           ),
-        );
+          bottomNavigationBar: BottomNavigationBar( //Creates Navigation Bar
+            //onTap: onTabTapped,
+            currentIndex: 0,
+            items: [
+              BottomNavigationBarItem( //Navigation Bar 1
+                icon: new Icon(Icons.home),
+                title: new Text('Home'),
+              ),
+              BottomNavigationBarItem( //Navigation Bar 2
+                icon: new Icon(Icons.settings),
+                title: new Text('Settings'),
+              )
+            ]
+            ),
+          ),
+      );
     }
-  }
+  } //end routeHome class
+
+
 /*
   class PlaceholderWidget extents StatelessWidget
   {
