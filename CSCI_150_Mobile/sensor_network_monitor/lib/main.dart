@@ -201,7 +201,8 @@ class _MyHomePageState extends State<MyHomePage> {
               {
                 if (snapshot.hasData)
                 {
-                  return Text(snapshot.data.title);
+                  Text(snapshot.data.title, style: TextStyle(fontWeight: FontWeight.bold),);
+                  return Text(snapshot.data.body); //Why won't it let me post data twice???
                 }
                 else if (snapshot.hasError)
                 {
