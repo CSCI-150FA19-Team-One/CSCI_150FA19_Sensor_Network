@@ -28,6 +28,7 @@ class Post
 Future<Post> fetchPost() async
 {
   final response =
+  //Collect http info
   await http.get('https://jsonplaceholder.typicode.com/posts/1');
 
   //Checks to see if the server sent an "OK" response
@@ -38,9 +39,49 @@ Future<Post> fetchPost() async
   //Throws an exception if the server did NOT send an "OK" response
   else
   {
-    throw Exception('Failed to load post');
+    throw Exception('Failed to Download Data');
   }
 } //end fetchPost class
+
+//Preparing for sensor data request
+/*
+class Data
+{
+  final String userID;
+  final String deviceID;
+  final String name;
+  final String version;
+
+  Data({this.userID, this.deviceID, this.name, this.version});
+
+  factory Data.fromJson(Map<String, dynamic> json)
+  {
+    return Data(
+      userID: json['_id'],
+      deviceID: json['deviceID'],
+      name: json['title'],
+      version: json['_v'],
+    );
+  }
+} //end post clas
+
+Future<Data> fetchData() async
+{
+  final response =
+  //Collect http info
+  await http.get('https://jsonplaceholder.typicode.com/posts/1');
+
+  //Checks to see if the server sent an "OK" response
+  if(response.statusCode == 200)
+  {
+    return Data.fromJson(json.decode(response.body));
+  }
+  //Throws an exception if the server did NOT send an "OK" response
+  else
+  {
+    throw Exception('Failed to Download Data');
+  }
+}*/
 
 //runs the program
 void main() => runApp(MyApp());
@@ -185,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget build(BuildContext context)
     {
       return MaterialApp(
-        title: 'For the love of god work mf',
+        title: 'Sensors',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -201,7 +242,8 @@ class _MyHomePageState extends State<MyHomePage> {
               {
                 if (snapshot.hasData)
                 {
-                  Text(snapshot.data.title, style: TextStyle(fontWeight: FontWeight.bold),);
+                  print(snapshot.data.title);
+                  print(snapshot.data.id);
                   return Text(snapshot.data.body); //Why won't it let me post data twice???
                 }
                 else if (snapshot.hasError)
