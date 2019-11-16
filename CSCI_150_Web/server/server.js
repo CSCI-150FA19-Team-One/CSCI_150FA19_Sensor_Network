@@ -3,16 +3,20 @@ const express = require('express');
 const app =  express();
 const mongoose = require('mongoose');
 const database_data = require('./models/data.models.js');
+const bodyParser = require('body-parser');
 
 
 //Local modules
 const fetch = require('./data_fetch.js');
 const routes = require('./routes/api_interface/api.js');
+const userRoutes = require('./routes/api_interface/api_users.js');
 const settings = require('./config.json');
 
 
 
 app.use('/', routes);
+app.use('/user', userRoutes);
+
 
 
 
@@ -39,7 +43,7 @@ db.on('open', () => {
 
 
 
-setInterval(fetch.loop_through_devices, 10000);
+setInterval(fetch.loop_through_devices, 150000);
 
 
 
@@ -51,6 +55,8 @@ app.listen(3000, () => {
 
 
 /********* WEB SERVER ********************************/
+
+
 
 
 
