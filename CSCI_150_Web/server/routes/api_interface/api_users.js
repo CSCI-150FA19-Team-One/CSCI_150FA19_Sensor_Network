@@ -3,11 +3,13 @@ const router = express.Router();
 const User = require('../../models/user.models.js');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const jsonParser = bodyParser.json();
 
 
 const Salts = 10;
+const SecretKey = "nodesensor";
 
 
 //create a new user
@@ -24,6 +26,7 @@ router.post('/register', jsonParser,  (req, res) => {
 				password: hash
 			});
 
+			//If user already exists in the database, it will return err
 			user.save((err, docs) => {
 				if(err) {return res.sendStatus(500);}
 				else return res.status(200).send(docs);
@@ -55,7 +58,22 @@ router.post('/login', jsonParser,  (req, res) => {
 		//If passwords match, the result is set to True
 		bcrypt.compare(req.body.password, hashedPW, (err, result) => {
 			if(result) {
-				return res.status(200).send(docs);
+
+				//create a token
+				const token = jwt.sign(
+					{username: docs.username}, 
+					SecretKey,
+					{expiresIn: "90 minutes"},
+					);
+
+
+				User.updateOne(
+					filter,
+					{$set: {'tokens': {token: token}}},
+					(err, result) => { if (err) {return res.status(421);}});
+				
+				return res.status(200).json({token: token});
+
 			}
 			else{
 				return res.status(500);

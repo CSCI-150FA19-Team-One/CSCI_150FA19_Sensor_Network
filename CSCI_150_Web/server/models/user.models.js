@@ -12,7 +12,12 @@ const user_schema = new Schema({
 		type: String,
 		required: true,
 		trim: true
-	}
+	},
+	tokens: [
+		{
+			token: {type: String}
+		}
+	] 
 
 });
 
