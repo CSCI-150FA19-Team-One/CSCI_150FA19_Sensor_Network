@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 //http post request class
+/*
 class Post
 {
   final int userID;
@@ -42,9 +43,9 @@ Future<Post> fetchPost() async
     throw Exception('Failed to Download Data');
   }
 } //end fetchPost class
-
+*/
 //Preparing for sensor data request
-/*
+
 class Data
 {
   final String userID;
@@ -65,16 +66,17 @@ class Data
   }
 } //end post clas
 
+/*
 Future<Data> fetchData() async
 {
   final response =
   //Collect http info
-  await http.get('https://jsonplaceholder.typicode.com/posts/1');
+  await http.get('http://108.211.45.253:60005/find?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF');
 
   //Checks to see if the server sent an "OK" response
   if(response.statusCode == 200)
   {
-    return Data.fromJson(json.decode(response.body));
+    return Data.fromJson(json.decode(response.body[1]));
   }
   //Throws an exception if the server did NOT send an "OK" response
   else
@@ -82,6 +84,36 @@ Future<Data> fetchData() async
     throw Exception('Failed to Download Data');
   }
 }*/
+
+Future<Data> fetchData() async
+{
+  //Collects Current Day Info
+  int y = new DateTime.now().year;
+  String year = y.toString();
+  int m = new DateTime.now().month;
+  String month = m.toString();
+  int d = new DateTime.now().day;
+  String day = d.toString();
+
+  //Collect http info
+  final response =
+  await http.get('http://108.211.45.253:60005/find?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF');
+
+  //Collects day of info
+  String path= 'http://108.211.45.253:60005/find/'+ year +'/'+ month +'/'+ day + '?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF';
+  print(path);
+  //Checks to see if the server sent an "OK" response
+  if(response.statusCode == 200)
+  {
+    //Data.results
+    return Data.fromJson(json.decode(response.body[0]));
+  }
+  //Throws an exception if the server did NOT send an "OK" response
+  else
+  {
+    throw Exception('Failed to Download Data');
+  }
+}
 
 //runs the program
 void main() => runApp(MyApp());
@@ -214,12 +246,12 @@ class _MyHomePageState extends State<MyHomePage> {
     final List<Widget> _children = [];
 
     //http fetch function stuff
-    Future<Post> post;
+    Future<Data> data;
     @override
     void initState()
     {
       super.initState();
-      post = fetchPost();
+      data = fetchData();
     }
 
     @override
@@ -236,15 +268,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           //body: _children[_currentIndex],
           body: Center( //Create the fetch Request
-            child: FutureBuilder<Post>(
-              future: post,
+            child: FutureBuilder<Data>(
+              future: data,
               builder: (context, snapshot)
               {
                 if (snapshot.hasData)
                 {
-                  print(snapshot.data.title);
-                  print(snapshot.data.id);
-                  return Text(snapshot.data.body); //Why won't it let me post data twice???
+                  print(snapshot.data.deviceID);
+                  print(snapshot.data.name);
+                  return Text(snapshot.data.name); //Why won't it let me post data twice???
                 }
                 else if (snapshot.hasError)
                 {
