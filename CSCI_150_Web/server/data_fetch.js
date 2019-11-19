@@ -1,30 +1,22 @@
+// 3rd Party modules
 const http = require("http");	//For requests
 const https = require("https");	//For requests to secure websites
-const mongoose = require('mongoose');
+const database_data = require('./models/data.models.js');
 
 //local modules
 const settings = require('./config.json');
-const temperature = require('./models/sensor_data.js');
-
-
-/*********************************************************/
-const liveAgent = new https.Agent({keepAlive: true});
-/*********************************************************/
-
-
 
 
 //Function that will make GET requests to grab data
-//Needs the authenticatoin token, device id, and the host
-function get_requests(token, deviceID, host){
-	var path_dir = "/v1/devices/" + deviceID + "/temp?access_token=" + token
+//Needs the authenticatoin token, device id, host, and what temp unit
+//Farenheight tempF or celsuis tempC
+function get_requests(token, deviceID, host, temp){
+	var path_dir = "/v1/devices/" + deviceID + `/${temp}?access_token=` + token
 
 	var options = {
 	host: `${host}`,
 	path: `${path_dir}`,
-	method: "GET",
-	agent:liveAgent,
-	headers: {Connection: 'keep-alive'}
+	method: "GET"
 	};
 
 
@@ -39,75 +31,67 @@ function get_requests(token, deviceID, host){
 
 		});//End of res.on('data')
 
+
 		//All data has been grabbed from the response, store in DB
 		res.on('end', () =>{
 			var data = JSON.parse(response_data);	//turn data in JSON
 			
-
-			//Connecting to MongoDB
-			mongoose.connect(settings.mongoDB_path, {useNewUrlParser: false,useUnifiedTopology: true});
-
-			//Getting the DB object
-			const db = mongoose.connection;
-
-			//If couldn't connect to database, output error
-			db.on('error', console.error.bind(console, "MongoDB error"));
-
-			db.on('open', () => {
-				console.log("Connected to mongodb!");
-			});
+			//Creating date object to find out current date information
+			var current_date = new Date();
 
 
+			var current_year = current_date.getFullYear(); //Gets current year i.e 2019
+			var current_month = current_date.getMonth() + 1; //1-12
+			var current_day = current_date.getDate(); //1-31
+			var current_hour = current_date.getHours();  //gets the current hour 
+			var current_minute = current_date.getMinutes() //gets the current minutes
 
-			//Disabling for now, too much output
-			//Save data as a new record
-			var current_temperature = new temperature(data);
-			current_temperature.save((err) => {
-				if (err){
-					console.log(err);
-				}
-				else{
-					console.log("Data has been saved into DB!")
-				}
-			});
-			
-			/*
-			//output all documents under the model temperature
-			temperature.find((err, docs) => {
-				if (err)
-				{
-					console.log(err);
-				}
-				else {
-					console.log(docs);
-				}
-			});
+			//Convert month and day to strings to use in gatheredAt field
+			var timestamp = current_hour.toString() +":"+ current_minute.toString();
 
-			temperature.find({name: 'temp'}, (err, docs) => {
-					if (err)
-					{
-						console.log(err);
+
+
+			//Primary keys used to find the document to update
+			var filter = {
+				year_timestamp: current_year,
+				deviceID: data.coreInfo.deviceID,
+				name: data.name
+			}
+
+			//options for the update - Upsert creates a document if none found
+			//New returns the updated document
+			var options = {upsert: true, new: true};
+
+
+			//The path to update can not contain variables or string concats
+			//must use object literal? to get around this issue
+			var updateKey = "results.month."+current_month+".day."+current_day;
+			var temp = {};
+			temp[updateKey] = {gatheredAt: timestamp, value: data.result};
+
+
+			//Will look for a document matching the filter. If none found, will insert
+			//a new document with filter and update properties. Otherwise, update
+			//the given property only	
+			database_data.findOneAndUpdate(filter, {$push: temp}, options, (err, docs) => {
+					if(err){
+						console.log("Could not find or update the document");
 					}
-					else {
-						console.log(docs);
-					}	
-			});
+				});
+			
+
+			/*WORKING
+			database_data.findOneAndUpdate(filter, {$push: {"results.month.3.day.2":  
+				{gatheredAt: timestamp, value: data.result}}}, 
+				options, (err, docs) => {
+					if(err){
+						console.log("Could not find or update the document");
+					}
+				});
 			*/
 
-			//Output all documents with with a specific ID
-			temperature.find({'coreInfo.deviceID': '50ff6f065067545626430587'} , (err, docs) => {
-					if (err)
-					{
-						console.log(err);
-					}
-					else {
-						console.log(docs);
-						mongoose.disconnect();
-					}	
-			});
 
-
-			console.log('Ended Session!');
+			console.log('End of get Request!');
 		});//End of res.on('end')
 
 
@@ -117,204 +101,16 @@ function get_requests(token, deviceID, host){
 }//End of function get_requests
 
 
+
+
+//Double for loop. For loop 1 goes through all the devices in the config
+//For loop 2 goes through all the sensors on those devices
 exports.loop_through_devices = function() {
 	for (var i = 0; i < settings.device_ID.length; i++){
-		get_requests(settings.token, settings.device_ID[i], settings.host)
+		for(var k = 0; k < settings.sensor.length; k++ ){
+			get_requests(settings.token, settings.device_ID[i], settings.host, settings.sensor[k]);
+		}
 	}
 	return console.log("Finished making all requests");
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-			var parsed_data = JSON.parse(response_data);
-
-			//Connecting to MongoDB
-			mongoose.connect(settings.mongoDB_path, {useNewUrlParser: false,useUnifiedTopology: true});
-
-			//Getting the DB object
-			const db = mongoose.connection;
-
-			//If couldn't connect to database, output error
-			db.on('error', console.error.bind(console, "MongoDB error"));
-
-			db.once('open', () => {
-				//Save data into MongoDB
-				data.save( (err, data) => {
-						if (error){ 
-							return console.log(err);
-						}
-						else {
-							console.log("Temp value saved: " + data.result);
-						}
-					});
-				});
-
-
-
-
-
-
-
-
-			/*
-		*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			/* Possibly not needed anymore
-			//Move the newly created json file to the destination dir. No dupes
-			mv(`data_${deviceID}.json`, __dirname + `/temp_files/data_${deviceID}`, {clobber: false}, (err) => {
-				//If file already exists in dest location, delete the file new file
-				if(err){ 
-					console.log("File already exists! Not moving. Deleting now");
-					var delete_file_path = `data_${deviceID}.json`;
-
-					//async method
-					fs.unlink(delete_file_path, (err) => {
-						if(err){ 
-							console.log(err);
-							return
-						}
-					});
-				}
-				else console.log("It works?");
-			});
-
-		*/
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-
-
-
-
-
-
-//Creating the schema for the acceptable data from the devices
-const Schema = mongoose.Schema
-
-
-
-
-//Mongoose will create model for SensorDatas collection
-const data_model = mongoose.model('dataModel', data_schema);
-const model_instance = new data_model({name: 'Data'});
-model_instance.save( () => {
-
-
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//The allowed data must contain a deviceID string found
-//In config.js
-const data_schema = new Schema({
-	uniqueID: Schema.ObjectId;
-	cmd: String,
-	name: {type: String, required: true}
-	result: {type: Number, min: -10, max: 130, required: true},
-	coreInfo: 
-			{
-				last_app: String,
-				last_heard: Date,
-				connected: Boolean,
-				last_handshake_at: Date,
-				deviceID: 
-					{
-						type: String, 
-						required: true,
-						enum: [settings.deviceID[0]]
-					},
-				product_id: Number
-			}
-});
-
-
-
-
-
-*/
