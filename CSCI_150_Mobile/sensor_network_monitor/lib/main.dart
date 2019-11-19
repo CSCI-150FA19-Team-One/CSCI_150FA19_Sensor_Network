@@ -46,6 +46,7 @@ Future<Post> fetchPost() async
 */
 //Preparing for sensor data request
 
+//Collects Sensor Data
 class Data
 {
   final String userID;
@@ -53,15 +54,33 @@ class Data
   final String name;
   final String version;
 
-  Data({this.userID, this.deviceID, this.name, this.version});
+  Data._({this.userID, this.deviceID, this.name, this.version});
 
   factory Data.fromJson(Map<String, dynamic> json)
   {
-    return Data(
+    return new Data._(
       userID: json['_id'],
       deviceID: json['deviceID'],
       name: json['title'],
       version: json['_v'],
+    );
+  }
+} //end post clas
+
+//Collects Results Data
+class DataResults
+{
+  final String gatheredAt;
+  final double value;
+  String valueStr;
+
+  DataResults._({this.gatheredAt,this.value});
+
+  factory DataResults.fromJson(Map<String, dynamic> json)
+  {
+    return new DataResults._(
+      gatheredAt: json['gatheredAt'],
+      value: json['value'],
     );
   }
 } //end post clas
@@ -85,7 +104,7 @@ Future<Data> fetchData() async
   }
 }*/
 
-Future<Data> fetchData() async
+Future<DataResults> fetchResults() async
 {
   //Collects Current Day Info
   int y = new DateTime.now().year;
@@ -99,14 +118,16 @@ Future<Data> fetchData() async
   final response =
   await http.get('http://108.211.45.253:60005/find?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF');
 
-  //Collects day of info
+  //Collects specific day result info
   String path= 'http://108.211.45.253:60005/find/'+ year +'/'+ month +'/'+ day + '?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF';
   print(path);
+  final responseResults = await http.get(path);
+
   //Checks to see if the server sent an "OK" response
-  if(response.statusCode == 200)
+  if(responseResults.statusCode == 200)
   {
     //Data.results
-    return Data.fromJson(json.decode(response.body[0]));
+    return DataResults.fromJson(json.decode(responseResults.body));
   }
   //Throws an exception if the server did NOT send an "OK" response
   else
@@ -238,21 +259,69 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 */
 
+//Creates the dynamic http path for the data of a specific day (current day only right now)
+String makePath()
+{
+  //Collects Current Day Info
+  int y = new DateTime.now().year;
+  String year = y.toString();
+  int m = new DateTime.now().month;
+  String month = m.toString();
+  int d = new DateTime.now().day;
+  String day = d.toString();
+
+  String temp = 'http://108.211.45.253:60005/find/'+ year +'/'+ month +'/'+ day + '?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF';
+
+  //Collects specific day result info
+  return temp;
+}
+
 //routeHome that provides http fetch functionality as well as bottom navigation
   class _MyAppState extends State<MyApp>
   {
+
     //bottom navigation variables
-    int _currentIndex = 0;
-    final List<Widget> _children = [];
+    //int _currentIndex = 0;
+    //final List<Widget> _children = [];
+
+    double temp;
+    String tempStr;
+    String path = makePath();
+    List<DataResults> list = List();
+    var isLoading = false;
+
+      _fetchRequest() async {
+        setState(() {
+          isLoading = true;
+        });
+        final response =
+        await http.get(path);
+        if (response.statusCode == 200) {
+          list = (json.decode(response.body) as List)
+            .map((data) => new DataResults.fromJson(data))
+            .toList();
+          setState(()
+          {
+            isLoading = false;
+          });
+        } else {
+          throw Exception('Failed to Download Data');
+        }
+        for (int i = 0; i < list.length; i++)
+          {
+             temp = list[i].value;
+            list[i].valueStr = temp.toString();
+          }
+      }//End fetchRequest
 
     //http fetch function stuff
-    Future<Data> data;
+    /*Future<DataResults> results;
     @override
     void initState()
     {
       super.initState();
-      data = fetchData();
-    }
+      results = fetchResults();
+    }*/
 
     @override
     Widget build(BuildContext context)
@@ -266,17 +335,44 @@ class _MyHomePageState extends State<MyHomePage> {
           appBar: AppBar(
               title: Text('Sensor Home Page'),
             ),
+
+            bottomNavigationBar: Padding(
+            padding: const EdgeInsets.all(8.0),
+                child: RaisedButton(
+                  child: new Text("Fetch Data"),
+                  onPressed: _fetchRequest,
+                ),
+              ),
+
+            body: isLoading
+                ? Center(
+              child: CircularProgressIndicator(),
+            )
+                : ListView.builder(
+                itemCount: list.length,
+                itemBuilder: (BuildContext context, int index)
+                {
+                  tempStr = 'Time: ' + list[index].gatheredAt;
+                  return ListTile(
+                    contentPadding: EdgeInsets.all(10.0),
+                    title: new Text(tempStr),
+                    trailing: new Text(
+                      list[index].valueStr,
+                    ),
+                  );
+                }
+                ),
+        )
           //body: _children[_currentIndex],
-          body: Center( //Create the fetch Request
-            child: FutureBuilder<Data>(
-              future: data,
+          /*body: Center( //Create the fetch Request
+            child: FutureBuilder<DataResults>(
+              future: results,
               builder: (context, snapshot)
               {
                 if (snapshot.hasData)
                 {
-                  print(snapshot.data.deviceID);
-                  print(snapshot.data.name);
-                  return Text(snapshot.data.name); //Why won't it let me post data twice???
+                  print('TEST');
+                  return Text(snapshot.data.value); //Why won't it let me post data twice???
                 }
                 else if (snapshot.hasError)
                 {
@@ -300,9 +396,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 title: new Text('Settings'),
               )
             ]
-            ),
-          ),
-      );
+            ),*/
+          );
     }
   } //end routeHome class
 
