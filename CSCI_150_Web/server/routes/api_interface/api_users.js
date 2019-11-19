@@ -66,7 +66,7 @@ router.post('/login', jsonParser,  (req, res) => {
 					{expiresIn: "90 minutes"},
 					);
 
-
+				//place token into the database
 				User.updateOne(
 					filter,
 					{$set: {'tokens': {token: token}}},
@@ -83,34 +83,5 @@ router.post('/login', jsonParser,  (req, res) => {
 
 });
 
-
-
-/*
-
-signup -> login -> receive token -> sign out -> delete token
-
-signup -
-	check to see if database matches the passed username
-
-login -
-	compare non-hashed password with the hashed password to make sure
-	it is correct
-
-	check if a user already has an auth token
-
-receive token -
-	update the database putting in the token
-
-	should token ever expire? -> if not make an api that allows someone
-	to get a new token
-
-sign out -
-	only needed if receive token is not permenant
-
-
-
-database API will require the token to be present in the query
-
-*/
 
 module.exports = router;

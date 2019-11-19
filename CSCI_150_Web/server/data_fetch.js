@@ -20,7 +20,7 @@ function get_requests(token, deviceID, host, temp){
 	};
 
 
-	var req = https.request(options, (res) => {
+	var request = https.request(options, (res) => {
 		console.log(`connection status: ${res.statusCode}`);
 		var response_data = ""
 
@@ -78,26 +78,14 @@ function get_requests(token, deviceID, host, temp){
 						console.log("Could not find or update the document");
 					}
 				});
-			
-
-			/*WORKING
-			database_data.findOneAndUpdate(filter, {$push: {"results.month.3.day.2":  
-				{gatheredAt: timestamp, value: data.result}}}, 
-				options, (err, docs) => {
-					if(err){
-						console.log("Could not find or update the document");
-					}
-				});
-			*/
-
 
 			console.log('End of get Request!');
 		});//End of res.on('end')
 
-
+		//request.end();
 	});//End of https.request
 
-	req.end();
+	request.end();
 }//End of function get_requests
 
 

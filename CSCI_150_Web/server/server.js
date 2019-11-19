@@ -22,6 +22,8 @@ app.use('/user', userRoutes);
 
 
 /*********** MONGOSE CONNECCTION **********************/
+//"mongodb://127.0.0.1:27017"
+//"mongodb+srv://admin:password1234@nodesensor-jdaif.azure.mongodb.net/test?retryWrites=true&w=majority"
 
 //Connect to MongoDB
 mongoose.connect(settings.mongoDB_path, {useNewUrlParser: false,useUnifiedTopology: true});
@@ -43,7 +45,7 @@ db.on('open', () => {
 
 
 
-setInterval(fetch.loop_through_devices, 150000);
+setInterval(fetch.loop_through_devices, 20000);
 
 
 
