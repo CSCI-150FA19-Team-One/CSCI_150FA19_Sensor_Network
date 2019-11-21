@@ -1,24 +1,31 @@
-import React from 'react';
+// import React from 'react';
+import React, { Component } from "react";
 import { render } from "react-dom";
+import Clock from "react-live-clock";
+import PropTypes from "prop-types";
 
-import Tabs from './tabs.js';
-require('./App.css');
+import Tabs from "./tabs.js";
+require("./App.css");
 
 function App() {
   return (
     <div>
-      <h1>Tabs Demo</h1>
-     <Tabs>
-      <div label="Gator">
-        See ya later, <em>Alligator</em>!
-      </div>
-      <div label="Croc">
-        After 'while, <em>Crocodile</em>!
-      </div>
-      <div label="Sarcosuchus">
-        Nothing to see here, this tab is <em>extinct</em>!
-      </div>
-    </Tabs>
+      <h1>Home</h1>
+      <h3>
+        <Clock
+          format={"dddd, MMMM Do YYYY, HH:mm:ss A"}
+          ticking={true}
+          timezone={"US/Pacific"}
+        />
+      </h3>
+      <Tabs>
+        <div label="Average of Data">
+          Graph of Temperature, Moisture, and Humidity Averaged
+        </div>
+        <div label="Temperature">Graph of Temperature</div>
+        <div label="Moisture">Graph of Moisture</div>
+        <div label="Humidity">Graph of Humidity</div>
+      </Tabs>
     </div>
   );
 }
