@@ -5,7 +5,16 @@ import Clock from "react-live-clock";
 import PropTypes from "prop-types";
 
 import Tabs from "./tabs.js";
+
 require("./App.css");
+
+const http = require("http");
+const https = require("https");
+
+let m = 1;
+let d = 1;
+var url = "http://108.211.45.253:60005/find/2019/" + m + "/" + d "?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF";
+60005
 
 function App() {
   return (
