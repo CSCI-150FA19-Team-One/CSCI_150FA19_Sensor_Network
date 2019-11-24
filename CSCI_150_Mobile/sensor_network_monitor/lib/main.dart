@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+//Create global query class variable q
+query q = new query();
+
 //runs the program
 void main() => runApp(MyApp());
 
@@ -168,16 +171,82 @@ class DataResults
 
 class query {
 //Date Query Variables
-  int year;
-  int month;
-  int day;
-  int hour;
+  int year=null;
+  int month=null;
+  int day=null;
+  int hour=null;
+  String y;
+  String m;
+  String d;
+  String h;
+
+  //Sensor Query Variables
+  bool tempInF = true;
+  bool humidityInT = true;
 
 //Device Query Variables
-  String device; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
-  String sensor; //"tempC", "tempF", "HumidityL", "HumidityT"
+  String device="e00fce681c2671fc7b1680eb"; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
+  String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT"
 }//END QUERY CLASS
 
+//Creates the dynamic http path for the data of a specific day (current day only right now)
+String makePath()
+{
+//Build Year, Month, Day Variables. If null, fill the variables
+  if(q.year != null)
+  {
+    q.y = q.year.toString();
+  }
+  else
+  {
+    q.year = new DateTime.now().year;
+    q.y = q.year.toString();
+  }
+
+  if(q.month != null)
+  {
+    q.m = q.month.toString();
+  }
+  else
+  {
+    q.month = new DateTime.now().month;
+    q.m = q.month.toString();
+  }
+
+  if(q.day != null)
+  {
+    q.d = q.day.toString();
+  }
+  else
+  {
+    q.day = new DateTime.now().day;
+    q.d = q.day.toString();
+  }
+
+  //Build Sensor and Device Variables
+  if(q.humidityInT && q.device == "e00fce686522d2441e1f693f")
+  {
+    q.sensor = "HumidityT";
+  }
+  else if(q.device == "e00fce686522d2441e1f693f")
+  {
+    q.sensor = "HumidityL";
+  }
+  else if(q.tempInF && q.device == "e00fce681c2671fc7b1680eb")
+  {
+    q.sensor = "tempF";
+  }
+  else if(q.device == "e00fce681c2671fc7b1680eb")
+  {
+    q.sensor = "tempC";
+  }
+
+  //Build the path with all the class variables
+  String buildPath = 'http://108.211.45.253:60005/find/'+ q.y +'/'+ q.m +'/'+ q.d + '?deviceID=' + q.device + '&sensor=' + q.sensor;
+
+  //Collects specific day result info
+  return buildPath;
+}//END MAKEPATH
 
 
 
@@ -212,23 +281,6 @@ Future<DataResults> fetchResults() async
     throw Exception('Failed to Download Data');
   }
 }//END FETCHRESULTS CLASS
-
-//Creates the dynamic http path for the data of a specific day (current day only right now)
-String makePath()
-{
-  //Collects Current Day Info
-  int y = new DateTime.now().year;
-  String year = y.toString();
-  int m = new DateTime.now().month;
-  String month = m.toString();
-  int d = new DateTime.now().day;
-  String day = d.toString();
-
-  String temp = 'http://108.211.45.253:60005/find/'+ year +'/'+ month +'/'+ day + '?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF';
-
-  //Collects specific day result info
-  return temp;
-}//END MAKEPATH
 
 //routeHome that provides http fetch functionality as well as bottom navigation
   class _MyAppState extends State<MyApp>
