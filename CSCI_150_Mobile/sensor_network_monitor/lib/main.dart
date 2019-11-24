@@ -185,7 +185,7 @@ class query {
   bool humidityInT = true;
 
 //Device Query Variables
-  String device="e00fce681c2671fc7b1680eb"; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
+  String device=null; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
   String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT"
 }//END QUERY CLASS
 
@@ -199,7 +199,7 @@ String makePath()
   }
   else
   {
-    q.year = new DateTime.now().year;
+    q.year = new DateTime.now().year; //Default Case
     q.y = q.year.toString();
   }
 
@@ -209,7 +209,7 @@ String makePath()
   }
   else
   {
-    q.month = new DateTime.now().month;
+    q.month = new DateTime.now().month; //Default Case
     q.m = q.month.toString();
   }
 
@@ -219,12 +219,20 @@ String makePath()
   }
   else
   {
-    q.day = new DateTime.now().day;
+    q.day = new DateTime.now().day; //Default case
     q.d = q.day.toString();
   }
 
   //Build Sensor and Device Variables
-  if(q.humidityInT && q.device == "e00fce686522d2441e1f693f")
+  if(q.tempInF && q.device == "e00fce681c2671fc7b1680eb")
+  {
+    q.sensor = "tempF";
+  }
+  else if(q.device == "e00fce681c2671fc7b1680eb")
+  {
+    q.sensor = "tempC";
+  }
+  else if(q.humidityInT && q.device == "e00fce686522d2441e1f693f")
   {
     q.sensor = "HumidityT";
   }
@@ -232,13 +240,10 @@ String makePath()
   {
     q.sensor = "HumidityL";
   }
-  else if(q.tempInF && q.device == "e00fce681c2671fc7b1680eb")
+  else
   {
+    q.device = "e00fce681c2671fc7b1680eb"; //Default Case
     q.sensor = "tempF";
-  }
-  else if(q.device == "e00fce681c2671fc7b1680eb")
-  {
-    q.sensor = "tempC";
   }
 
   //Build the path with all the class variables
@@ -249,7 +254,7 @@ String makePath()
 }//END MAKEPATH
 
 
-
+/*
 Future<DataResults> fetchResults() async
 {
   //Collects Current Day Info
@@ -259,10 +264,6 @@ Future<DataResults> fetchResults() async
   String month = m.toString();
   int d = new DateTime.now().day;
   String day = d.toString();
-
-  //Collect http info
-  final response =
-  await http.get('http://108.211.45.253:60005/find?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF');
 
   //Collects specific day result info
   String path= 'http://108.211.45.253:60005/find/'+ year +'/'+ month +'/'+ day + '?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF';
@@ -280,7 +281,7 @@ Future<DataResults> fetchResults() async
   {
     throw Exception('Failed to Download Data');
   }
-}//END FETCHRESULTS CLASS
+}//END FETCHRESULTS CLASS*/
 
 //routeHome that provides http fetch functionality as well as bottom navigation
   class _MyAppState extends State<MyApp>
