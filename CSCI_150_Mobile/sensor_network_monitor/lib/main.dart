@@ -243,12 +243,13 @@ String makePath()
   else
   {
     q.device = "e00fce681c2671fc7b1680eb"; //Default Case
-    q.sensor = "tempF";
+    q.sensor = "tempC";
   }
 
   //Build the path with all the class variables
   String buildPath = 'http://108.211.45.253:60005/find/'+ q.y +'/'+ q.m +'/'+ q.d + '?deviceID=' + q.device + '&sensor=' + q.sensor;
 
+  print(buildPath);
   //Collects specific day result info
   return buildPath;
 }//END MAKEPATH
@@ -303,10 +304,13 @@ Future<DataResults> fetchResults() async
         });
         final response =
         await http.get(path);
+        print('TEST3');
         if (response.statusCode == 200) {
           list = (json.decode(response.body) as List)
             .map((data) => new DataResults.fromJson(data))
             .toList();
+          print('TEST4');
+
           setState(()
           {
             isLoading = false;
@@ -314,6 +318,7 @@ Future<DataResults> fetchResults() async
         } else {
           throw Exception('Failed to Download Data');
         }
+        print("TEST2");
         for (int i = 0; i < list.length; i++)
           {
              temp = list[i].value;
