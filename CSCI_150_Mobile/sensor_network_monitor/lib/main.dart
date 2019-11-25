@@ -164,7 +164,7 @@ class DataResults
   {
     return new DataResults._(
       gatheredAt: json['gatheredAt'],
-      value: json['value'],
+      value: json['value'].toDouble(),
     );
   }
 } //END REULTS CLASS
@@ -243,7 +243,7 @@ String makePath()
   else
   {
     q.device = "e00fce681c2671fc7b1680eb"; //Default Case
-    q.sensor = "tempC";
+    q.sensor = "tempF";
   }
 
   //Build the path with all the class variables
@@ -304,12 +304,10 @@ Future<DataResults> fetchResults() async
         });
         final response =
         await http.get(path);
-        print('TEST3');
         if (response.statusCode == 200) {
           list = (json.decode(response.body) as List)
             .map((data) => new DataResults.fromJson(data))
             .toList();
-          print('TEST4');
 
           setState(()
           {
@@ -318,7 +316,6 @@ Future<DataResults> fetchResults() async
         } else {
           throw Exception('Failed to Download Data');
         }
-        print("TEST2");
         for (int i = 0; i < list.length; i++)
           {
              temp = list[i].value;
