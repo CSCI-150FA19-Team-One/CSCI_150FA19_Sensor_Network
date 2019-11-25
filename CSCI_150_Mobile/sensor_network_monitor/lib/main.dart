@@ -3,138 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-//http post request class
-/*
-class Post
-{
-  final int userID;
-  final int id;
-  final String title;
-  final String body;
-
-  Post({this.userID, this.id, this.title, this.body});
-
-  factory Post.fromJson(Map<String, dynamic> json)
-  {
-    return Post(
-      userID: json['userId'],
-      id: json['id'],
-      title: json['title'],
-      body: json['body'],
-    );
-  }
-} //end post class
-
-//http fetchpost request class
-Future<Post> fetchPost() async
-{
-  final response =
-  //Collect http info
-  await http.get('https://jsonplaceholder.typicode.com/posts/1');
-
-  //Checks to see if the server sent an "OK" response
-  if(response.statusCode == 200)
-  {
-    return Post.fromJson(json.decode(response.body));
-  }
-  //Throws an exception if the server did NOT send an "OK" response
-  else
-  {
-    throw Exception('Failed to Download Data');
-  }
-} //end fetchPost class
-*/
-//Preparing for sensor data request
-
-//Collects Sensor Data
-class Data
-{
-  final String userID;
-  final String deviceID;
-  final String name;
-  final String version;
-
-  Data._({this.userID, this.deviceID, this.name, this.version});
-
-  factory Data.fromJson(Map<String, dynamic> json)
-  {
-    return new Data._(
-      userID: json['_id'],
-      deviceID: json['deviceID'],
-      name: json['title'],
-      version: json['_v'],
-    );
-  }
-} //end post clas
-
-//Collects Results Data
-class DataResults
-{
-  final String gatheredAt;
-  final double value;
-  String valueStr;
-
-  DataResults._({this.gatheredAt,this.value});
-
-  factory DataResults.fromJson(Map<String, dynamic> json)
-  {
-    return new DataResults._(
-      gatheredAt: json['gatheredAt'],
-      value: json['value'],
-    );
-  }
-} //end post clas
-
-/*
-Future<Data> fetchData() async
-{
-  final response =
-  //Collect http info
-  await http.get('http://108.211.45.253:60005/find?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF');
-
-  //Checks to see if the server sent an "OK" response
-  if(response.statusCode == 200)
-  {
-    return Data.fromJson(json.decode(response.body[1]));
-  }
-  //Throws an exception if the server did NOT send an "OK" response
-  else
-  {
-    throw Exception('Failed to Download Data');
-  }
-}*/
-
-Future<DataResults> fetchResults() async
-{
-  //Collects Current Day Info
-  int y = new DateTime.now().year;
-  String year = y.toString();
-  int m = new DateTime.now().month;
-  String month = m.toString();
-  int d = new DateTime.now().day;
-  String day = d.toString();
-
-  //Collect http info
-  final response =
-  await http.get('http://108.211.45.253:60005/find?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF');
-
-  //Collects specific day result info
-  String path= 'http://108.211.45.253:60005/find/'+ year +'/'+ month +'/'+ day + '?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF';
-  print(path);
-  final responseResults = await http.get(path);
-
-  //Checks to see if the server sent an "OK" response
-  if(responseResults.statusCode == 200)
-  {
-    //Data.results
-    return DataResults.fromJson(json.decode(responseResults.body));
-  }
-  //Throws an exception if the server did NOT send an "OK" response
-  else
-  {
-    throw Exception('Failed to Download Data');
-  }
-}
+//Create global query class variable q
+query q = new query();
 
 //runs the program
 void main() => runApp(MyApp());
@@ -147,6 +17,7 @@ class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
+
   /*
   // This widget is the root of your application.
   @override
@@ -259,8 +130,133 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 */
 
+//Collects Sensor Data
+class Data
+{
+  final String userID;
+  final String deviceID;
+  final String name;
+  final String version;
+
+  Data._({this.userID, this.deviceID, this.name, this.version});
+
+  factory Data.fromJson(Map<String, dynamic> json)
+  {
+    return new Data._(
+      userID: json['_id'],
+      deviceID: json['deviceID'],
+      name: json['title'],
+      version: json['_v'],
+    );
+  }
+} //END DATA CLASS
+
+//Collects Results Data
+class DataResults
+{
+  final String gatheredAt;
+  final double value;
+  String valueStr;
+
+  DataResults._({this.gatheredAt,this.value});
+
+  factory DataResults.fromJson(Map<String, dynamic> json)
+  {
+    return new DataResults._(
+      gatheredAt: json['gatheredAt'],
+      value: json['value'].toDouble(),
+    );
+  }
+} //END REULTS CLASS
+
+class query {
+//Date Query Variables
+  int year=null;
+  int month=null;
+  int day=null;
+  int hour=null;
+  String y;
+  String m;
+  String d;
+  String h;
+
+  //Sensor Query Variables
+  bool tempInF = true;
+  bool humidityInT = true;
+
+//Device Query Variables
+  String device=null; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
+  String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT"
+}//END QUERY CLASS
+
 //Creates the dynamic http path for the data of a specific day (current day only right now)
 String makePath()
+{
+//Build Year, Month, Day Variables. If null, fill the variables
+  if(q.year != null)
+  {
+    q.y = q.year.toString();
+  }
+  else
+  {
+    q.year = new DateTime.now().year; //Default Case
+    q.y = q.year.toString();
+  }
+
+  if(q.month != null)
+  {
+    q.m = q.month.toString();
+  }
+  else
+  {
+    q.month = new DateTime.now().month; //Default Case
+    q.m = q.month.toString();
+  }
+
+  if(q.day != null)
+  {
+    q.d = q.day.toString();
+  }
+  else
+  {
+    q.day = new DateTime.now().day; //Default case
+    q.d = q.day.toString();
+  }
+
+  //Build Sensor and Device Variables
+  if(q.tempInF && q.device == "e00fce681c2671fc7b1680eb")
+  {
+    q.sensor = "tempF";
+  }
+  else if(q.device == "e00fce681c2671fc7b1680eb")
+  {
+    q.sensor = "tempC";
+  }
+  else if(q.humidityInT && q.device == "e00fce686522d2441e1f693f")
+  {
+    q.sensor = "HumidityT";
+  }
+  else if(q.device == "e00fce686522d2441e1f693f")
+  {
+    q.sensor = "HumidityL";
+  }
+  else
+  {
+    q.device = "e00fce681c2671fc7b1680eb"; //Default Case
+    q.sensor = "tempF";
+  }
+
+  //Build the path with all the class variables
+  String buildPath = 'http://108.211.45.253:60005/find/'+ q.y +'/'+ q.m +'/'+ q.d + '?deviceID=' + q.device + '&sensor=' + q.sensor;
+
+  print(buildPath);
+  //Collects specific day result info
+  return buildPath;
+}//END MAKEPATH
+
+
+/*
+Future<DataResults> fetchResults() async
 {
   //Collects Current Day Info
   int y = new DateTime.now().year;
@@ -270,11 +266,23 @@ String makePath()
   int d = new DateTime.now().day;
   String day = d.toString();
 
-  String temp = 'http://108.211.45.253:60005/find/'+ year +'/'+ month +'/'+ day + '?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF';
-
   //Collects specific day result info
-  return temp;
-}
+  String path= 'http://108.211.45.253:60005/find/'+ year +'/'+ month +'/'+ day + '?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF';
+  print(path);
+  final responseResults = await http.get(path);
+
+  //Checks to see if the server sent an "OK" response
+  if(responseResults.statusCode == 200)
+  {
+    //Data.results
+    return DataResults.fromJson(json.decode(responseResults.body));
+  }
+  //Throws an exception if the server did NOT send an "OK" response
+  else
+  {
+    throw Exception('Failed to Download Data');
+  }
+}//END FETCHRESULTS CLASS*/
 
 //routeHome that provides http fetch functionality as well as bottom navigation
   class _MyAppState extends State<MyApp>
@@ -300,6 +308,7 @@ String makePath()
           list = (json.decode(response.body) as List)
             .map((data) => new DataResults.fromJson(data))
             .toList();
+
           setState(()
           {
             isLoading = false;
@@ -400,6 +409,7 @@ String makePath()
           );
     }
   } //end routeHome class
+
 
 
 /*
