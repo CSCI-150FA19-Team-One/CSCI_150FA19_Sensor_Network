@@ -53,6 +53,7 @@ router.post('/login', jsonParser,  (req, res) => {
 			return res.status(422);
 		}
 
+		console.log("found matching document with match username!");
 		const hashedPW = docs.password;
 
 		//If passwords match, the result is set to True
@@ -74,13 +75,10 @@ router.post('/login', jsonParser,  (req, res) => {
 				
 				return res.status(200).json({token: token});
 
-			}
-			else{
-				return res.status(500);
-			}
+			}			
 		});
 	});
-
+	return res.status(500).json({"message": "Password did not match!"});
 });
 
 

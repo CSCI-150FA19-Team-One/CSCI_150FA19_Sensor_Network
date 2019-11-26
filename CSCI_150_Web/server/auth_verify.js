@@ -26,3 +26,4 @@ module.exports = (req, res, next) => {
 	}
 	else { return res.json({"message": "no token was supplied!"});}
 };
+

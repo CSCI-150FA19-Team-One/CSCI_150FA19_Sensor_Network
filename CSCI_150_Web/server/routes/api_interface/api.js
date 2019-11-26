@@ -12,7 +12,6 @@ router.get('/', (req,res) => {
 });
 
 
-
 // path to retrieve data from MongoDB
 router.get('/find', authCheck, (req, res) => {
 
