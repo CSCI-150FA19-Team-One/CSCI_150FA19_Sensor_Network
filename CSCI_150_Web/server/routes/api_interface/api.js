@@ -111,7 +111,7 @@ router.get('/find/:year/:month/:day', authCheck, (req, res) => {
 		}
 
 	res.json(docs.results.month[month_number].day[day_number]);	
-			res.json(docs);
+
 	});
 
 });
