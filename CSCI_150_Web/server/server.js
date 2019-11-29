@@ -45,7 +45,7 @@ db.on('open', () => {
 
 
 
-setInterval(fetch.loop_through_devices, 15000);
+setInterval(fetch.loop_through_devices, 180000);
 
 
 
