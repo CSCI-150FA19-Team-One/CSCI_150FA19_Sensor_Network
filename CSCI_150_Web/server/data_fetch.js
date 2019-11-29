@@ -61,7 +61,7 @@ function get_requests(token, deviceID, host, temp){
 		console.log('Request made at: ' + Date());
 		var response_data = "";
 
-		if(res.statusCode === 200){
+		//if(res.statusCode === 200){
 			//Getting the data from the get request
 			res.on('data', (data) => {
 				console.log("Grabbing data!");
@@ -69,9 +69,12 @@ function get_requests(token, deviceID, host, temp){
 
 			});//End of res.on('data')
 
+
+			/*
 			res.on('error', (err) => {
 				console.log("error: " + err);
 			});
+			*/
 
 
 			//All data has been grabbed from the response, store in DB
@@ -123,14 +126,16 @@ function get_requests(token, deviceID, host, temp){
 
 				console.log('End of get Request!');
 			});//End of res.on('end')
-		}// if statement
+		//}// if statement
 	});//End of https.request
 
 
+	/*
 	request.on('error', (err) => {
 		console.log("request.on('error) called");
 		console.log(err);
 	});
+	*/
 
 	request.end();
 }//End of function get_requests
