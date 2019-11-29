@@ -3,8 +3,44 @@ const http = require("http");	//For requests
 const https = require("https");	//For requests to secure websites
 const database_data = require('./models/data.models.js');
 
+//const requestPromise = require('request-promise');
+
+
 //local modules
 const settings = require('./config.json');
+
+/*
+var urls[
+	"https://api.particle.io/v1/devices/e00fce681c2671fc7b1680eb/tempC?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+
+	"https://api.particle.io/v1/devices/e00fce681c2671fc7b1680eb/tempF?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+
+	"https://api.particle.io/v1/devices/e00fce681c2671fc7b1680eb/HumidityL?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+
+	"https://api.particle.io/v1/devices/e00fce681c2671fc7b1680eb/HumidityT?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+
+
+
+	"https://api.particle.io/v1/devices/e00fce686522d2441e1f693f/tempC?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+
+	"https://api.particle.io/v1/devices/e00fce686522d2441e1f693f/tempF?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+	
+	"https://api.particle.io/v1/devices/e00fce686522d2441e1f693f/HumidityL?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+	
+	"https://api.particle.io/v1/devices/e00fce686522d2441e1f693f/HumidityT?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+
+
+
+	"https://api.particle.io/v1/devices/e00fce68b1b49ccf2e314c17/tempC?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+	
+	"https://api.particle.io/v1/devices/e00fce68b1b49ccf2e314c17/tempF?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+	
+	"https://api.particle.io/v1/devices/e00fce68b1b49ccf2e314c17/HumidityL?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+	
+	"https://api.particle.io/v1/devices/e00fce68b1b49ccf2e314c17/HumidityT?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3"
+]
+*/
+
 
 
 //Function that will make GET requests to grab data
@@ -93,7 +129,7 @@ function get_requests(token, deviceID, host, temp){
 	});//End of https.request
 
 
-	request.on('error' (err) => {
+	request.on('error', (err) => {
 		console.log("request.on('error) called");
 		console.log(err);
 	});
@@ -114,4 +150,3 @@ exports.loop_through_devices = function() {
 	}
 	return console.log("Finished making all requests");
 }
-

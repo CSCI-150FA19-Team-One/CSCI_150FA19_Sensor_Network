@@ -13,7 +13,6 @@ const userRoutes = require('./routes/api_interface/api_users.js');
 const settings = require('./config.json');
 
 
-
 app.use('/', routes);
 app.use('/user', userRoutes);
 
@@ -44,8 +43,8 @@ db.on('open', () => {
 
 
 
-
 setInterval(fetch.loop_through_devices, 180000);
+
 
 
 
