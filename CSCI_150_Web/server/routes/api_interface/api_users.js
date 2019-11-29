@@ -64,7 +64,7 @@ router.post('/login', jsonParser,  (req, res) => {
 				const token = jwt.sign(
 					{username: docs.username}, 
 					SecretKey,
-					{expiresIn: "120h"},
+					{expiresIn: "120hr"},
 					);
 
 				//place token into the database

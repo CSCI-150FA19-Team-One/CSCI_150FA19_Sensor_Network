@@ -26,6 +26,7 @@ router.get('/find', authCheck, (req, res) => {
 		name: req.query.sensor
 	}
 	//Query database to find doc matching parameters
+<<<<<<< HEAD
 	database_data.find(query, (err, docs) => {
 		if(err){
 			res.sendStatus(500);
@@ -52,11 +53,14 @@ router.get('/find/:year', authCheck, (req, res) => {
 	}
 
 
+=======
+>>>>>>> 2e38c9ad10f1a339ed4897aa95591177fd0e129b
 	database_data.findOne(query, (err, docs) => {
 		if(err){
 			res.sendStatus(500);
 			return;
 		}
+<<<<<<< HEAD
 		res.json(docs);	
 	});
 });
@@ -112,11 +116,12 @@ router.get('/find/:year/:month/:day', authCheck, (req, res) => {
 
 	res.json(docs.results.month[month_number].day[day_number]);	
 
+=======
+			res.json(docs);
+>>>>>>> 2e38c9ad10f1a339ed4897aa95591177fd0e129b
 	});
 
 });
-
-
 
 module.exports = router;
 

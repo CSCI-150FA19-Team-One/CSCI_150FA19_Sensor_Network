@@ -13,9 +13,14 @@ const userRoutes = require('./routes/api_interface/api_users.js');
 const settings = require('./config.json');
 
 
+<<<<<<< HEAD
 app.use('/', routes);
 app.use('/user', userRoutes);
 
+=======
+
+app.use('/', routes)
+>>>>>>> 2e38c9ad10f1a339ed4897aa95591177fd0e129b
 
 
 
@@ -45,6 +50,10 @@ db.on('open', () => {
 
 setInterval(fetch.loop_through_devices, 180000);
 
+<<<<<<< HEAD
+=======
+setInterval(fetch.loop_through_devices, 30000);
+>>>>>>> 2e38c9ad10f1a339ed4897aa95591177fd0e129b
 
 
 
@@ -60,4 +69,47 @@ app.listen(3000, () => {
 
 
 
+<<<<<<< HEAD
+=======
+/*
+
+//3rd party modules
+const express = require('express');
+const app = express();
+
+//Local modules
+const routes = require('./routes');
+const grab_data = require('./data_fetch.js');
+
+
+// The port which the web server will start on
+const port = 3000;
+
+
+// Connects all routes to the app
+// Anything that visits '/' URI gets sent to the routers defined in 
+// routes directory
+app.use('/', routes);
+
+
+//Timer event, makes requests to all the sensor devices that
+//are found in config.json
+setInterval(grab_data.loop_through_devices, 10000);
+
+
+
+//Starts the server on specified port
+app.listen(port, () => {
+	console.log(`Express server started on port: ${port}` );
+});
+
+
+
+
+
+
+
+
+*/
+>>>>>>> 2e38c9ad10f1a339ed4897aa95591177fd0e129b
 
