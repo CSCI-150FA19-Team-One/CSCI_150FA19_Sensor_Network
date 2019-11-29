@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -130,6 +131,23 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 */
 
+//Collects auth token
+class auth
+{
+  final String token;
+  final String message;
+
+  auth._({this.token, this.message});
+
+  factory auth.fromJson(Map<String, dynamic> json)
+  {
+    return new auth._(
+      token: json['token'],
+      message: json['token'],
+    );
+  }
+}
+
 //Collects Sensor Data
 class Data
 {
@@ -189,10 +207,17 @@ class query {
   String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT"
 }//END QUERY CLASS
 
+
+//Creates the authorization path
+String makeAuth()
+{
+  return 'http://108.211.45.253:60005/user/register';
+}
+
 //Creates the dynamic http path for the data of a specific day (current day only right now)
 String makePath()
 {
-//Build Year, Month, Day Variables. If null, fill the variables
+  //Build Year, Month, Day Variables. If null, fill the variables
   if(q.year != null)
   {
     q.y = q.year.toString();
@@ -254,6 +279,26 @@ String makePath()
   return buildPath;
 }//END MAKEPATH
 
+Future<auth> postRequest() async
+{
+  //Create Request
+  var response = await
+  http.post(makeAuth(),
+    //Create Body Login Info
+    body: { 'username': 'test', 'password': '1234', }
+  );
+  print(response.body); //Check console for response Sent
+  print(response.statusCode); //If status is 500: "Internal Server Error"
+
+  if (response.statusCode == 200)
+  {
+    return auth.fromJson(json.decode(response.body));
+  }
+  else
+  {
+    throw Exception('Failed to Download Data');
+  }
+}
 
 /*
 Future<DataResults> fetchResults() async
@@ -296,6 +341,7 @@ Future<DataResults> fetchResults() async
     String tempStr;
     String path = makePath();
     List<DataResults> list = List();
+
     var isLoading = false;
 
       _fetchRequest() async {
@@ -304,7 +350,8 @@ Future<DataResults> fetchResults() async
         });
         final response =
         await http.get(path);
-        if (response.statusCode == 200) {
+        if (response.statusCode == 200)
+        {
           list = (json.decode(response.body) as List)
             .map((data) => new DataResults.fromJson(data))
             .toList();
@@ -323,16 +370,8 @@ Future<DataResults> fetchResults() async
           }
       }//End fetchRequest
 
-    //http fetch function stuff
-    /*Future<DataResults> results;
-    @override
-    void initState()
-    {
-      super.initState();
-      results = fetchResults();
-    }*/
-
-    @override
+    //DISPLAY DATA WHEN AUTH IS FULFILLED
+    /*@override
     Widget build(BuildContext context)
     {
       return MaterialApp(
@@ -407,6 +446,46 @@ Future<DataResults> fetchResults() async
             ]
             ),*/
           );
+    }*/
+
+
+    //USE THIS CODE BELOW TO TEST AUTH
+    //http post function stuff
+    Future<auth> results;
+    @override
+    void initState()
+    {
+      super.initState();
+      results = postRequest();
+    }
+
+    @override
+    Widget build(BuildContext context) {
+      return MaterialApp(
+        title: 'Fetch Data Example',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('Fetch Data Example'),
+          ),
+          body: Center(
+            child: FutureBuilder<auth>(
+              future: results,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Text(snapshot.data.token);
+                }
+                print("DidIMakeItHereTest?");
+
+                // By default, show a loading spinner.
+                return CircularProgressIndicator();
+              },
+            ),
+          ),
+        ),
+      );
     }
   } //end routeHome class
 
