@@ -73,7 +73,6 @@ function get_requests(token, deviceID, host, temp){
 				console.log("error: " + err);
 			});
 
-<<<<<<< HEAD
 
 			//All data has been grabbed from the response, store in DB
 			res.on('end', () =>{
@@ -124,36 +123,7 @@ function get_requests(token, deviceID, host, temp){
 
 				console.log('End of get Request!');
 			});//End of res.on('end')
-=======
-		//All data has been grabbed from the response, store in DB
-		res.on('end', () =>{
-			var data = JSON.parse(response_data);	//turn data in JSON
-			
-			filter = {
-				deviceID: data.coreInfo.deviceID,
-				name: data.name
-			}
-
-
-			// Looks for a doc matching filter properties. If none found,
-			// Inserts a doc with filter and push properties.
-			// Otherwise just updates the results array of the doc, adding 
-			// Another element to it.
-			database_data.findOneAndUpdate(filter, {"$push": { "results": data.result}} 
-				, {upsert: true, new: true},(err, docs) => {
-				if(err){
-					console.log("Could not find or update the document");
-				}
-				/*
-				else{
-					console.log(docs)
-				}
-				*/
-			});
->>>>>>> 2e38c9ad10f1a339ed4897aa95591177fd0e129b
-
-			//request.end();
-		}
+		}// if statement
 	});//End of https.request
 
 
