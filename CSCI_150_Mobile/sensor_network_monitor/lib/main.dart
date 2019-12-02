@@ -8,9 +8,9 @@ import 'package:http/http.dart' as http;
 query q = new query();
 
 //runs the program
-void main() => runApp(MyApp());
+void main() => runApp(MyApp(
 
-class MyHomePage extends StatefulWidget {
+/*class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -20,7 +20,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 //Unused, Demo class
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePag
   int _counter = 0;
 
   void _incrementCounter() {
@@ -249,7 +249,7 @@ Future<DataResults> fetchResults() async
 //routeHome that provides http fetch functionality as well as bottom navigation
   class _MyAppState extends State<MyApp>
 
-class MyLogoWidget extends StatelessWidget {
+/*class MyLogoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   var assetsImage = new AssetImage('assets/2.0x/logo.png');
@@ -260,7 +260,7 @@ class MyLogoWidget extends StatelessWidget {
   }
 
 
-  class routeHome extends StatelessWidget
+  /*class routeHome extends StatelessWidget
   {
 
     //bottom navigation variables
