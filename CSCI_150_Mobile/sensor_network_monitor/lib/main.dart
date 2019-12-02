@@ -10,6 +10,10 @@ query q = new query();
 //runs the program
 void main() => runApp(MyApp());
 
+
+    //primaryColor: Colors.grey,
+    //accentColor: Colors.black
+
 class MyApp extends StatelessWidget {
   static const String _title = 'Sensor Node';
   @override
@@ -19,12 +23,81 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-
-      home: MyStatefulWidget(),
+      debugShowCheckedModeBanner: false,
+      home: SplashScreenOne(),
+      //home: MyStatefulWidget(),
     );
   }
 }
 
+class SplashScreenOne extends StatefulWidget {
+
+  @override
+  _SplashScreenOneState createState() => _SplashScreenOneState();
+
+}
+
+class _SplashScreenOneState extends State<SplashScreenOne> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 3),() {
+      Navigator.push(
+        context,
+          MaterialPageRoute(
+            builder: (context) => MyStatefulWidget(),
+
+          ));
+
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              gradient: LinearGradient(
+                  colors: [Colors.grey, Colors.black],
+                  begin: Alignment.centerRight,
+                  end: new Alignment(-1.0, -1.0)
+              ),
+            ),
+          ),
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 75.0,
+                child: Icon(
+                  Icons.polymer,
+                  color: Colors.black,
+                  size: 50.0,
+                ),
+
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 10.0),
+              ),
+              Text(
+                'Sensor Node',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24.0
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
 class MyStatefulWidget extends StatefulWidget {
   MyStatefulWidget({Key key}) : super(key: key);
 
