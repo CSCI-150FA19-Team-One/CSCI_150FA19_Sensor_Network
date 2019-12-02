@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/build/app/intermediates/flutter/debug/libs.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
