@@ -4,6 +4,7 @@ const upload_route = require('./data_uploads.js');
 
 //Anything that visits the upload URI gets sent the route from data_upload.js
 router.use('/data_upload', upload_route);
+//router.use('/api', api_routes);
 
 
 //A basic routing page

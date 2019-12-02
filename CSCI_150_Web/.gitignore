@@ -1,6 +1,6 @@
 # Ignoring package-lock.json files
-./server/package-lock.json
-./server/package.json
+/server/package-lock.json
+/server/package.json
 
 #Ignoring todo list txt file
 todo.txt
@@ -8,4 +8,6 @@ todo.txt
 
 #ignoring a coule of local js files
 fetch.js
-./server/temp_files/data_50ff6f065067545626430587.json
+/server/temp_files/*
+
+request_class.js

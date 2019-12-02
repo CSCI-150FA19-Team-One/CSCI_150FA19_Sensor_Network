@@ -1,6 +1,7 @@
 {
 	"host": "api.particle.io",
-	"device_ID": ["50ff6f065067545626430587"],
+	"device_ID": ["e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17" ],
 	"token": "895043e69c01b80b464cdd995e913efa4b25c3a3",
-	"mongoDB_path": "mongodb://127.0.0.1:27017"
+	"mongoDB_path": "mongodb://127.0.0.1:27017",
+	"sensor": ["tempC", "tempF", "HumidityL", "HumidityT"]
 }

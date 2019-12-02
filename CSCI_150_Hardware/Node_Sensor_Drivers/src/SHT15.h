@@ -1,5 +1,6 @@
 
 #include "Particle.h"
+#include "math.h"
 // SHT15 sensor file
 
 class SHT15 {
@@ -7,7 +8,8 @@ public:
   SHT15(int dataPin, int clockPin);
   double getTemperatureF();
   double getTemperatureC();
-  //double getHumidity();
+  double getHumidityLinear();
+  double getHumidityTrue();
   //void cloudRegister();
   void Tick();
 
@@ -22,6 +24,8 @@ private:
   uint16_t _rawDataH;
   double _tempuratureF;
   double _tempuratureC;
+  double _humdityLinear;
+  double _humdityTrue;
   uint8_t _getTempCmd = 0b00000011;
   uint8_t _getHumidityCmd = 0b00000101;
   void _readDataRaw(bool sensor);
