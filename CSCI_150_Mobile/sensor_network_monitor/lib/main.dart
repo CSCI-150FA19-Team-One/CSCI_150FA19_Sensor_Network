@@ -1,9 +1,9 @@
 //import 'package:sensor_network_monitor/widgets_test.dart';
-import 'package:flutter/material.dart';
+//import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+/*void main() => runApp(MyApp());
 
-class MyHomePage extends StatefulWidget {
+/*class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -12,7 +12,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+/*class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class MyLogoWidget extends StatelessWidget {
+/*class MyLogoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   var assetsImage = new AssetImage('assets/2.0x/logo.png');
@@ -50,7 +50,7 @@ class MyLogoWidget extends StatelessWidget {
   }
 
 
-  class routeHome extends StatelessWidget
+  /*class routeHome extends StatelessWidget
   {
     int _currentIndex = 0;
     final List<Widget> _children = [];
