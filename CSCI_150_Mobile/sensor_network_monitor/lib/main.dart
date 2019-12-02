@@ -10,6 +10,117 @@ query q = new query();
 //runs the program
 void main() => runApp(MyApp(
 
+class MyApp extends StatelessWidget {
+static const String _title = 'Sensor Node';
+
+@override
+Widget build(BuildContext context) {
+return MaterialApp(
+title: _title,
+theme: ThemeData(
+primarySwatch: Colors.blueGrey,
+),
+
+home: MyStatefulWidget(),
+);
+}
+}
+
+class MyStatefulWidget extends StatefulWidget {
+MyStatefulWidget({Key key}) : super(key: key);
+
+@override
+_MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+
+//@override
+//Widget build(BuildContext context) {
+//return Scaffold(
+//appBar: AppBar(
+// title: Text(widget.title),
+//),
+//body: new Center(
+//child: new MyLogoWidget(),
+//)
+//), // This trailing comma makes auto-formatting nicer for build methods.
+// );
+//}
+//}
+
+int _currentIndex = 0;
+static const TextStyle optionStyle = TextStyle(
+fontSize: 30, fontWeight: FontWeight.bold);
+static const List<Widget> _widgetOptions = <Widget>[
+Text(
+'Welcome',
+style: optionStyle,
+),
+Text(
+'Temperature',
+style: optionStyle,
+),
+Text(
+'Humidity',
+style: optionStyle,
+),
+Text(
+'Ground Moisture',
+style: optionStyle,
+),
+];
+
+void _onItemTapped(int index) {
+setState(() {
+_currentIndex = index;
+});
+}
+
+@override
+Widget build(BuildContext context) {
+return Scaffold(
+appBar: AppBar(
+title: const Text('Sensor Node'),
+),
+body: Center(
+child: _widgetOptions.elementAt(_currentIndex),
+),
+bottomNavigationBar: BottomNavigationBar(
+
+//},
+items: const <BottomNavigationBarItem>[
+BottomNavigationBarItem(
+icon: Icon(Icons.home),
+title: Text('Home'), // First Button
+),
+BottomNavigationBarItem(
+icon: Icon(Icons.cloud_queue), //Second Button
+title: Text('Temperature'),
+),
+BottomNavigationBarItem(
+icon: Icon(Icons.invert_colors), // Third Button
+title: Text('Humidity'),
+),
+BottomNavigationBarItem(
+icon: Icon(Icons.local_florist), // Fourth Button
+title: Text('Ground Moisture'),
+),
+],
+currentIndex: _currentIndex,
+//backgroundColor: Colors.grey[800],
+unselectedItemColor: Colors.red[800],
+selectedItemColor: Colors.blueGrey[800],
+onTap: _onItemTapped,
+),
+
+);
+}
+}
+
+
+
+
 /*class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
