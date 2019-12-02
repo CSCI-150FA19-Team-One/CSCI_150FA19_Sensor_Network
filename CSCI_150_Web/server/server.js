@@ -3,21 +3,28 @@ const express = require('express');
 const app =  express();
 const mongoose = require('mongoose');
 const database_data = require('./models/data.models.js');
+const bodyParser = require('body-parser');
 
 
 //Local modules
 const fetch = require('./data_fetch.js');
 const routes = require('./routes/api_interface/api.js');
+const userRoutes = require('./routes/api_interface/api_users.js');
 const settings = require('./config.json');
 
 
-
 app.use('/', routes);
+app.use('/user', userRoutes);
+
+
+app.use('/', routes)
 
 
 
 
 /*********** MONGOSE CONNECCTION **********************/
+//"mongodb://127.0.0.1:27017"
+//"mongodb+srv://admin:password1234@nodesensor-jdaif.azure.mongodb.net/test?retryWrites=true&w=majority"
 
 //Connect to MongoDB
 mongoose.connect(settings.mongoDB_path, {useNewUrlParser: false,useUnifiedTopology: true});
@@ -38,8 +45,9 @@ db.on('open', () => {
 
 
 
+setInterval(fetch.loop_through_devices, 180000);
 
-setInterval(fetch.loop_through_devices, 10000);
+
 
 
 
@@ -51,6 +59,4 @@ app.listen(3000, () => {
 
 
 /********* WEB SERVER ********************************/
-
-
 
