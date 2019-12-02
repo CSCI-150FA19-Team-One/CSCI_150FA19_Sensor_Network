@@ -20,8 +20,8 @@ const data_schema = new Schema({
 				deviceID: 
 					{
 						type: String, 
-						required: true,
-						enum: [settings.device_ID[0]]
+						required: true
+						//enum: [settings.device_ID[0]]
 					},
 				product_id: Number
 			}
