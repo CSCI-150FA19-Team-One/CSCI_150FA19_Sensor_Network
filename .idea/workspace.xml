@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c1997c6c-a97d-4728-9229-1175e0448147" name="Default Changelist" comment="">
+    <list default="true" id="c1997c6c-a97d-4728-9229-1175e0448147" name="Default Changelist" comment="added splash screen/ with splash screen file">
       <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/splash_screen_one.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -22,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="44" column="38" selection-start-line="44" selection-start-column="38" selection-end-line="44" selection-end-column="38" />
+            <state relative-caret-position="119">
+              <caret line="7" column="19" lean-forward="true" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -34,11 +33,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/splash_screen_one.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="56" column="7" selection-start-line="56" selection-start-column="7" selection-end-line="56" selection-end-column="7" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="136">
+              <caret line="8" column="23" lean-forward="true" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -161,7 +157,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575264660891</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added splash screen">
+      <created>1575271718632</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1575271718634</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView">
@@ -187,13 +190,14 @@
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Favorites" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Find" />
+      <window_info active="true" anchor="bottom" id="Messages" sideWeight="0.4976526" visible="true" weight="0.32980132" />
       <window_info anchor="bottom" id="Dart Analysis" order="0" sideWeight="0.49921754" weight="0.32980132" />
-      <window_info active="true" anchor="bottom" id="Run" order="1" sideWeight="0.4945227" visible="true" weight="0.32980132" />
+      <window_info anchor="bottom" id="Run" order="1" sideWeight="0.49295774" weight="0.32980132" />
       <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.49921754" weight="0.32980132" />
       <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Debug" order="4" />
       <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49921754" weight="0.32980132" />
-      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.5054773" side_tool="true" visible="true" weight="0.32980132" />
+      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.5023474" side_tool="true" visible="true" weight="0.32980132" />
       <window_info anchor="bottom" id="Flutter Performance" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4976526" weight="0.32980132" />
       <window_info anchor="bottom" id="Logcat" order="9" />
@@ -209,7 +213,19 @@
     <MESSAGE value="added nav bar" />
     <MESSAGE value="deleted/ fixed a minor issue" />
     <MESSAGE value="color change" />
-    <option name="LAST_COMMIT_MESSAGE" value="color change" />
+    <MESSAGE value="added splash screen" />
+    <MESSAGE value="added splash screen/ with splash screen file" />
+    <option name="LAST_COMMIT_MESSAGE" value="added splash screen/ with splash screen file" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/splash_screen_one.dart</url>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.lock">
@@ -224,18 +240,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/splash_screen_one.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="56" column="7" selection-start-line="56" selection-start-column="7" selection-end-line="56" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="136">
+          <caret line="8" column="23" lean-forward="true" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="44" column="38" selection-start-line="44" selection-start-column="38" selection-end-line="44" selection-end-column="38" />
+        <state relative-caret-position="119">
+          <caret line="7" column="19" lean-forward="true" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>

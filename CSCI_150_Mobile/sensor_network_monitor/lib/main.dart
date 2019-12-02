@@ -3,6 +3,7 @@ import 'dart:convert';
 //import 'package:sensor_network_monitor/widgets_test.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+//import 'splash_screen_one.dart';
 
 //Create global query class variable q
 query q = new query();
