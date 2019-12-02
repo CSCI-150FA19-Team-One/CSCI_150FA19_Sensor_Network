@@ -4,49 +4,115 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-//Create global query class variable q
 query q = new query();
 
-//runs the program
-void main() => runApp(MyApp(
+void main() => runApp(MyApp());
 
-/*class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+/// This Widget is the main application widget.
+class MyApp extends StatelessWidget {
+  static const String _title = 'Sensor Node';
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: _title,
+
+      home: MyStatefulWidget(),
+    );
+  }
 }
 
-//Unused, Demo class
-class _MyHomePageState extends State<MyHomePag
-  int _counter = 0;
+class MyStatefulWidget extends StatefulWidget {
+  MyStatefulWidget({Key key}) : super(key: key);
 
-  void _incrementCounter() {
+  @override
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+
+  //@override
+  //Widget build(BuildContext context) {
+  //return Scaffold(
+  //appBar: AppBar(
+  // title: Text(widget.title),
+  //),
+  //body: new Center(
+  //child: new MyLogoWidget(),
+  //)
+  //), // This trailing comma makes auto-formatting nicer for build methods.
+  // );
+  //}
+//}
+
+  int _currentIndex = 0;
+  static const TextStyle optionStyle = TextStyle(
+      fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Welcome',
+      style: optionStyle,
+    ),
+    Text(
+      'Temperature',
+      style: optionStyle,
+    ),
+    Text(
+      'Humidity',
+      style: optionStyle,
+    ),
+    Text(
+      'Ground Moisture',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
     setState(() {
-      _counter++;
+      _currentIndex = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('Sensor Node'),
       ),
-      body: new Center(
-        child: new MyLogoWidget(),
-      )
+      body: Center(
+        child: _widgetOptions.elementAt(_currentIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
 
-      //floatingActionButton: FloatingActionButton(
-       // onPressed: _incrementCounter,
-        //tooltip: 'Increment',
-        //child: Icon(Icons.add),
-      //), // This trailing comma makes auto-formatting nicer for build methods.
+        //},
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home'), // First Button
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.cloud_queue), //Second Button
+            title: Text('Temperature'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.invert_colors), // Third Button
+            title: Text('Humidity'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.local_florist), // Fourth Button
+            title: Text('Ground Moisture'),
+          ),
+        ],
+        currentIndex: _currentIndex,
+        //backgroundColor: Colors.grey[800],
+        unselectedItemColor: Colors.red[800],
+        selectedItemColor: Colors.blueGrey[800],
+        onTap: _onItemTapped,
+      ),
+
     );
   }
 }
-*/
 
 //Collects auth token
 class auth
@@ -247,222 +313,4 @@ Future<DataResults> fetchResults() async
 }//END FETCHRESULTS CLASS*/
 
 //routeHome that provides http fetch functionality as well as bottom navigation
-  class _MyAppState extends State<MyApp>
-
-/*class MyLogoWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-  var assetsImage = new AssetImage('assets/2.0x/logo.png');
-  var image = new Image(image: assetsImage, width:48.0, height: 48.0);
-  return new Container(child: image);
-
-  }
-  }
-
-
-  /*class routeHome extends StatelessWidget
-  {
-
-    //bottom navigation variables
-    //int _currentIndex = 0;
-    //final List<Widget> _children = [];
-
-    double temp;
-    String tempStr;
-    String path = makePath();
-    List<DataResults> list = List();
-
-    var isLoading = false;
-
-      _fetchRequest() async {
-        setState(() {
-          isLoading = true;
-        });
-        final response =
-        await http.get(path);
-        if (response.statusCode == 200)
-        {
-          list = (json.decode(response.body) as List)
-            .map((data) => new DataResults.fromJson(data))
-            .toList();
-
-          setState(()
-          {
-            isLoading = false;
-          });
-        } else {
-          throw Exception('Failed to Download Data');
-        }
-        for (int i = 0; i < list.length; i++)
-          {
-             temp = list[i].value;
-            list[i].valueStr = temp.toString();
-          }
-      }//End fetchRequest
-
-    //DISPLAY DATA WHEN AUTH IS FULFILLED
-    /*@override
-    Widget build(BuildContext context)
-    {
-      return MaterialApp(
-        title: 'Sensors',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Scaffold(
-          appBar: AppBar(
-              title: Text('Sensor Home Page'),
-            ),
-
-            bottomNavigationBar: Padding(
-            padding: const EdgeInsets.all(8.0),
-                child: RaisedButton(
-                  child: new Text("Fetch Data"),
-                  onPressed: _fetchRequest,
-                ),
-              ),
-
-            body: isLoading
-                ? Center(
-              child: CircularProgressIndicator(),
-            )
-                : ListView.builder(
-                itemCount: list.length,
-                itemBuilder: (BuildContext context, int index)
-                {
-                  tempStr = 'Time: ' + list[index].gatheredAt;
-                  return ListTile(
-                    contentPadding: EdgeInsets.all(10.0),
-                    title: new Text(tempStr),
-                    trailing: new Text(
-                      list[index].valueStr,
-                    ),
-                  );
-                }
-                ),
-        )
-          //body: _children[_currentIndex],
-          /*body: Center( //Create the fetch Request
-            child: FutureBuilder<DataResults>(
-              future: results,
-              builder: (context, snapshot)
-              {
-                if (snapshot.hasData)
-                {
-                  print('TEST');
-                  return Text(snapshot.data.value); //Why won't it let me post data twice???
-                }
-                else if (snapshot.hasError)
-                {
-                  return Text("${snapshot.error}");
-                }
-
-                return CircularProgressIndicator(); //Defaults to a circular loading indicator
-              },
-            ),
-          ),
-          bottomNavigationBar: BottomNavigationBar( //Creates Navigation Bar
-            //onTap: onTabTapped,
-            currentIndex: 0,
-            items: [
-              BottomNavigationBarItem( //Navigation Bar 1
-                icon: new Icon(Icons.home),
-                title: new Text('Home'),
-              ),
-              BottomNavigationBarItem( //Navigation Bar 2
-                icon: new Icon(Icons.settings),
-                title: new Text('Settings'),
-              )
-            ]
-            ),*/
-          );
-    }*/
-
-
-    //USE THIS CODE BELOW TO TEST AUTH
-    //http post function stuff
-    Future<auth> results;
-    @override
-    void initState()
-    {
-      super.initState();
-      results = postRequest();
-    }
-
-    @override
-    Widget build(BuildContext context) {
-      return MaterialApp(
-        title: 'Fetch Data Example',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('Fetch Data Example'),
-          ),
-          body: Center(
-            child: FutureBuilder<auth>(
-              future: results,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Text(snapshot.data.token);
-                }
-                print("DidIMakeItHereTest?");
-
-                // By default, show a loading spinner.
-                return CircularProgressIndicator();
-              },
-            ),
-          ),
-        ),
-      );
-    }
-  } //end routeHome class
-
-
-
-/*
-  class PlaceholderWidget extents StatelessWidget
-  {
-    final Color color;
-
-    PlaceholderWidget(this.color);
-
-    @override
-    Widget build(BuildContext context)
-    {
-      return Container(
-        color: color,
-      );
-    }
-  }
-  void onTabTapped(int index)
-  {
-    setState(()
-    {
-      _currentIndex = index;
-    });
-  }
-*/
-  /* PREVIOUS ROUTE CODE - POSSIBLY DELETE???
-  class routeTest2 extends StatelessWidget
-  {
-    @override
-    Widget build(BuildContext context)
-    {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text("Next Route"),
-        ),
-        body: Center(
-          child: RaisedButton(
-            onPressed: () {
-              //NAVIGATION BACK
-              Navigator.pop(context);
-            },
-          child: Text('Goin Back?'),
-            ),
-          ),
-        );
-    }
-  }*/
+ // class _MyAppState extends State<MyApp>
