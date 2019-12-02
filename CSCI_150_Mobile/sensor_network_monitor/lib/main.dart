@@ -79,36 +79,42 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         title: const Text('Sensor Node'),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_currentIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        //backgroundColor: Colors.blue,
 
         //},
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+            backgroundColor: Colors.blueGrey,
             icon: Icon(Icons.home),
             title: Text('Home'), // First Button
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.blueGrey,
             icon: Icon(Icons.cloud_queue), //Second Button
             title: Text('Temperature'),
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.blueGrey,
             icon: Icon(Icons.invert_colors), // Third Button
             title: Text('Humidity'),
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.blueGrey,
             icon: Icon(Icons.local_florist), // Fourth Button
             title: Text('Ground Moisture'),
           ),
         ],
         currentIndex: _currentIndex,
-        //backgroundColor: Colors.grey[800],
-        unselectedItemColor: Colors.red[800],
-        selectedItemColor: Colors.blueGrey[800],
+        //backgroundColor: Colors.blue[800],
+        unselectedItemColor: Colors.lightBlue,
+        selectedItemColor: Colors.white,
         onTap: _onItemTapped,
       ),
 
