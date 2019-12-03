@@ -11,10 +11,6 @@ query q = new query();
 //runs the program
 void main() => runApp(MyApp());
 
-
-    //primaryColor: Colors.grey,
-    //accentColor: Colors.black
-
 class MyApp extends StatelessWidget {
   static const String _title = 'Sensor Node';
   @override
@@ -108,19 +104,19 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
-//@override
-//Widget build(BuildContext context) {
-//return Scaffold(
-//appBar: AppBar(
-// title: Text(widget.title),
-//),
-//body: new Center(
-//child: new MyLogoWidget(),
-//)
-//), // This trailing comma makes auto-formatting nicer for build methods.
-// );
-//}
-//}
+  //Create asynchronous auth and authreg variables
+  Future<authReg> authreg;
+  Future<Auth> auth;
+
+  //Create initial state for the authreg and reg variables
+  @override
+  void initState()
+  {
+    super.initState();
+    authreg = regRequest();
+    auth = loginRequest();
+  }
+
   int _currentIndex = 0;
   static const TextStyle optionStyle = TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold);
@@ -196,46 +192,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   }
 }
 
-
-
-/*class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-//Unused, Demo class
-class _MyHomePageState extends State<MyHomePag
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: new Center(
-        child: new MyLogoWidget(),
-      )
-
-      //floatingActionButton: FloatingActionButton(
-       // onPressed: _incrementCounter,
-        //tooltip: 'Increment',
-        //child: Icon(Icons.add),
-      //), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
-*/
-
 //Collects auth token Registration information
 class authReg
 {
@@ -255,22 +211,23 @@ class authReg
       message: json['message'],
     );
   }
-}
-class auth
+}//END AuthReg CLASS
+
+class Auth
 {
   final String token;
   final String message;
 
-  auth._({this.token, this.message});
+  Auth._({this.token, this.message});
 
-  factory auth.fromJson(Map<String, dynamic> json)
+  factory Auth.fromJson(Map<String, dynamic> json)
   {
-    return new auth._(
+    return new Auth._(
       token: json['token'],
       message: json['token'],
     );
   }
-}
+}//END Auth CLASS
 
 //Collects Sensor Data
 class Data
@@ -420,7 +377,7 @@ Future<authReg> regRequest() async
 }
 
 //Asynchronous post request to receive a token from the server
-Future<auth> loginRequest() async
+Future<Auth> loginRequest() async
 {
   //Create Request
   var response = await
@@ -433,7 +390,7 @@ Future<auth> loginRequest() async
 
   if (response.statusCode == 200)
   {
-    return auth.fromJson(json.decode(response.body));
+    return Auth.fromJson(json.decode(response.body));
   }
   else
   {
@@ -447,36 +404,8 @@ String regURL()
   return 'http://108.211.45.253:60005/user/register';
 }
 
+//Creates the login path for the token
 String loginURL()
 {
   return 'http://108.211.45.253:60005/user/login';
 }
-
-/*
-Future<DataResults> fetchResults() async
-{
-  //Collects Current Day Info
-  int y = new DateTime.now().year;
-  String year = y.toString();
-  int m = new DateTime.now().month;
-  String month = m.toString();
-  int d = new DateTime.now().day;
-  String day = d.toString();
-
-  //Collects specific day result info
-  String path= 'http://108.211.45.253:60005/find/'+ year +'/'+ month +'/'+ day + '?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF';
-  print(path);
-  final responseResults = await http.get(path);
-
-  //Checks to see if the server sent an "OK" response
-  if(responseResults.statusCode == 200)
-  {
-    //Data.results
-    return DataResults.fromJson(json.decode(responseResults.body));
-  }
-  //Throws an exception if the server did NOT send an "OK" response
-  else
-  {
-    throw Exception('Failed to Download Data');
-  }
-}//END FETCHRESULTS CLASS*/
