@@ -1,45 +1,41 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+// import PropTypes from "prop-types";
 
 class GetData extends Component {
-  var m = 11;
-  var d = 18;
-  var grabData = "";
+  render() {
+    var m = 11;
+    var d = 18;
+    var grabData = "";
 
-  setDest = () => {
+    const https = require("http");
+
     const dest = {
       hostname: "108.211.45.253",
       port: 60005,
       path: "/find/2019/" + m + "/" + d + "?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF",
       method: "Get"
     };
-  }
 
-  render() { 
-    const req = https.request(options, res => {
+    const req = https.request(dest, res => {
       console.log(`statusCode: ${res.statusCode}`);
-    
+
       res.on("data", d => {
-        getTime += d;
+        grabData += d;
+        console.log(grabData)
       });
     });
-    
+
     req.on("error", error => {
       console.error(error);
     });
-    
+
     req.end();
 
-    return ( 
-      console.log(getTime)
-    );
+  return <div>{console.log(this.props.grabData)}</div>;
   }
 }
- 
+
 export default GetData;
-
-
-
 
 // const dest = {
 //   hostname: "108.211.45.253",
@@ -54,9 +50,9 @@ export default GetData;
 //   console.log(`statusCode: ${res.statusCode}`);
 
 //   res.on("data", d => {
-//     getTime += d;
-//     console.log(getTime);
-//     console.log(typeof getTime);
+//     grabData += d;
+//     console.log(grabData);
+//     console.log(typeof grabData);
 //   });
 // });
 

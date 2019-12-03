@@ -1,11 +1,13 @@
-// import React from 'react';
-import React, { Component } from "react";
-import { render } from "react-dom";
+import React from 'react';
+// import React, { Component } from "react";
+// import { render } from "react-dom";
 import Clock from "react-live-clock";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Tabs from "./tabs.js";
 import GetData from "./gethttp.js";
+import NavBar from "./navbar.js"
 
 require("./App.css");
 
@@ -19,6 +21,7 @@ require("./App.css");
 function App() {
   return (
     <div>
+          <NavBar></NavBar>
       <h1>Home</h1>
       <h3>
         <Clock
