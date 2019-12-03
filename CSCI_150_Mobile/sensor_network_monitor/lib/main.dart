@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 //import 'splash_screen_one.dart';
+//import 'package:intl/intl.dart';
 
 //Create global query class variable q
 query q = new query();
@@ -73,12 +74,12 @@ class _SplashScreenOneState extends State<SplashScreenOne> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 75.0,
+                backgroundColor: Colors.black54,
+                radius: 100.0,
                 child: Icon(
                   Icons.polymer,
-                  color: Colors.black,
-                  size: 50.0,
+                  color: Colors.white,
+                  size: 100.0,
                 ),
 
               ),
@@ -89,7 +90,7 @@ class _SplashScreenOneState extends State<SplashScreenOne> {
                 'Sensor Node',
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24.0
+                    fontSize: 38.0
                 ),
               ),
             ],
@@ -108,6 +109,7 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
+
 //@override
 //Widget build(BuildContext context) {
 //return Scaffold(
@@ -122,12 +124,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 //}
 //}
   int _currentIndex = 0;
-  static const TextStyle optionStyle = TextStyle(
+   static const TextStyle optionStyle = TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
+   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Welcome',
       style: optionStyle,
+
+
     ),
     Text(
       'Temperature',
@@ -154,13 +158,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return Scaffold(
       appBar: AppBar(
 
-        title: const Text('Sensor Node'),
+        title: new Center(child: new Text('Sensor Node', textAlign: TextAlign.center)),
+        automaticallyImplyLeading: false,
+
       ),
       body: Center(
         child: _widgetOptions.elementAt(_currentIndex),
+
+
       ),
       bottomNavigationBar: BottomNavigationBar(
-        //backgroundColor: Colors.blue,
 
         //},
         items: const <BottomNavigationBarItem>[
