@@ -48,13 +48,16 @@ router.post('/login', jsonParser,  (req, res) => {
 		username: req.body.username
 	}
 
+
 	User.findOne(filter, (err, docs) => {
-		if(err) {
+		if(err) {			
 			return res.status(422);
 		}
 
 		console.log("found matching document with match username!");
 		const hashedPW = docs.password;
+
+
 
 		//If passwords match, the result is set to True
 		bcrypt.compare(req.body.password, hashedPW, (err, result) => {
@@ -64,22 +67,28 @@ router.post('/login', jsonParser,  (req, res) => {
 				const token = jwt.sign(
 					{username: docs.username}, 
 					SecretKey,
-					{expiresIn: "120h"},
+					{expiresIn: "90 minutes"},
 					);
 
 				//place token into the database
-				User.updateOne(
-					filter,
-					{$set: {'tokens': {token: token}}},
-					(err, result) => { if (err) {return res.status(421);}});
-				
-				return res.status(200).json({token: token});
+				User.updateOne(filter, {$set: {'tokens': {token: token}}}, (err, result) => {
+						if(err){
+							console.log("There was an error inserting new token!");
+							return res.status(421).json({"error": "error updating token value"});
+						}
+						return res.status(200).json({token: token});
+					});
+			}
+			else{
+				return res.status(500).json({"error": "passwords did not match!"});
+			}
+		}); //end of bcrypt
 
-			}			
-		});
-	});
-	return res.status(500).json({"message": "Password did not match!"});
-});
+	}); //end of findOne
+
+
+});//end of post login api
+
 
 
 module.exports = router;
