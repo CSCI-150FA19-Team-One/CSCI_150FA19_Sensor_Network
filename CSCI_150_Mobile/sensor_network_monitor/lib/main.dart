@@ -236,7 +236,26 @@ class _MyHomePageState extends State<MyHomePag
 }
 */
 
-//Collects auth token
+//Collects auth token Registration information
+class authReg
+{
+  final String id;
+  final String username;
+  final String password;
+  final String message;
+
+  authReg._({this.id, this.username, this.password, this.message});
+
+  factory authReg.fromJson(Map<String, dynamic> json)
+  {
+    return new authReg._(
+      id: json['id'],
+      username: json['username'],
+      password: json['password'],
+      message: json['message'],
+    );
+  }
+}
 class auth
 {
   final String token;
@@ -313,12 +332,6 @@ class query {
 }//END QUERY CLASS
 
 
-//Creates the authorization path
-String makeAuth()
-{
-  return 'http://108.211.45.253:60005/user/register';
-}
-
 //Creates the dynamic http path for the data of a specific day (current day only right now)
 String makePath()
 {
@@ -384,13 +397,36 @@ String makePath()
   return buildPath;
 }//END MAKEPATH
 
-Future<auth> postRequest() async
+//Asynchronous approach to send a post request to the server to register the device
+Future<authReg> regRequest() async
 {
   //Create Request
   var response = await
-  http.post(makeAuth(),
+  http.post(regURL(),
     //Create Body Login Info
-    body: { 'username': 'test', 'password': '1234', }
+    body: {'username': 'user333', 'password': '1234',}
+  );
+  print(response.body); //Check console for response Sent
+  print(response.statusCode); //If status is 500: "Internal Server Error"
+
+  if (response.statusCode == 200)
+  {
+    return authReg.fromJson(json.decode(response.body));
+  }
+  else
+  {
+    throw Exception('Failed to Download Data');
+  }
+}
+
+//Asynchronous post request to receive a token from the server
+Future<auth> loginRequest() async
+{
+  //Create Request
+  var response = await
+  http.post(loginURL(),
+      //Create Body Login Info
+      body: {'username': 'user333', 'password': '1234',}
   );
   print(response.body); //Check console for response Sent
   print(response.statusCode); //If status is 500: "Internal Server Error"
@@ -403,6 +439,17 @@ Future<auth> postRequest() async
   {
     throw Exception('Failed to Download Data');
   }
+}
+
+//Creates the authorization path
+String regURL()
+{
+  return 'http://108.211.45.253:60005/user/register';
+}
+
+String loginURL()
+{
+  return 'http://108.211.45.253:60005/user/login';
 }
 
 /*
@@ -433,7 +480,3 @@ Future<DataResults> fetchResults() async
     throw Exception('Failed to Download Data');
   }
 }//END FETCHRESULTS CLASS*/
-
-//routeHome that provides http fetch functionality as well as bottom navigation
-  //class _MyAppState extends State<MyApp>
-
