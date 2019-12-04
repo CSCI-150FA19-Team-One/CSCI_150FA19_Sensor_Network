@@ -4,16 +4,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 //import 'splash_screen_one.dart';
+//import 'package:intl/intl.dart';
 
 //Create global query class variable q
 query q = new query();
 
 //runs the program
 void main() => runApp(MyApp());
-
-
-    //primaryColor: Colors.grey,
-    //accentColor: Colors.black
 
 class MyApp extends StatelessWidget {
   static const String _title = 'Sensor Node';
@@ -73,12 +70,12 @@ class _SplashScreenOneState extends State<SplashScreenOne> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 75.0,
+                backgroundColor: Colors.black54,
+                radius: 100.0,
                 child: Icon(
                   Icons.polymer,
-                  color: Colors.black,
-                  size: 50.0,
+                  color: Colors.white,
+                  size: 100.0,
                 ),
 
               ),
@@ -89,7 +86,7 @@ class _SplashScreenOneState extends State<SplashScreenOne> {
                 'Sensor Node',
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24.0
+                    fontSize: 38.0
                 ),
               ),
             ],
@@ -108,26 +105,28 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
-//@override
-//Widget build(BuildContext context) {
-//return Scaffold(
-//appBar: AppBar(
-// title: Text(widget.title),
-//),
-//body: new Center(
-//child: new MyLogoWidget(),
-//)
-//), // This trailing comma makes auto-formatting nicer for build methods.
-// );
-//}
-//}
+  //Create asynchronous auth and authreg variables
+  Future<authReg> authreg;
+  Future<Auth> auth;
+
+  //Create initial state for the authreg and reg variables
+  @override
+  void initState()
+  {
+    super.initState();
+    authreg = regRequest();
+    auth = loginRequest();
+  }
+
   int _currentIndex = 0;
-  static const TextStyle optionStyle = TextStyle(
+   static const TextStyle optionStyle = TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
+   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Welcome',
       style: optionStyle,
+
+
     ),
     Text(
       'Temperature',
@@ -154,13 +153,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return Scaffold(
       appBar: AppBar(
 
-        title: const Text('Sensor Node'),
+        title: new Center(child: new Text('Sensor Node', textAlign: TextAlign.center)),
+        automaticallyImplyLeading: false,
+
       ),
       body: Center(
         child: _widgetOptions.elementAt(_currentIndex),
+
+
       ),
       bottomNavigationBar: BottomNavigationBar(
-        //backgroundColor: Colors.blue,
 
         //},
         items: const <BottomNavigationBarItem>[
@@ -196,62 +198,42 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   }
 }
 
+//Collects auth token Registration information
+class authReg
+{
+  final String id;
+  final String username;
+  final String password;
+  final String message;
 
+  authReg._({this.id, this.username, this.password, this.message});
 
-/*class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-//Unused, Demo class
-class _MyHomePageState extends State<MyHomePag
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: new Center(
-        child: new MyLogoWidget(),
-      )
-
-      //floatingActionButton: FloatingActionButton(
-       // onPressed: _incrementCounter,
-        //tooltip: 'Increment',
-        //child: Icon(Icons.add),
-      //), // This trailing comma makes auto-formatting nicer for build methods.
+  factory authReg.fromJson(Map<String, dynamic> json)
+  {
+    return new authReg._(
+      id: json['id'],
+      username: json['username'],
+      password: json['password'],
+      message: json['message'],
     );
   }
-}
-*/
+}//END AuthReg CLASS
 
-//Collects auth token
-class auth
+class Auth
 {
   final String token;
   final String message;
 
-  auth._({this.token, this.message});
+  Auth._({this.token, this.message});
 
-  factory auth.fromJson(Map<String, dynamic> json)
+  factory Auth.fromJson(Map<String, dynamic> json)
   {
-    return new auth._(
+    return new Auth._(
       token: json['token'],
       message: json['token'],
     );
   }
-}
+}//END Auth CLASS
 
 //Collects Sensor Data
 class Data
@@ -312,12 +294,6 @@ class query {
   String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT"
 }//END QUERY CLASS
 
-
-//Creates the authorization path
-String makeAuth()
-{
-  return 'http://108.211.45.253:60005/user/register';
-}
 
 //Creates the dynamic http path for the data of a specific day (current day only right now)
 String makePath()
@@ -384,20 +360,21 @@ String makePath()
   return buildPath;
 }//END MAKEPATH
 
-Future<auth> postRequest() async
+//Asynchronous approach to send a post request to the server to register the device
+Future<authReg> regRequest() async
 {
   //Create Request
   var response = await
-  http.post(makeAuth(),
+  http.post(regURL(),
     //Create Body Login Info
-    body: { 'username': 'test', 'password': '1234', }
+    body: {'username': 'user333', 'password': '1234',}
   );
   print(response.body); //Check console for response Sent
   print(response.statusCode); //If status is 500: "Internal Server Error"
 
   if (response.statusCode == 200)
   {
-    return auth.fromJson(json.decode(response.body));
+    return authReg.fromJson(json.decode(response.body));
   }
   else
   {
@@ -405,35 +382,36 @@ Future<auth> postRequest() async
   }
 }
 
-/*
-Future<DataResults> fetchResults() async
+//Asynchronous post request to receive a token from the server
+Future<Auth> loginRequest() async
 {
-  //Collects Current Day Info
-  int y = new DateTime.now().year;
-  String year = y.toString();
-  int m = new DateTime.now().month;
-  String month = m.toString();
-  int d = new DateTime.now().day;
-  String day = d.toString();
+  //Create Request
+  var response = await
+  http.post(loginURL(),
+      //Create Body Login Info
+      body: {'username': 'user333', 'password': '1234',}
+  );
+  print(response.body); //Check console for response Sent
+  print(response.statusCode); //If status is 500: "Internal Server Error"
 
-  //Collects specific day result info
-  String path= 'http://108.211.45.253:60005/find/'+ year +'/'+ month +'/'+ day + '?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF';
-  print(path);
-  final responseResults = await http.get(path);
-
-  //Checks to see if the server sent an "OK" response
-  if(responseResults.statusCode == 200)
+  if (response.statusCode == 200)
   {
-    //Data.results
-    return DataResults.fromJson(json.decode(responseResults.body));
+    return Auth.fromJson(json.decode(response.body));
   }
-  //Throws an exception if the server did NOT send an "OK" response
   else
   {
     throw Exception('Failed to Download Data');
   }
-}//END FETCHRESULTS CLASS*/
+}
 
-//routeHome that provides http fetch functionality as well as bottom navigation
-  //class _MyAppState extends State<MyApp>
+//Creates the authorization path
+String regURL()
+{
+  return 'http://108.211.45.253:60005/user/register';
+}
 
+//Creates the login path for the token
+String loginURL()
+{
+  return 'http://108.211.45.253:60005/user/login';
+}
