@@ -22,7 +22,6 @@ function App() {
   return (
     <div>
           <NavBar></NavBar>
-      <h1>Home</h1>
       <h3>
         <Clock
           format={"dddd, MMMM Do YYYY, HH:mm:ss A"}

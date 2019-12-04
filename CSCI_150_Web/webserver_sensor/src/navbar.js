@@ -9,9 +9,11 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-//   Form,
-//   FormControl,
-//   Button
+  Form,
+  Button,
+  FormGroup,
+  Label,
+  Input
 } from 'reactstrap';
 
 const NavBar = (props) => {
@@ -22,7 +24,7 @@ const NavBar = (props) => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">reactstrap</NavbarBrand>
+        <NavbarBrand href="/">Sensor Node Network</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -34,14 +36,14 @@ const NavBar = (props) => {
             </NavItem> */}
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Options
+                Stuff
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>
-                  Option 1
+                  More Stuff
                 </DropdownItem>
                 <DropdownItem>
-                  Option 2
+                  Less Stuff
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
@@ -51,10 +53,13 @@ const NavBar = (props) => {
             </UncontrolledDropdown>
           </Nav>
         </Collapse>
-        {/* <Form inline>
-      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+        <Form inline>
+        <FormGroup>
+        <Label for="exampleSearch" hidden>Search</Label>
+        <Input type="search" name="search" id="exampleSearch" placeholder="Search" />
+      </FormGroup>
       <Button variant="outline-success">Search</Button>
-    </Form> */}
+    </Form>
       </Navbar>
     </div>
   );

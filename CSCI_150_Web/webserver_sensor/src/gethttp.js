@@ -3,8 +3,8 @@ import React, { Component } from "react";
 
 class GetData extends Component {
   render() {
-    var m = 11;
-    var d = 18;
+    // var m = 11;
+    // var d = 18;
     var grabData = "";
 
     const https = require("http");
@@ -12,7 +12,7 @@ class GetData extends Component {
     const dest = {
       hostname: "108.211.45.253",
       port: 60005,
-      path: "/find/2019/" + m + "/" + d + "?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF",
+      path: "/find/2019/11/20?deviceID=e00fce681c2671fc7b1680eb&sensor=tempF",
       method: "Get"
     };
 
@@ -31,7 +31,7 @@ class GetData extends Component {
 
     req.end();
 
-  return <div>{console.log(this.props.grabData)}</div>;
+  return <div>{grabData}</div>;
   }
 }
 
