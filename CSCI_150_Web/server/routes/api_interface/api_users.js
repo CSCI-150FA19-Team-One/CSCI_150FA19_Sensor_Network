@@ -26,12 +26,22 @@ router.post('/register', jsonParser,  (req, res) => {
 						const user = new User({
 							username: req.body.username,
 							password: hash
+						}).save( (err,docs) => {
+							if(err){ return res.status(500).json({"error": "username already exists!"});}
+							return res.status(200).send(docs);			
+						});
+
+						/*
+						const user = new User({
+							username: req.body.username,
+							password: hash
 						});
 
 						user.save((err, docs) => {
 							if(err){ return res.status(500).json({"error": "username already exists!"});}
 							return res.status(200).send(docs);
 						});
+						*/
 					}
 				}); //end of bcrypt hash
 			}
