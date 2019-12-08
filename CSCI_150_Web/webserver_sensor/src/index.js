@@ -145,15 +145,13 @@ const App = () => (
     </span>
     <Container>
       <Row>
-        <Col>
+        <Col align="left">
           {/* chart is displayed here */}
-          <div
-            id="chartContainer"
+          <div class="chartSize" id="chartContainer"
           ></div>
         </Col>
-
-        <Col align ="center" md="auto">
-          Sensor Select
+        <Col className="text-center" md="auto">
+            <p>Sensor Select</p>
           <div class="vertical-menu">
             <a href="#" class="active">
               Sensor Node 1
