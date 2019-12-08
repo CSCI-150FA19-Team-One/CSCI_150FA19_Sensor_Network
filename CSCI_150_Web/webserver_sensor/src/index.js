@@ -58,6 +58,8 @@ window.onload = function () {
     setInterval(function () { updateChart() }, updateInterval);
 
     //
+    document.getElementById('showtempC').checked = true;
+
     document.getElementById("showtempC").onclick = function () {
         const showTempCVal = document.getElementById('showtempC').checked
         console.log(showTempCVal);
