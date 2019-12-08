@@ -186,7 +186,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           fontSize: 38.0),
     ),
     Text(
-      'Ground Moisture',
+      'Moisture',
       style: TextStyle(
           color: Colors.white,
           fontSize: 38.0),
@@ -369,7 +369,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           BottomNavigationBarItem(
             backgroundColor: Color(0xff202020),
             icon: Icon(Icons.local_florist), // Fourth Button
-            title: Text('Ground Moisture'),
+            title: Text('Moisture'),
           ),
           BottomNavigationBarItem(
             backgroundColor: Color(0xff202020),
