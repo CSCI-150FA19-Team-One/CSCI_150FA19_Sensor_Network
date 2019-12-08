@@ -104,15 +104,16 @@ const App = () => (<>
         </div>
     </div>
     
-    <span styles="font-size:30px;cursor:pointer" id="openNav">&#9776; Config</span>
+    <span styles="font-size:40px;cursor:pointer" id="openNav">&#9776; Config</span>
     <Container>
 
         <Row>
             <Col>
+            {/* chart is displayed here */}
                 <div id="chartContainer" styles="height: 370px; max-width: 920px; margin: 0px auto;"></div>
             </Col>
 
-            <Col>Sensor Select
+            <Col md="auto">Sensor Select
             <div class="vertical-menu">
                     <a href="#" class="active">Home</a>
                     <a href="#">Link 1</a>
