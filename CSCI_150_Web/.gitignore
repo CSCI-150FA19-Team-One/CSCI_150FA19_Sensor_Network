@@ -11,3 +11,4 @@ fetch.js
 /server/temp_files/*
 
 request_class.js
+/webserver_sensor/node_modules/*
