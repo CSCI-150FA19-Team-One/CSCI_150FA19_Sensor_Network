@@ -1,3 +1,12 @@
+
+/CSCI_150_Mobile/sensor_network_monitor/ios/Flutter/flutter_export_environment.sh
+/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart
+/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart
+/CSCI_150_Mobile/sensor_network_monitor/assets/2.0x/logo.png
+/CSCI_150_Mobile/sensor_network_monitor/lib/widgets
+/CSCI_150_Mobile/sensor_network_monitor/test/widget_test.dart
+
+.idea/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -5,3 +14,10 @@
 !.vscode/extensions.json
 *.code-workspace
 /CSCI_150_Hardware/Node_Sensor_Drivers/target
+/CSCI_150_Web/webserver_sensor/node_modules
+/CSCI_150_Web/webserver_sensor/package-lock.json
+/CSCI_150_Web/server/node_modules/
+/CSCI_150_Web/server/package-lock.json
+/CSCI_150_Web/.vs/
+/CSCI_150_Web/.vscode/
+
