@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: _title,
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xff606060),
-        //primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.blueGrey,
       ),
       debugShowCheckedModeBanner: false,
       home: SplashScreenOne(),
@@ -191,6 +191,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           color: Colors.white,
           fontSize: 38.0),
     ),
+     Text(
+       'Config',
+       style: TextStyle(
+           color: Colors.white,
+           fontSize: 38.0),
+     ),
   ];
 
 
@@ -228,6 +234,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return new Scaffold(
       appBar: AppBar(
 
+
         title: new Center(child: new Text('Sensor Node', textAlign: TextAlign.center)),
         backgroundColor: Color(0xff202020),
         automaticallyImplyLeading: false,
@@ -236,8 +243,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       drawer: new Drawer(
 
         child: new ListView(
+
           children: <Widget>[
             new UserAccountsDrawerHeader(
+
               accountName: new Text(
               'Jose Baca',
               style: TextStyle(
@@ -361,6 +370,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             backgroundColor: Color(0xff202020),
             icon: Icon(Icons.local_florist), // Fourth Button
             title: Text('Ground Moisture'),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Color(0xff202020),
+            icon: Icon(Icons.computer), // Fourth Button
+            title: Text('Configuration'),
           ),
         ],
         currentIndex: _currentIndex,

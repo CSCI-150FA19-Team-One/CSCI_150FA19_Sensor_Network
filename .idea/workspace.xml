@@ -4,7 +4,6 @@
     <list default="true" id="c1997c6c-a97d-4728-9229-1175e0448147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.yaml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,14 +15,14 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="98895a3850415a3050" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_4_API_29" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="300" column="10" selection-start-line="300" selection-start-column="10" selection-end-line="300" selection-end-column="10" />
+            <state relative-caret-position="383">
+              <caret line="369" column="30" selection-start-line="369" selection-start-column="30" selection-end-line="369" selection-end-column="30" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -209,7 +208,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575806127053</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="adding a side bar">
+      <created>1575810522191</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1575810522191</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView">
@@ -240,12 +246,12 @@
       <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Debug" order="4" />
       <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49811035" weight="0.32980132" />
-      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.4913928" side_tool="true" visible="true" weight="0.3245033" />
+      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.49295774" side_tool="true" visible="true" weight="0.3245033" />
       <window_info anchor="bottom" id="Flutter Performance" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4976526" weight="0.32980132" />
       <window_info anchor="bottom" id="Logcat" order="9" />
       <window_info anchor="bottom" id="Find" order="10" />
-      <window_info active="true" anchor="bottom" id="Messages" order="11" sideWeight="0.5086072" visible="true" weight="0.3245033" />
+      <window_info active="true" anchor="bottom" id="Messages" order="11" sideWeight="0.5070422" visible="true" weight="0.3245033" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Theme Preview" order="2" />
@@ -265,7 +271,8 @@
     <MESSAGE value="working on a side bar" />
     <MESSAGE value="side bar updated" />
     <MESSAGE value="fixing merge error" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing merge error" />
+    <MESSAGE value="adding a side bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding a side bar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -306,8 +313,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="300" column="10" selection-start-line="300" selection-start-column="10" selection-end-line="300" selection-end-column="10" />
+        <state relative-caret-position="383">
+          <caret line="369" column="30" selection-start-line="369" selection-start-column="30" selection-end-line="369" selection-end-column="30" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
