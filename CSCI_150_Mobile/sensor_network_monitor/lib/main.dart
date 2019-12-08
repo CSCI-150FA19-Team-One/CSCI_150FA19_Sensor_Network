@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _title,
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        scaffoldBackgroundColor: const Color(0xff606060),
+        //primarySwatch: Colors.blueGrey,
       ),
       debugShowCheckedModeBanner: false,
       home: SplashScreenOne(),
@@ -146,10 +147,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     }
   }
 
-  int _currentIndex = 0;
+ int _currentIndex = 0;
    static const TextStyle optionStyle = TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold);
-   static const List<Widget> _widgetOptions = <Widget>[
+   List<Widget> _widgetOptions = <Widget>[
     Text(
       'Welcome',
       style: TextStyle(
@@ -160,15 +161,21 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     ),
     Text(
       'Temperature',
-      style: optionStyle,
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 38.0),
     ),
     Text(
       'Humidity',
-      style: optionStyle,
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 38.0),
     ),
     Text(
       'Ground Moisture',
-      style: optionStyle,
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 38.0),
     ),
   ];
 
@@ -208,6 +215,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       appBar: AppBar(
 
         title: new Center(child: new Text('Sensor Node', textAlign: TextAlign.center)),
+        backgroundColor: Color(0xff202020),
         automaticallyImplyLeading: false,
 
       ),
@@ -233,31 +241,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   // backgroundImage: new NetworkImage(),
                 ),
               ),
-      body: Center(
-        //child: _widgetOptions.elementAt(_currentIndex),
-        child: ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (BuildContext context, int index)
-            {
-              tempStr = 'Time: ' + list[index].gatheredAt;
-              if (q.sensor=="tempC"||q.sensor=="tempF")
-                {
-                  tempVal = "Temp: " + list[index].value.toStringAsFixed(4);
-                }
-              else
-                {
-                  tempVal = "Value: " + list[index].value.toStringAsFixed(4);
-                }
-              return ListTile(
-                contentPadding: EdgeInsets.all(10.0),
-                title: new Text(tempStr),
-                trailing: new Text(
-                  tempVal,
-                ),
-              );
-            }
-        ),
-
 
               decoration:new BoxDecoration(
                   image: new DecorationImage(
@@ -288,37 +271,64 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ),
 
       body: Center(
-          child: _widgetOptions.elementAt(_currentIndex),
+            child: ListView.builder(
+              //child:_widgetOptions.elementAt(_currentIndex),
+
+
+              itemCount: list.length,
+             itemBuilder: (BuildContext context, int index)
+             {
+             tempStr = 'Time: ' + list[index].gatheredAt;
+             if (q.sensor=="tempC"||q.sensor=="tempF")
+             {
+              tempVal = "Temp: " + list[index].value.toStringAsFixed(4);
+              }
+              else
+              {
+                tempVal = "Value: " + list[index].value.toStringAsFixed(4);
+              }
+              return ListTile(
+               contentPadding: EdgeInsets.all(10.0),
+               title: new Text(tempStr),
+                trailing: new Text(
+                tempVal,
+              ),
+            );
+          }
+          ),
 
         ),
-        bottomNavigationBar: BottomNavigationBar(
+
+
+
+      bottomNavigationBar: BottomNavigationBar(
 
         //},
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.home),
             title: Text('Home'), // First Button
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.cloud_queue), //Second Button
             title: Text('Temperature'),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.invert_colors), // Third Button
             title: Text('Humidity'),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.local_florist), // Fourth Button
             title: Text('Ground Moisture'),
           ),
         ],
         currentIndex: _currentIndex,
         //backgroundColor: Colors.blue[800],
-        unselectedItemColor: Colors.lightBlue,
+        unselectedItemColor: Colors.teal,
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
       ),
