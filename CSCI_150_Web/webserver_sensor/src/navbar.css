@@ -24,6 +24,17 @@ input[type=radio] {
   bottom: 2px;
 }
 
+.mouseSelect{
+  cursor: pointer;
+}
+
+.chart-container {
+  position: fixed;
+  margin: auto;
+  height: 800vh;
+  width: 1080vw;
+}
+
 h2{
   vertical-align: middle;
   position: relative;
