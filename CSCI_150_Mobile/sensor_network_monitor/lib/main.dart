@@ -149,11 +149,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _currentIndex = 0;
    static const TextStyle optionStyle = TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold);
-   List<Widget> _widgetOptions = <Widget>[
-     Text(
-       'Welcome',
-       style: optionStyle,
-     ),
+   static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Welcome',
+      style: TextStyle(
+      color: Colors.white,
+      fontSize: 38.0),
+  //optionStyle,
+
+    ),
     Text(
       'Temperature',
       style: optionStyle,
@@ -200,13 +204,35 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new Scaffold(
       appBar: AppBar(
 
         title: new Center(child: new Text('Sensor Node', textAlign: TextAlign.center)),
         automaticallyImplyLeading: false,
 
       ),
+      drawer: new Drawer(
+        child: new ListView(
+          children: <Widget>[
+            new UserAccountsDrawerHeader(
+              accountName: new Text(
+              'Jose Baca',
+              style: TextStyle(
+              color: Colors.black
+              ),
+              ),
+              accountEmail: new Text(
+                  'stud@hotmail.com',
+                    style: TextStyle(
+                    color: Colors.black
+                ),
+              ),
+              currentAccountPicture: new GestureDetector(
+                onTap: () => print('This is the current user'),
+                child: new CircleAvatar(
+                  // backgroundImage: new NetworkImage(),
+                ),
+              ),
       body: Center(
         //child: _widgetOptions.elementAt(_currentIndex),
         child: ListView.builder(
@@ -233,8 +259,39 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         ),
 
 
+              decoration:new BoxDecoration(
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new NetworkImage('https://www.deviantart.com/thegameworld/art/Baby-Yoda-822454332'),
+                  )
+              ),
+            ) ,
+
+            new ListTile(
+              title: new Text('Profile'),
+              trailing: new Icon(Icons.person),
+            ),
+            new ListTile(
+              title: new Text('Notifications'),
+              trailing: new Icon(Icons.notifications),
+            ),
+            new ListTile(
+              title: new Text('Settings'),
+              trailing: new Icon(Icons.settings),
+            ),
+            new ListTile(
+              title: new Text('Logout'),
+              trailing: new Icon(Icons.lock),
+            ),
+          ],
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+
+      body: Center(
+          child: _widgetOptions.elementAt(_currentIndex),
+
+        ),
+        bottomNavigationBar: BottomNavigationBar(
 
         //},
         items: const <BottomNavigationBarItem>[
