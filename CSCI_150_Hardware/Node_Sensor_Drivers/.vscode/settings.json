@@ -7,5 +7,5 @@
     },
     "particle.targetPlatform": "xenon",
     "particle.targetDevice": "node1",
-    "particle.firmwareVersion": "1.4.2"
+    "particle.firmwareVersion": "1.4.4"
 }
