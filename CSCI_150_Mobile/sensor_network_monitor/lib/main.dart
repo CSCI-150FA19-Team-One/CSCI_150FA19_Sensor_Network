@@ -120,6 +120,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     auth = loginRequest();
   }
 
+
   int _currentIndex = 0;
    static const TextStyle optionStyle = TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold);
@@ -370,6 +371,16 @@ String makePath()
   //Collects specific day result info
   return buildPath;
 }//END MAKEPATH
+/*
+Future<DataResults> dataRestults() async
+{
+  http.post(makePath(),
+      headers: {"Content-type": "application/json"},
+      //Create Body Login Info
+      body: '{token: }'
+  );
+}*/
+
 
 //Asynchronous approach to send a post request to the server to register the device
 Future<authReg> regRequest() async
@@ -377,8 +388,9 @@ Future<authReg> regRequest() async
   //Create Request
   var response = await
   http.post(regURL(),
+    headers: {"Content-type": "application/json"},
     //Create Body Login Info
-    body: {'username': 'user333', 'password': '1234',}
+    body: '{"username": "onlyonce", "password": "1234"}'
   );
   print(response.body); //Check console for response Sent
   print(response.statusCode); //If status is 500: "Internal Server Error"
@@ -399,8 +411,9 @@ Future<Auth> loginRequest() async
   //Create Request
   var response = await
   http.post(loginURL(),
+      headers: {"Content-type": "application/json"},
       //Create Body Login Info
-      body: {'username': 'user333', 'password': '1234',}
+      body: '{"username": "onlyonce", "password": "1234"}'
   );
   print(response.body); //Check console for response Sent
   print(response.statusCode); //If status is 500: "Internal Server Error"
@@ -418,11 +431,11 @@ Future<Auth> loginRequest() async
 //Creates the authorization path
 String regURL()
 {
-  return 'http://108.211.45.253:60005/user/register';
+  return "http://108.211.45.253:60005/user/register";
 }
 
 //Creates the login path for the token
 String loginURL()
 {
-  return 'http://108.211.45.253:60005/user/login';
+  return "http://108.211.45.253:60005/user/login";
 }
