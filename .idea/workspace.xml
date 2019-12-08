@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1997c6c-a97d-4728-9229-1175e0448147" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.yaml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1309">
-              <caret line="77" column="30" lean-forward="true" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
+            <state relative-caret-position="359">
+              <caret line="204" column="29" lean-forward="true" selection-start-line="204" selection-start-column="29" selection-end-line="204" selection-end-column="29" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -70,10 +67,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1358" />
-    <option name="width" value="1390" />
-    <option name="height" value="1756" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1356" />
+    <option name="y" value="-12" />
+    <option name="width" value="1394" />
+    <option name="height" value="1770" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -81,8 +79,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -99,6 +95,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -173,7 +171,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575273064491</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="resized splashed screen/ changed app bar">
+      <created>1575413713942</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1575413713944</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
@@ -186,12 +191,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
+    <frame x="678" y="-6" width="697" height="885" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="1" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.08390023" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.17370892" />
       <window_info id="Structure" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
       <window_info id="Image Layers" order="5" />
@@ -199,17 +204,17 @@
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Favorites" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Dart Analysis" order="0" sideWeight="0.49921754" weight="0.32980132" />
-      <window_info active="true" anchor="bottom" id="Run" order="1" sideWeight="0.49130765" visible="true" weight="0.32980132" />
+      <window_info anchor="bottom" id="Run" order="1" sideWeight="0.48826292" visible="true" weight="0.32980132" />
       <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.49921754" weight="0.32980132" />
       <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Debug" order="4" />
       <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49811035" weight="0.32980132" />
-      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.5086924" side_tool="true" visible="true" weight="0.32980132" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="6" sideWeight="0.5117371" side_tool="true" visible="true" weight="0.32980132" />
       <window_info anchor="bottom" id="Flutter Performance" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4976526" weight="0.32980132" />
       <window_info anchor="bottom" id="Logcat" order="9" />
       <window_info anchor="bottom" id="Find" order="10" />
-      <window_info active="true" anchor="bottom" id="Messages" order="11" sideWeight="0.49659863" visible="true" weight="0.32980132" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49584278" weight="0.32980132" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Theme Preview" order="2" />
@@ -224,7 +229,8 @@
     <MESSAGE value="color change" />
     <MESSAGE value="added splash screen" />
     <MESSAGE value="added splash screen/ with splash screen file" />
-    <option name="LAST_COMMIT_MESSAGE" value="added splash screen/ with splash screen file" />
+    <MESSAGE value="resized splashed screen/ changed app bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="resized splashed screen/ changed app bar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -239,8 +245,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1309">
-          <caret line="77" column="30" lean-forward="true" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
+        <state relative-caret-position="359">
+          <caret line="204" column="29" lean-forward="true" selection-start-line="204" selection-start-column="29" selection-end-line="204" selection-end-column="29" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>

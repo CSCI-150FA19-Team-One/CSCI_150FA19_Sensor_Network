@@ -13,13 +13,15 @@ query q = new query();
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
   static const String _title = 'Sensor Node';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        scaffoldBackgroundColor: const Color(0xff606060),
+        //primarySwatch: Colors.blueGrey,
       ),
       debugShowCheckedModeBanner: false,
       home: SplashScreenOne(),
@@ -123,22 +125,31 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       fontSize: 30, fontWeight: FontWeight.bold);
    static const List<Widget> _widgetOptions = <Widget>[
     Text(
-      'Welcome',
-      style: optionStyle,
 
+      'Welcome',
+      style: TextStyle(
+      color: Colors.white,
+      fontSize: 38.0),
+  //optionStyle,
 
     ),
     Text(
       'Temperature',
-      style: optionStyle,
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 38.0),
     ),
     Text(
       'Humidity',
-      style: optionStyle,
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 38.0),
     ),
     Text(
       'Ground Moisture',
-      style: optionStyle,
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 38.0),
     ),
   ];
 
@@ -154,12 +165,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       appBar: AppBar(
 
         title: new Center(child: new Text('Sensor Node', textAlign: TextAlign.center)),
+        backgroundColor: Color(0xff202020),
         automaticallyImplyLeading: false,
 
       ),
       body: Center(
         child: _widgetOptions.elementAt(_currentIndex),
-
 
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -167,29 +178,29 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         //},
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.home),
             title: Text('Home'), // First Button
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.cloud_queue), //Second Button
             title: Text('Temperature'),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.invert_colors), // Third Button
             title: Text('Humidity'),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.local_florist), // Fourth Button
             title: Text('Ground Moisture'),
           ),
         ],
         currentIndex: _currentIndex,
         //backgroundColor: Colors.blue[800],
-        unselectedItemColor: Colors.lightBlue,
+        unselectedItemColor: Colors.teal,
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
       ),
