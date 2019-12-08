@@ -67,7 +67,7 @@ window.onload = function () {
 
 
     //
-    document.getElementById("showtempC").checked = true;
+    document.getElementById("showtempC").checked = false;
 
     document.getElementById("showtempC").onclick = function () {
         const showTempCVal = document.getElementById("showtempC").checked;
