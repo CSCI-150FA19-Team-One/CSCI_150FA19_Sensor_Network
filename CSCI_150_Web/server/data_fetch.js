@@ -3,8 +3,44 @@ const http = require("http");	//For requests
 const https = require("https");	//For requests to secure websites
 const database_data = require('./models/data.models.js');
 
+//const requestPromise = require('request-promise');
+
+
 //local modules
 const settings = require('./config.json');
+
+/*
+var urls[
+	"https://api.particle.io/v1/devices/e00fce681c2671fc7b1680eb/tempC?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+
+	"https://api.particle.io/v1/devices/e00fce681c2671fc7b1680eb/tempF?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+
+	"https://api.particle.io/v1/devices/e00fce681c2671fc7b1680eb/HumidityL?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+
+	"https://api.particle.io/v1/devices/e00fce681c2671fc7b1680eb/HumidityT?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+
+
+
+	"https://api.particle.io/v1/devices/e00fce686522d2441e1f693f/tempC?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+
+	"https://api.particle.io/v1/devices/e00fce686522d2441e1f693f/tempF?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+	
+	"https://api.particle.io/v1/devices/e00fce686522d2441e1f693f/HumidityL?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+	
+	"https://api.particle.io/v1/devices/e00fce686522d2441e1f693f/HumidityT?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+
+
+
+	"https://api.particle.io/v1/devices/e00fce68b1b49ccf2e314c17/tempC?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+	
+	"https://api.particle.io/v1/devices/e00fce68b1b49ccf2e314c17/tempF?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+	
+	"https://api.particle.io/v1/devices/e00fce68b1b49ccf2e314c17/HumidityL?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3",
+	
+	"https://api.particle.io/v1/devices/e00fce68b1b49ccf2e314c17/HumidityT?access_token=895043e69c01b80b464cdd995e913efa4b25c3a3"
+]
+*/
+
 
 
 //Function that will make GET requests to grab data
@@ -20,51 +56,84 @@ function get_requests(token, deviceID, host, temp){
 	};
 
 
-	var req = https.request(options, (res) => {
+	var request = https.request(options, (res) => {
 		console.log(`connection status: ${res.statusCode}`);
-		var response_data = ""
+		console.log('Request made at: ' + Date());
+		var response_data = "";
 
-		//Getting the data from the get request
-		res.on('data', (data) => {
-			console.log("Grabbing data!");
-			response_data += data;	//response_data is a string
+		if(res.statusCode === 200){
+			//Getting the data from the get request
+			res.on('data', (data) => {
+				console.log("Grabbing data!");
+				response_data += data;	//response_data is a string
 
-		});//End of res.on('data')
+			});//End of res.on('data')
 
-
-		//All data has been grabbed from the response, store in DB
-		res.on('end', () =>{
-			var data = JSON.parse(response_data);	//turn data in JSON
-			
-			filter = {
-				deviceID: data.coreInfo.deviceID,
-				name: data.name
-			}
-
-
-			// Looks for a doc matching filter properties. If none found,
-			// Inserts a doc with filter and push properties.
-			// Otherwise just updates the results array of the doc, adding 
-			// Another element to it.
-			database_data.findOneAndUpdate(filter, {"$push": { "results": data.result}} 
-				, {upsert: true, new: true},(err, docs) => {
-				if(err){
-					console.log("Could not find or update the document");
-				}
-				/*
-				else{
-					console.log(docs)
-				}
-				*/
+			res.on('error', (err) => {
+				console.log("error: " + err);
 			});
 
-			console.log('End of get Request!');
-		});//End of res.on('end')
+
+			//All data has been grabbed from the response, store in DB
+			res.on('end', () =>{
+				var data = JSON.parse(response_data);	//turn data in JSON
+				
+				//Creating date object to find out current date information
+				var current_date = new Date();
 
 
+				var current_year = current_date.getFullYear(); //Gets current year i.e 2019
+				var current_month = current_date.getMonth() + 1; //1-12
+				var current_day = current_date.getDate(); //1-31
+				var current_hour = current_date.getHours();  //gets the current hour 
+				var current_minute = current_date.getMinutes() //gets the current minutes
+
+				//Convert month and day to strings to use in gatheredAt field
+				var timestamp = current_hour.toString() +":"+ current_minute.toString();
+
+
+
+				//Primary keys used to find the document to update
+				var filter = {
+					year_timestamp: current_year,
+					deviceID: data.coreInfo.deviceID,
+					name: data.name
+				}
+
+				//options for the update - Upsert creates a document if none found
+				//New returns the updated document
+				var options = {upsert: true, new: true, setDefaultsOnInsert: true};
+
+
+				//The path to update can not contain variables or string concats
+				//must use object literal? to get around this issue
+				var updateKey = "results.month."+current_month+".day."+current_day;
+				var temp = {};
+				temp[updateKey] = {gatheredAt: timestamp, value: data.result};
+
+
+				//Will look for a document matching the filter. If none found, will insert
+				//a new document with filter and update properties. Otherwise, update
+				//the given property only	
+				database_data.findOneAndUpdate(filter, {$push: temp}, options, (err, docs) => {
+						if(err){
+							console.log("Could not find or update the document");
+						}
+					});
+
+				console.log('End of get Request!');
+			});//End of res.on('end')
+
+		}
 	});//End of https.request
 
-	req.end();
+
+	request.on('error', (err) => {
+		console.log("request.on('error) called");
+		console.log(err);
+	});
+
+	request.end();
 }//End of function get_requests
 
 
@@ -80,4 +149,3 @@ exports.loop_through_devices = function() {
 	}
 	return console.log("Finished making all requests");
 }
-

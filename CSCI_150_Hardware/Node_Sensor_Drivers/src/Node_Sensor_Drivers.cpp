@@ -33,6 +33,7 @@ void setup() {
   #if PLATFORM_ID == PLATFORM_ARGON
   WiFi.setCredentials("MASTER_LAPTOP", "passwrd100");
   WiFi.setCredentials("IEEE-THERMALTAK 4824", "3250eJ+9");
+  WiFi.setCredentials("Super G", "passwrd100");
   #endif
 
   // register functions/variables with cloud
