@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 //import 'splash_screen_one.dart';
 //import 'package:intl/intl.dart';
+//import 'package:url_launcher/url_launcher.dart';
 
 //Create global query class variable q
 query q = new query();
@@ -107,12 +108,25 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
+  String mainProfilePicture = 'https://unsplash.com/photos/TdVGcGkb6C8';
+  String secondProfilePicture = 'http://www.solidbackgrounds.com/2880x1800-spanish-sky-blue-solid-color-background.html';
+  String thirdProfilePicture = 'http://www.solidbackgrounds.com/1920x1080-yellow-green-solid-color-background.html';
   String tempStr;
   String tempVal;
   //Create asynchronous auth and authreg variables
   Future<authReg> authreg;
   Future<Auth> auth;
 
+
+
+  void switchUser() {
+    String backupString = mainProfilePicture;
+    this.setState(() {
+      mainProfilePicture = secondProfilePicture;
+      secondProfilePicture = thirdProfilePicture;
+      thirdProfilePicture = backupString;
+    });
+  }
   //Create initial state for the authreg and reg variables
   @override
   void initState()
@@ -220,6 +234,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
       ),
       drawer: new Drawer(
+
         child: new ListView(
           children: <Widget>[
             new UserAccountsDrawerHeader(
@@ -238,14 +253,28 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               currentAccountPicture: new GestureDetector(
                 onTap: () => print('This is the current user'),
                 child: new CircleAvatar(
-                  // backgroundImage: new NetworkImage(),
+                  backgroundImage: new NetworkImage(mainProfilePicture),
                 ),
               ),
+              otherAccountsPictures: <Widget>[
+                new GestureDetector(
+                  onTap: () => switchUser(),
+                  child: new CircleAvatar(
+                    backgroundImage:new NetworkImage(secondProfilePicture) ,
+                  ),
+                ),
+                new GestureDetector(
+                  onTap: () => switchUser(),
+                  child: new CircleAvatar(
+                    backgroundImage:new NetworkImage(thirdProfilePicture) ,
+                  ),
+                ),
+              ],
 
               decoration:new BoxDecoration(
                   image: new DecorationImage(
                     fit: BoxFit.fill,
-                    image: new NetworkImage('https://www.deviantart.com/thegameworld/art/Baby-Yoda-822454332'),
+                    image: new NetworkImage(mainProfilePicture),
                   )
               ),
             ) ,
@@ -263,8 +292,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               trailing: new Icon(Icons.settings),
             ),
             new ListTile(
-              title: new Text('Logout'),
+              title: new Text('Logoff'),
               trailing: new Icon(Icons.lock),
+            ),
+            new Divider(),
+
+
+            new ListTile(
+              title: new Text('Close'),
+              trailing: new Icon(Icons.close),
+              onTap: () => Navigator.of(context).pop(),
             ),
           ],
         ),
