@@ -112,7 +112,7 @@ const App = () => (
       </h3>
     </div>
     <div id="mySidenav" class="sidenav">
-      <h2>Config</h2>
+      <h2 id="sideNavTitle">Config</h2>
       <a href="javascript:void(0)" class="closebtn" id="closeNav">
         &times;
       </a>

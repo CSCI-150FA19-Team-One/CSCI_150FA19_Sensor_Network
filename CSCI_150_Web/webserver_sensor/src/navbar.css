@@ -10,7 +10,7 @@ body {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: rgb(219, 207, 207);
+  background-color: #eee;
   overflow-x: hidden;
   padding-top: 60px;
 }
@@ -67,7 +67,7 @@ input[type=radio] {
   width: 60vw;
 }
 
-h2{
+#sideNavTitle{
   vertical-align: middle;
   position: relative;
   left: 65px;
@@ -81,7 +81,7 @@ label{
 
 p{
   position: relative;
-  left: 300px;
+  left: 0px;
 }
 
 {/*Vertical menu styles*/}
@@ -90,7 +90,7 @@ p{
   width: 200px;
   height: 75%;
   position: relative;
-  left: 300px;
+  left: 0px;
   overflow-y: auto;
 }
 
