@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 //import 'package:sensor_network_monitor/widgets_test.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,15 +14,13 @@ query q = new query();
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
   static const String _title = 'Sensor Node';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xff606060),
-        //primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.blueGrey,
       ),
       debugShowCheckedModeBanner: false,
       home: SplashScreenOne(),
@@ -107,6 +106,8 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
+  String tempStr;
+  String tempVal;
   //Create asynchronous auth and authreg variables
   Future<authReg> authreg;
   Future<Auth> auth;
@@ -120,6 +121,30 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     auth = loginRequest();
   }
 
+  List<DataResults> list = List();
+  _dataResults() async
+  {
+    //Create token string
+    String token = "\"" + q.token + "\"";
+
+    //POST request & response collection
+    final response = await http.get(makePath(),
+        //Create token header
+        headers: {HttpHeaders.authorizationHeader: q.token},
+    );
+
+    list.length = 0;
+    if (response.statusCode == 200)
+    {
+      list = (json.decode(response.body) as List)
+      .map((data) => new DataResults.fromJson(data))
+      .toList();
+    }
+    else
+    {
+      throw Exception('Failed to Download Data');
+    }
+  }
 
   int _currentIndex = 0;
    static const TextStyle optionStyle = TextStyle(
@@ -135,27 +160,45 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     ),
     Text(
       'Temperature',
-      style: TextStyle(
-          color: Colors.white,
-          fontSize: 38.0),
+      style: optionStyle,
     ),
     Text(
       'Humidity',
-      style: TextStyle(
-          color: Colors.white,
-          fontSize: 38.0),
+      style: optionStyle,
     ),
     Text(
       'Ground Moisture',
-      style: TextStyle(
-          color: Colors.white,
-          fontSize: 38.0),
+      style: optionStyle,
     ),
   ];
+
 
   void _onItemTapped(int index) {
     setState(() {
       _currentIndex = index;
+      print(index);
+      if (index == 1)
+        {
+          q.device = "e00fce681c2671fc7b1680eb";
+          q.sensor = "tempF";
+          _dataResults();
+        }
+      else if (index == 2)
+        {
+          q.device = "e00fce686522d2441e1f693f";
+          q.sensor = "HumidityL";
+          _dataResults();
+        }
+      else if (index == 3)
+        {
+          q.device = "e00fce68b1b49ccf2e314c17";
+          q.sensor = "GMoistureP";
+          _dataResults();
+        }
+      else
+        {} //Empty Else
+      //String device=null; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
+      //String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT"
     });
   }
 
@@ -165,7 +208,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       appBar: AppBar(
 
         title: new Center(child: new Text('Sensor Node', textAlign: TextAlign.center)),
-        backgroundColor: Color(0xff202020),
         automaticallyImplyLeading: false,
 
       ),
@@ -191,6 +233,31 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   // backgroundImage: new NetworkImage(),
                 ),
               ),
+      body: Center(
+        //child: _widgetOptions.elementAt(_currentIndex),
+        child: ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (BuildContext context, int index)
+            {
+              tempStr = 'Time: ' + list[index].gatheredAt;
+              if (q.sensor=="tempC"||q.sensor=="tempF")
+                {
+                  tempVal = "Temp: " + list[index].value.toStringAsFixed(4);
+                }
+              else
+                {
+                  tempVal = "Value: " + list[index].value.toStringAsFixed(4);
+                }
+              return ListTile(
+                contentPadding: EdgeInsets.all(10.0),
+                title: new Text(tempStr),
+                trailing: new Text(
+                  tempVal,
+                ),
+              );
+            }
+        ),
+
 
               decoration:new BoxDecoration(
                   image: new DecorationImage(
@@ -229,29 +296,29 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         //},
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            backgroundColor: Color(0xff202020),
+            backgroundColor: Colors.blueGrey,
             icon: Icon(Icons.home),
             title: Text('Home'), // First Button
           ),
           BottomNavigationBarItem(
-            backgroundColor: Color(0xff202020),
+            backgroundColor: Colors.blueGrey,
             icon: Icon(Icons.cloud_queue), //Second Button
             title: Text('Temperature'),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Color(0xff202020),
+            backgroundColor: Colors.blueGrey,
             icon: Icon(Icons.invert_colors), // Third Button
             title: Text('Humidity'),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Color(0xff202020),
+            backgroundColor: Colors.blueGrey,
             icon: Icon(Icons.local_florist), // Fourth Button
             title: Text('Ground Moisture'),
           ),
         ],
         currentIndex: _currentIndex,
         //backgroundColor: Colors.blue[800],
-        unselectedItemColor: Colors.teal,
+        unselectedItemColor: Colors.lightBlue,
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
       ),
@@ -290,6 +357,7 @@ class Auth
 
   factory Auth.fromJson(Map<String, dynamic> json)
   {
+    q.token = json['token'];
     return new Auth._(
       token: json['token'],
       message: json['token'],
@@ -323,7 +391,6 @@ class DataResults
 {
   final String gatheredAt;
   final double value;
-  String valueStr;
 
   DataResults._({this.gatheredAt,this.value});
 
@@ -346,6 +413,8 @@ class query {
   String m;
   String d;
   String h;
+  String token;
+
 
   //Sensor Query Variables
   bool tempInF = true;
@@ -421,29 +490,17 @@ String makePath()
   //Collects specific day result info
   return buildPath;
 }//END MAKEPATH
-/*
-Future<DataResults> dataRestults() async
-{
-  http.post(makePath(),
-      headers: {"Content-type": "application/json"},
-      //Create Body Login Info
-      body: '{token: }'
-  );
-}*/
-
 
 //Asynchronous approach to send a post request to the server to register the device
 Future<authReg> regRequest() async
 {
   //Create Request
   var response = await
-  http.post(regURL(),
+  http.post("http://108.211.45.253:60005/user/register",
     headers: {"Content-type": "application/json"},
     //Create Body Login Info
     body: '{"username": "onlyonce", "password": "1234"}'
   );
-  print(response.body); //Check console for response Sent
-  print(response.statusCode); //If status is 500: "Internal Server Error"
 
   if (response.statusCode == 200)
   {
@@ -460,13 +517,12 @@ Future<Auth> loginRequest() async
 {
   //Create Request
   var response = await
-  http.post(loginURL(),
+  http.post("http://108.211.45.253:60005/user/login",
       headers: {"Content-type": "application/json"},
       //Create Body Login Info
       body: '{"username": "onlyonce", "password": "1234"}'
   );
   print(response.body); //Check console for response Sent
-  print(response.statusCode); //If status is 500: "Internal Server Error"
 
   if (response.statusCode == 200)
   {
@@ -476,16 +532,4 @@ Future<Auth> loginRequest() async
   {
     throw Exception('Failed to Download Data');
   }
-}
-
-//Creates the authorization path
-String regURL()
-{
-  return "http://108.211.45.253:60005/user/register";
-}
-
-//Creates the login path for the token
-String loginURL()
-{
-  return "http://108.211.45.253:60005/user/login";
 }
