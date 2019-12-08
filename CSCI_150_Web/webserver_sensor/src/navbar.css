@@ -1,7 +1,7 @@
 
-/* body {
+body {
   font-family: "Lato", sans-serif;
-} */
+}
 
 .sidenav {
   height: 100%;
@@ -24,9 +24,14 @@ input[type=radio] {
   bottom: 2px;
 }
 
+h2{
+  vertical-align: middle;
+  position: relative;
+  left: 125px;
+}
+
 label{
   display: block;
-  horizontal-align: middle;
   position: relative;
   left: 25px;
 }

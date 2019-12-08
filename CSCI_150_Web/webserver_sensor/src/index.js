@@ -98,7 +98,6 @@ window.onload = function () {
 }
 
 
-
 const App = () => (<>
     <Navbar bg="light">
         <Navbar.Brand href="#home">Brand link</Navbar.Brand>
