@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1997c6c-a97d-4728-9229-1175e0448147" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Asap/Asap-Bold.ttf" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Asap/Asap-BoldItalic.ttf" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Asap/Asap-Italic.ttf" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Asap/Asap-Medium.ttf" afterDir="false" />
@@ -16,8 +15,6 @@
       <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Cinzel/Cinzel-Regular.ttf" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Cinzel/OFL.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
-    <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +32,8 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1666">
               <caret line="185" column="19" lean-forward="true" selection-start-line="185" selection-start-column="19" selection-end-line="185" selection-end-column="19" />
+            <state relative-caret-position="383">
+              <caret line="369" column="30" selection-start-line="369" selection-start-column="30" selection-end-line="369" selection-end-column="30" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -63,6 +62,8 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
               <caret line="28" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="187">
+              <caret line="29" column="3" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -235,6 +236,7 @@
       <updated>1575839865535</updated>
     </task>
     <option name="localTasksCounter" value="13" />
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView">
@@ -328,6 +330,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="28" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="187">
+          <caret line="29" column="3" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -335,6 +339,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1666">
           <caret line="185" column="19" lean-forward="true" selection-start-line="185" selection-start-column="19" selection-end-line="185" selection-end-column="19" />
+        <state relative-caret-position="383">
+          <caret line="369" column="30" selection-start-line="369" selection-start-column="30" selection-end-line="369" selection-end-column="30" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
