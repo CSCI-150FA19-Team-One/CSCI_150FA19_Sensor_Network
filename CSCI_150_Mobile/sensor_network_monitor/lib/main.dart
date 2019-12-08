@@ -13,13 +13,15 @@ query q = new query();
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
   static const String _title = 'Sensor Node';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        scaffoldBackgroundColor: const Color(0xff606060),
+        //primarySwatch: Colors.blueGrey,
       ),
       debugShowCheckedModeBanner: false,
       home: SplashScreenOne(),
@@ -118,27 +120,37 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     auth = loginRequest();
   }
 
+
   int _currentIndex = 0;
    static const TextStyle optionStyle = TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold);
    static const List<Widget> _widgetOptions = <Widget>[
     Text(
-      'Welcome',
-      style: optionStyle,
 
+      'Welcome',
+      style: TextStyle(
+      color: Colors.white,
+      fontSize: 38.0),
+  //optionStyle,
 
     ),
     Text(
       'Temperature',
-      style: optionStyle,
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 38.0),
     ),
     Text(
       'Humidity',
-      style: optionStyle,
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 38.0),
     ),
     Text(
       'Ground Moisture',
-      style: optionStyle,
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 38.0),
     ),
   ];
 
@@ -154,12 +166,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       appBar: AppBar(
 
         title: new Center(child: new Text('Sensor Node', textAlign: TextAlign.center)),
+        backgroundColor: Color(0xff202020),
         automaticallyImplyLeading: false,
 
       ),
       body: Center(
         child: _widgetOptions.elementAt(_currentIndex),
-
 
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -167,29 +179,29 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         //},
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.home),
             title: Text('Home'), // First Button
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.cloud_queue), //Second Button
             title: Text('Temperature'),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.invert_colors), // Third Button
             title: Text('Humidity'),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.local_florist), // Fourth Button
             title: Text('Ground Moisture'),
           ),
         ],
         currentIndex: _currentIndex,
         //backgroundColor: Colors.blue[800],
-        unselectedItemColor: Colors.lightBlue,
+        unselectedItemColor: Colors.teal,
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
       ),
@@ -359,6 +371,16 @@ String makePath()
   //Collects specific day result info
   return buildPath;
 }//END MAKEPATH
+/*
+Future<DataResults> dataRestults() async
+{
+  http.post(makePath(),
+      headers: {"Content-type": "application/json"},
+      //Create Body Login Info
+      body: '{token: }'
+  );
+}*/
+
 
 //Asynchronous approach to send a post request to the server to register the device
 Future<authReg> regRequest() async
@@ -366,8 +388,9 @@ Future<authReg> regRequest() async
   //Create Request
   var response = await
   http.post(regURL(),
+    headers: {"Content-type": "application/json"},
     //Create Body Login Info
-    body: {'username': 'user333', 'password': '1234',}
+    body: '{"username": "onlyonce", "password": "1234"}'
   );
   print(response.body); //Check console for response Sent
   print(response.statusCode); //If status is 500: "Internal Server Error"
@@ -388,8 +411,9 @@ Future<Auth> loginRequest() async
   //Create Request
   var response = await
   http.post(loginURL(),
+      headers: {"Content-type": "application/json"},
       //Create Body Login Info
-      body: {'username': 'user333', 'password': '1234',}
+      body: '{"username": "onlyonce", "password": "1234"}'
   );
   print(response.body); //Check console for response Sent
   print(response.statusCode); //If status is 500: "Internal Server Error"
@@ -407,11 +431,11 @@ Future<Auth> loginRequest() async
 //Creates the authorization path
 String regURL()
 {
-  return 'http://108.211.45.253:60005/user/register';
+  return "http://108.211.45.253:60005/user/register";
 }
 
 //Creates the login path for the token
 String loginURL()
 {
-  return 'http://108.211.45.253:60005/user/login';
+  return "http://108.211.45.253:60005/user/login";
 }
