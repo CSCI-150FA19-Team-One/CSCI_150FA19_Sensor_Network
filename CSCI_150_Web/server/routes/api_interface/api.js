@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const database_data = require('../../models/data.models.js');
+const authCheck = require('./../../auth_verify.js');
 
 
 //This represents the xyz/api url path
@@ -11,9 +12,8 @@ router.get('/', (req,res) => {
 });
 
 
-
 // path to retrieve data from MongoDB
-router.get('/find', (req, res) => {
+router.get('/find', authCheck, (req, res) => {
 
 	// Acess the req.query object to see if the parameters were supplied
 	if(!req.query.deviceID || !req.query.sensor){
@@ -38,7 +38,7 @@ router.get('/find', (req, res) => {
 
 
 // path to retrieve specific year data
-router.get('/find/:year', (req, res) => {
+router.get('/find/:year', authCheck, (req, res) => {
 
 	if(!req.query.deviceID || !req.query.sensor || !req.params.year){
 		res.send(400);
@@ -51,12 +51,12 @@ router.get('/find/:year', (req, res) => {
 		name: req.query.sensor
 	}
 
-
 	database_data.findOne(query, (err, docs) => {
 		if(err){
 			res.sendStatus(500);
 			return;
 		}
+
 		res.json(docs);	
 	});
 });
@@ -64,7 +64,7 @@ router.get('/find/:year', (req, res) => {
 
 
 
-router.get('/find/:year/:month', (req, res) => {
+router.get('/find/:year/:month', authCheck, (req, res) => {
 
 	if(!req.query.deviceID || !req.query.sensor || !req.params.year || !req.params.month){
 		res.send(400);
@@ -88,7 +88,7 @@ router.get('/find/:year/:month', (req, res) => {
 });
 
 
-router.get('/find/:year/:month/:day', (req, res) => {
+router.get('/find/:year/:month/:day', authCheck, (req, res) => {
 
 	if(!req.query.deviceID || !req.query.sensor || !req.params.year || !req.params.month 
 		|| !req.params.day){
@@ -115,8 +115,6 @@ router.get('/find/:year/:month/:day', (req, res) => {
 	});
 
 });
-
-
 
 module.exports = router;
 
