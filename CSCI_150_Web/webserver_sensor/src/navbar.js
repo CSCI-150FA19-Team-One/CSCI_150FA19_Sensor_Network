@@ -23,8 +23,8 @@ const NavBar = (props) => {
 
   return (
     <div>
-      <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">Sensor Node Network</NavbarBrand>
+      <Navbar color="primary" variant="dark" light expand="md">
+        <NavbarBrand href="#home">Sensor Node Network</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
