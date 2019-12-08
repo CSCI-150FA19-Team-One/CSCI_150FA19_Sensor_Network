@@ -145,11 +145,11 @@ const App = () => (
     </span>
     <Container>
       <Row>
-        <Col>
+        <Col md="auto">
           {/* chart is displayed here */}
           <div
             id="chartContainer"
-            styles="height: 370px; max-width: 920px; margin: 0px auto;"
+            styles="height: 500px; max-width: 1080px; margin: 0px auto;"
           ></div>
         </Col>
 
