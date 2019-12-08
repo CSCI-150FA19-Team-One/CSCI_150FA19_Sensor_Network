@@ -4,16 +4,21 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import CanvasJS from "./canvasjs.min.js";
+//import CanvasJS from "./canvasjs.min.js";
+import CanvasJSReact from './canvasjs.react';
 import Clock from "react-live-clock";
-import PropTypes from "prop-types";
 
 // Importing the Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
 
 require("./navbar.css");
 
+const CanvasJS = CanvasJSReact.CanvasJS;
+//const CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
 window.onload = function () {
+
+    //start of chart code
     var dps = []; // dataPoints
     const chart = new CanvasJS.Chart("chartContainer", {
         title: {
@@ -58,6 +63,8 @@ window.onload = function () {
     setInterval(function () {
         updateChart();
     }, updateInterval);
+    //end of chart code
+
 
     //
     document.getElementById("showtempC").checked = true;
@@ -98,71 +105,56 @@ window.onload = function () {
 };
 
 const App = () => (
-  <>
-    <Navbar bg="light">
-      <Navbar.Brand href="#home">Brand link</Navbar.Brand>
-    </Navbar>
-    <div>
-      <h3 className="text-center">
-        <Clock
-          format={"dddd, MMMM Do YYYY, HH:mm:ss A"}
-          ticking={true}
-          timezone={"US/Pacific"}
-        />
-      </h3>
-    </div>
-    <div id="mySidenav" class="sidenav">
-      <h2 id="sideNavTitle">Config</h2>
-      <a href="javascript:void(0)" class="closebtn" id="closeNav">
-        &times;
-      </a>
-      <div>
-        <input type="checkbox" id="showtempC" name="showtempC" />
-        <label for="showtempC">TempC</label>
-      </div>
-      <div>
-        <input type="checkbox" id="showtempF" name="showtempF" />
-        <label for="showtempF">TempF</label>
-      </div>
-      <div>
-        <input type="checkbox" id="showhumidity" name="showhumidity" />
-        <label for="showhumidity">Humidity</label>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          id="showgroundmoisture"
-          name="showgroundmoisture"
-        />
-        <label for="showgroundmoisture">Ground Moisture</label>
-      </div>
-    </div>
+    <>
+        <Navbar bg="light">
+            <Navbar.Brand href="#home">Sensor Network Project</Navbar.Brand>
+        </Navbar>
 
-    <span class="mouseSelect" id="openNav">
-      &#9776; Config
-    </span>
-    <Container>
-      <Row>
-        <Col align="left">
-          {/* chart is displayed here */}
-          <div class="chartSize" id="chartContainer"
-          ></div>
-        </Col>
-        <Col className="text-center" md="auto">
-            <p>Sensor Select</p>
-          <div class="vertical-menu">
-                        <a href="#" class="active">
-                            Sensor Node 1
-                        </a>
+        {/* open Config menu */}
+        <span class="mouseSelect" id="openNav"> &#9776; Config </span>
+
+        {/* Side nav setup */}
+        <div id="mySidenav" class="sidenav">
+            <h2 id="sideNavTitle">Config</h2>
+            <a href="javascript:void(0)" class="closebtn" id="closeNav"> &times;</a>
+            <div>
+                <input type="checkbox" id="showtempC" name="showtempC" />
+                <label for="showtempC">TempC</label>
+            </div>
+            <div>
+                <input type="checkbox" id="showtempF" name="showtempF" />
+                <label for="showtempF">TempF</label>
+            </div>
+            <div>
+                <input type="checkbox" id="showhumidity" name="showhumidity" />
+                <label for="showhumidity">Humidity</label>
+            </div>
+            <div>
+                <input type="checkbox" id="showgroundmoisture" name="showgroundmoisture" />
+                <label for="showgroundmoisture">Ground Moisture</label>
+            </div>
+        </div>
+
+        <Container>
+            <Row>
+                <Col align="left" >
+                    {/* clock displayed here */}
+                    <h3 className="text-center">
+                        <Clock
+                            format={"dddd, MMMM Do YYYY, HH:mm:ss A"}
+                            ticking={true}
+                            timezone={"US/Pacific"}
+                        />
+                    </h3>
+                    {/* chart is displayed here */}
+                    <div class="chartSize" id="chartContainer"></div>
+                </Col>
+                <Col className="text-center" align="right" md="auto">
+                    <h5>Sensor Node Select</h5>
+                    <div class="vertical-menu">
+                        <a href="#" class="active">Sensor Node 1</a>
                         <a href="#">Sensor Node 2</a>
                         <a href="#">Sensor Node 3</a>
-                        <a href="#">Sensor Node 4</a>
-                        <a href="#">Sensor Node 5</a>
-                        <a href="#">Sensor Node 6</a>
-                        <a href="#">Sensor Node 7</a>
-                        <a href="#">Sensor Node 8</a>
-                        <a href="#">Sensor Node 9</a>
-                        <a href="#">Sensor Node 10</a>
                     </div>
                 </Col>
             </Row>

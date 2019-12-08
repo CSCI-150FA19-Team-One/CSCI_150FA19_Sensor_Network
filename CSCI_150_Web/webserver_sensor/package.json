@@ -1,5 +1,6 @@
 {
-  "name": "code-sandbox-examples",
+  "homepage": "./",
+  "name": "csci-150-webserver",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

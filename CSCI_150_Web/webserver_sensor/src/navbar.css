@@ -24,7 +24,7 @@ body {
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: #f30a0a;
 }
 
 .sidenav .closebtn {
@@ -35,9 +35,14 @@ body {
   margin-left: 50px;
 }
 
+#openNav{
+  font-size: 30px;
+}
+
 .sidenav .navbarbody *{
     padding-left:10px
 }
+
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
@@ -59,13 +64,6 @@ input[type=radio] {
   font-size: 16px;
 }
 
-.chartSize{
-  position: absolute;
-  margin: auto;
-  display: inline-block;
-  height: 60vh;
-  width: 60vw;
-}
 
 #sideNavTitle{
   vertical-align: middle;
@@ -79,16 +77,12 @@ label{
   left: 25px;
 }
 
-p{
-  position: relative;
-  left: 0px;
-}
 
 {/*Vertical menu styles*/}
 
 .vertical-menu {
   width: 200px;
-  height: 75%;
+  /* height: 75%; */
   position: relative;
   left: 0px;
   overflow-y: auto;
