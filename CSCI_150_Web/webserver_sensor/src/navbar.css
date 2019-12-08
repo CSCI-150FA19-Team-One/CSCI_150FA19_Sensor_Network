@@ -1,4 +1,4 @@
-
+{/* NavBar styles*/}
 body {
   font-family: "Lato", sans-serif;
 }
@@ -10,41 +10,9 @@ body {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: rgb(219, 207, 207);
+  background-color: #eee;
   overflow-x: hidden;
   padding-top: 60px;
-}
-
-input[type=checkbox], input[type=radio] {
-  vertical-align: middle;
-  position: relative;
-  left: 25px;
-}
-input[type=radio] {
-  bottom: 2px;
-}
-
-.mouseSelect{
-  cursor: pointer;
-}
-
-.chart-container {
-  position: fixed;
-  margin: auto;
-  height: 800vh;
-  width: 1080vw;
-}
-
-h2{
-  vertical-align: middle;
-  position: relative;
-  left: 65px;
-}
-
-label{
-  display: block;
-  position: relative;
-  left: 25px;
 }
 
 .sidenav a {
@@ -56,12 +24,8 @@ label{
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: #f30a0a;
 }
-
-/* .sidenav {
-  right: 255px;
-} */
 
 .sidenav .closebtn {
   position: absolute;
@@ -71,11 +35,72 @@ label{
   margin-left: 50px;
 }
 
+#openNav{
+  font-size: 30px;
+}
+
 .sidenav .navbarbody *{
     padding-left:10px
 }
 
+
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
+}
+
+{/*Various Styles */}
+input[type=checkbox], input[type=radio] {
+  vertical-align: middle;
+  position: relative;
+  left: 25px;
+}
+input[type=radio] {
+  bottom: 2px;
+}
+
+.mouseSelect{
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
+#sideNavTitle{
+  vertical-align: middle;
+  position: relative;
+  left: 65px;
+}
+
+label{
+  display: block;
+  position: relative;
+  left: 25px;
+}
+
+
+{/*Vertical menu styles*/}
+
+.vertical-menu {
+  width: 200px;
+  /* height: 75%; */
+  position: relative;
+  left: 0px;
+  overflow-y: auto;
+}
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: rgb(74, 149, 184);
+  color: white;
 }
