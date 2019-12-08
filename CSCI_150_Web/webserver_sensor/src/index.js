@@ -82,10 +82,9 @@ const App = () => (<>
     </Navbar>
 
     <div id="mySidenav" class="sidenav">
-        <div id ="navbarbody">
-        <h1>Config</h1>
+        <h2>Config</h2>
         <a href="javascript:void(0)" class="closebtn" id='closeNav'>&times;</a>
-        <div padding-left = '10px'>
+        <div>
             <input type="checkbox" id="showtempC" name="showtempC" />
             <label for="showtempC">TempC</label>
         </div>
@@ -101,14 +100,13 @@ const App = () => (<>
             <input type="checkbox" id="showgroundmoisture" name="showgroundmoisture" />
             <label for="showgroundmoisture">Ground Moisture</label>
         </div>
-        </div>
     </div>
     
     <span styles="font-size:30px;cursor:pointer" id="openNav">&#9776; Config</span>
     <Container>
 
         <Row>
-            <Col>
+            <Col> 
                 <div id="chartContainer" styles="height: 370px; max-width: 920px; margin: 0px auto;"></div>
             </Col>
 
