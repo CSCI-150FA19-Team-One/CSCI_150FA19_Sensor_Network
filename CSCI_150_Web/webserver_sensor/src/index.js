@@ -65,6 +65,27 @@ window.onload = function () {
         console.log(showTempCVal);
     }
 
+    document.getElementById('showtempF').checked = true;
+
+    document.getElementById("showtempF").onclick = function () {
+        const showTempCVal = document.getElementById('showtempF').checked
+        console.log(showTempCVal);
+    }
+
+    document.getElementById('showhumidity').checked = true;
+
+    document.getElementById("showhumidity").onclick = function () {
+        const showTempCVal = document.getElementById('showhumidity').checked
+        console.log(showTempCVal);
+    }
+
+    document.getElementById('showgroundmoisture').checked = true;
+
+    document.getElementById("showgroundmoisture").onclick = function () {
+        const showTempCVal = document.getElementById('showgroundmoisture').checked
+        console.log(showTempCVal);
+    }
+
     document.getElementById("openNav").onclick = function () {
         document.getElementById("mySidenav").style.width = "250px";
     }
