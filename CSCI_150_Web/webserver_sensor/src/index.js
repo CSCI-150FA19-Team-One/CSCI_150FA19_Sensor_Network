@@ -4,7 +4,6 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-//import $ from "jquery";
 import CanvasJS from "./canvasjs.min.js";
 import Clock from "react-live-clock";
 import PropTypes from "prop-types";
@@ -15,11 +14,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 require("./navbar.css");
 require("./searchpanel.css");
 
-// const mongo = require('mongodb').MongoClient
-// const url = 'mongodb://localhost:27017'
+// const mongo = require('mongodb').MongoClient;
+// const url = "mongodb://108.211.45.253:60003/";
 
 // mongo.connect(url, {
-//     useNewUrlParser: true,
+//     useNewUrlParser: true
 //     useUnifiedTopology: true
 //   }, (err, client) => {
 //   if (err) {
@@ -32,17 +31,12 @@ require("./searchpanel.css");
 // const db = client.db('')
 
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/";
+var url = "mongodb://108.211.45.253:60003/";
 
 MongoClient.connect(url, function(err, db) {
   if (err) throw err;
-  var dbo = db.db("mydb");
 //   var query = { address: "Park Lane 38" };
-  dbo.bios.find().toArray(function(err, result) {
-    if (err) throw err;
-    console.log(result);
-    db.close();
-  });
+ const dbo = db.bios.find();
 });
 
 window.onload = function() {
