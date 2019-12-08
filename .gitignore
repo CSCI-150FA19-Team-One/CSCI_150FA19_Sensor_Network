@@ -5,3 +5,4 @@
 !.vscode/extensions.json
 *.code-workspace
 /CSCI_150_Hardware/Node_Sensor_Drivers/target
+/CSCI_150_Web/webserver_sensor/node_modules
