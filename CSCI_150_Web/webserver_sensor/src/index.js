@@ -140,35 +140,33 @@ const App = () => (
       </div>
     </div>
 
-    <span styles="font-size:40px;cursor:pointer" id="openNav">
+    <span class="mouseSelect" id="openNav">
       &#9776; Config
     </span>
     <Container>
       <Row>
-        <Col md="auto">
+        <Col>
           {/* chart is displayed here */}
           <div
             id="chartContainer"
-            styles="height: 500px; max-width: 1080px; margin: 0px auto;"
           ></div>
         </Col>
 
-        <Col md="auto">
+        <Col align ="center" md="auto">
           Sensor Select
           <div class="vertical-menu">
             <a href="#" class="active">
-              Home
+              Sensor Node 1
             </a>
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-            <a href="#">Link 4</a>
-            <a href="#">Link 5</a>
-            <a href="#">Link 6</a>
-            <a href="#">Link 7</a>
-            <a href="#">Link 8</a>
-            <a href="#">Link 9</a>
-            <a href="#">Link 10</a>
+            <a href="#">Sensor Node 2</a>
+            <a href="#">Sensor Node 3</a>
+            <a href="#">Sensor Node 4</a>
+            <a href="#">Sensor Node 5</a>
+            <a href="#">Sensor Node 6</a>
+            <a href="#">Sensor Node 7</a>
+            <a href="#">Sensor Node 8</a>
+            <a href="#">Sensor Node 9</a>
+            <a href="#">Sensor Node 10</a>
           </div>
         </Col>
       </Row>
