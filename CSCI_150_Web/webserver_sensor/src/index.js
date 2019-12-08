@@ -12,32 +12,46 @@ import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 require("./navbar.css");
-require("./searchpanel.css");
 
-// const mongo = require('mongodb').MongoClient;
-// const url = "mongodb://108.211.45.253:60003/";
 
-// mongo.connect(url, {
-//     useNewUrlParser: true
-//     useUnifiedTopology: true
-//   }, (err, client) => {
-//   if (err) {
-//     console.error(err)
-//     return
-//   }
-//   //...
-// })
+// const mongoose = require('mongodb').MongoClient;
+// const url = "mongodb://108.211.45.253:60003";
 
-// const db = client.db('')
+// // mongo.connect(url, {
+// //     useNewUrlParser: false,
+// //     useUnifiedTopology: true
+// //   }, (err, client) => {
+// //   if (err) {
+// //     console.error(err)
+// //     return
+// //   }
 
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://108.211.45.253:60003/";
+// // })
 
-MongoClient.connect(url, function(err, db) {
-  if (err) throw err;
-//   var query = { address: "Park Lane 38" };
- const dbo = db.bios.find();
-});
+// mongoose.connect(url, {useNewUrlParser: true,useUnifiedTopology: true});
+
+// //Getting the DB object
+// const db = mongoose.connection;
+
+// //If couldn't connect to database, output error
+// db.on('error', console.error.bind(console, "MongoDB error"));
+
+// db.on('open', () => {
+// 	console.log("Connected to mongodb!");
+// });
+
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb://108.211.45.253:60003/";
+
+// MongoClient.connect(url, function(err, db) {
+//   if (err) throw err;
+//   const dbo = db.db("DevicesData");
+//   dbo.bios.find().toArray(function(err, result) {
+//     if (err) throw err;
+//     console.log(result);
+//     db.close();
+//   });
+// });
 
 window.onload = function() {
   var dps = []; // dataPoints
