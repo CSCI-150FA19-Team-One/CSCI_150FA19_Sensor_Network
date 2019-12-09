@@ -31,10 +31,9 @@ MongoClient.connect(url, function(err, client) {
       test.equal(null, err);
       test.ok(items.length > 0);
       //console.log(items)
-      adminDb.collection('devicesdatas').findOne({},function(err,data){
+      adminDb.collection('devicesdatas').find({}).toArray(function(err,data){
      console.log(data)
         client.close();
       });
-
     });
 });
