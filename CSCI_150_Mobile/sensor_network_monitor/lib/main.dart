@@ -4,6 +4,9 @@ import 'dart:io';
 //import 'package:sensor_network_monitor/widgets_test.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:sensor_network_monitor/Profile.dart';
+import 'package:sensor_network_monitor/notification_screen.dart';
+import 'package:sensor_network_monitor/settings_page.dart';
 //import 'splash_screen_one.dart';
 //import 'package:intl/intl.dart';
 //import 'package:url_launcher/url_launcher.dart';
@@ -28,10 +31,15 @@ class MyApp extends StatelessWidget {
 
       debugShowCheckedModeBanner: false,
       home: SplashScreenOne(),
-      //home: MyStatefulWidget(),
-    );
+      routes: <String, WidgetBuilder>{
+        "/a": (BuildContext) => new profilePage("new page"),
+        "/b": (BuildContext) => new notificationScreen("new page"),
+        "/c": (BuildContext) => new settingsPage("new page"),
+
+  });
+      //home: MyStatefulWidget());
   }
-  
+
 }
 
 class SplashScreenOne extends StatefulWidget {
@@ -289,16 +297,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             new ListTile(
               title: new Text('Profile'),
               trailing: new Icon(Icons.person),
-              /*onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new profilePage("Profile")));
-              },
-
-               */
+              onTap:() => Navigator.of(context).pushNamed("/a"),
             ),
             new ListTile(
               title: new Text('Notifications'),
               trailing: new Icon(Icons.notifications),
+              onTap:() => Navigator.of(context).pushNamed("/b"),
              /* onTap: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new profilePage("Notifications")));
@@ -309,6 +313,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             new ListTile(
               title: new Text('Settings'),
               trailing: new Icon(Icons.settings),
+                onTap:() => Navigator.of(context).pushNamed("/c")
               /*onTap: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new profilePage("Profile")));
