@@ -13,6 +13,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 require("./navbar.css");
 
+
 const CanvasJS = CanvasJSReact.CanvasJS;
 //const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -22,7 +23,7 @@ window.onload = function () {
     var dps = []; // dataPoints
     const chart = new CanvasJS.Chart("chartContainer", {
         title: {
-            text: ("Sensor Node") 
+            text: ("Sensor Node Graph")
         },
         axisY: {
             includeZero: true
@@ -65,10 +66,9 @@ window.onload = function () {
     }, updateInterval);
     //end of chart code
 
-
     //
 
-    // Get the container element
+// Get the container element
 var menuContainer = document.getElementById("btnSelect");
 
 // Get all buttons with class="btn" inside the container
@@ -80,8 +80,12 @@ for (var i = 0; i < selected.length; i++) {
     var current = document.getElementsByClassName("active");
     current[0].className = current[0].className.replace(" active", "");
     this.className += " active";
+    // console.log(current[0].attributes.name)
+    // var graphName = current[0].attrubutes.name
   });
 }
+
+
     document.getElementById("showtempC").checked = false;
 
     document.getElementById("showtempC").onclick = function () {
@@ -167,9 +171,9 @@ const App = () => (
                 <Col className="text-center" align="right" md="auto">
                     <h5>Sensor Node Select</h5>
                     <div class="vertical-menu" id="btnSelect">
-                        <button class="btn active">Sensor Node 1</button>
-                        <button class="btn">Sensor Node 2</button>
-                        <button class="btn">Sensor Node 3</button>
+                        <button class="btn active" name="Sensor Node 1">Sensor Node 1</button>
+                        <button class="btn" name="Sensor Node 2">Sensor Node 2</button>
+                        <button class="btn" name="Sensor Node 3">Sensor Node 3</button>
                     </div>
                 </Col>
             </Row>
