@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sensor_network_monitor/Profile.dart';
+import 'package:sensor_network_monitor/login_screen.dart';
 import 'package:sensor_network_monitor/notification_screen.dart';
 import 'package:sensor_network_monitor/settings_page.dart';
 //import 'splash_screen_one.dart';
@@ -35,6 +36,8 @@ class MyApp extends StatelessWidget {
         "/a": (BuildContext) => new profilePage("new page"),
         "/b": (BuildContext) => new notificationScreen("new page"),
         "/c": (BuildContext) => new settingsPage("new page"),
+        "/d": (BuildContext) => new loginPage("new page"),
+
 
   });
       //home: MyStatefulWidget());
@@ -324,6 +327,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             new ListTile(
               title: new Text('Logoff'),
               trailing: new Icon(Icons.lock),
+                onTap:() => Navigator.of(context).pushNamed("/d")
             ),
             new Divider(),
 
@@ -346,9 +350,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               ),
             ),
 
-
-            title: new Padding(child: new Text('Sensor Node'),
-             padding: const EdgeInsets.only(left: 75.0)),
+            title: new Center(child: new Text("Sensor Node", textAlign: TextAlign.center)),
+            //title: new Padding(child: new Text('Sensor Node'),
+             //padding: const EdgeInsets.only(left: 75.0)),
              backgroundColor: Color(0xff202020),
              automaticallyImplyLeading: false,
 
