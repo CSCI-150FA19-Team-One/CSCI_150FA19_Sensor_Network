@@ -88,7 +88,7 @@ window.onload = function () {
         console.log(showTempCVal);
     };
 
-    document.getElementById("showgroundmoisture").checked = true;
+    document.getElementById("showgroundmoisture").checked = false;
 
     document.getElementById("showgroundmoisture").onclick = function () {
         const showTempCVal = document.getElementById("showgroundmoisture").checked;
@@ -130,7 +130,7 @@ const App = () => (
                 <label for="showhumidity">Humidity</label>
             </div>
             <div>
-                <input type="checkbox" id="showgroundmoisture" name="showgroundmoisture" />
+                <input type="checkbox" id="showgroundmoisture" name="showgroundmoisture" checked='false' />
                 <label for="showgroundmoisture">Ground Moisture</label>
             </div>
         </div>
