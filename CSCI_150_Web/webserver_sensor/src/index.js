@@ -22,7 +22,7 @@ window.onload = function () {
     var dps = []; // dataPoints
     const chart = new CanvasJS.Chart("chartContainer", {
         title: {
-            text: "Sensor Node 1"
+            text: ("Sensor Node " + id) 
         },
         axisY: {
             includeZero: true
@@ -67,6 +67,10 @@ window.onload = function () {
 
 
     //
+    document.getElementById("1").active = true;
+    document.getElementById("2").active = false;
+    document.getElementById("3").active = false;
+
     document.getElementById("showtempC").checked = false;
 
     document.getElementById("showtempC").onclick = function () {
@@ -152,9 +156,9 @@ const App = () => (
                 <Col className="text-center" align="right" md="auto">
                     <h5>Sensor Node Select</h5>
                     <div class="vertical-menu">
-                        <a href="#" class="active">Sensor Node 1</a>
-                        <a href="#">Sensor Node 2</a>
-                        <a href="#">Sensor Node 3</a>
+                        <a href="#" class="active" id='1'>Sensor Node 1</a>
+                        <a href="#" id='2'>Sensor Node 2</a>
+                        <a href="#" id='3'>Sensor Node 3</a>
                     </div>
                 </Col>
             </Row>
