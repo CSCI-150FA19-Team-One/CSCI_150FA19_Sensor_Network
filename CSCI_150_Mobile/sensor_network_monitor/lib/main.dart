@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 //import 'splash_screen_one.dart';
 //import 'package:intl/intl.dart';
 //import 'package:url_launcher/url_launcher.dart';
+//import './Profile.dart';
 
 //Create global query class variable q
 query q = new query();
@@ -18,17 +19,19 @@ class MyApp extends StatelessWidget {
   static const String _title = 'Sensor Node';
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return new MaterialApp(
       title: _title,
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xff606060),
-        primarySwatch: Colors.blueGrey,
+        //primarySwatch: Colors.blueGrey,
       ),
+
       debugShowCheckedModeBanner: false,
       home: SplashScreenOne(),
       //home: MyStatefulWidget(),
     );
   }
+  
 }
 
 class SplashScreenOne extends StatefulWidget {
@@ -228,7 +231,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return Scaffold(
       drawer: new Drawer(
 
+
         child: new ListView(
+
 
           children: <Widget>[
             new UserAccountsDrawerHeader(
@@ -248,20 +253,27 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               currentAccountPicture: new GestureDetector(
                 onTap: () => print('This is the current user'),
                 child: new CircleAvatar(
-                  backgroundImage: new NetworkImage(mainProfilePicture),
+                  backgroundColor: Colors.purple,
+                  child: new Text("J"),
+                 // backgroundImage: new NetworkImage(mainProfilePicture),
                 ),
               ),
               otherAccountsPictures: <Widget>[
                 new GestureDetector(
+
                   onTap: () => switchUser(),
                   child: new CircleAvatar(
-                    backgroundImage:new NetworkImage(secondProfilePicture) ,
+                    backgroundColor: Colors.red,
+                   child: new Text("G"),
+                   // backgroundImage:new NetworkImage(secondProfilePicture) ,
                   ),
                 ),
                 new GestureDetector(
                   onTap: () => switchUser(),
                   child: new CircleAvatar(
-                    backgroundImage:new NetworkImage(thirdProfilePicture) ,
+                    backgroundColor: Colors.green,
+                    child: new Text("R"),
+                    //backgroundImage:new NetworkImage(thirdProfilePicture) ,
                   ),
                 ),
               ],
@@ -277,14 +289,32 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             new ListTile(
               title: new Text('Profile'),
               trailing: new Icon(Icons.person),
+              /*onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new profilePage("Profile")));
+              },
+
+               */
             ),
             new ListTile(
               title: new Text('Notifications'),
               trailing: new Icon(Icons.notifications),
+             /* onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new profilePage("Notifications")));
+              },
+
+              */
             ),
             new ListTile(
               title: new Text('Settings'),
               trailing: new Icon(Icons.settings),
+              /*onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new profilePage("Profile")));
+              },
+
+               */
             ),
             new ListTile(
               title: new Text('Logoff'),
