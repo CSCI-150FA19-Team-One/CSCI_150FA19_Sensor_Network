@@ -29,7 +29,7 @@ class profilePage extends StatelessWidget {
       ),
       body: new Center(
         child:  new Text(
-            "you look good",
+            "",
               style: TextStyle(
               color: Colors.white,
               fontSize: 25.0),

@@ -29,7 +29,7 @@ class notificationScreen extends StatelessWidget {
       ),
       body: new Center(
         child:  new Text(
-            "left on read",
+            "",
             style: TextStyle(
             color: Colors.white,
             fontSize: 25.0),
