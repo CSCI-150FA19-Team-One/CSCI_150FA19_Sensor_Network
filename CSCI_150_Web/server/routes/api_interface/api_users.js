@@ -71,38 +71,38 @@ router.post('/login', jsonParser,  (req, res) => {
 		User.findOne(filter, (err, docs) => {
 			if(err) {			
 				return res.status(422);
+			}else if(docs === null){
+				return res.status(500).json({'message': "Error! No user exists with that username!"});
+			}else{
+
+				//Retrieve hashed pw
+				const hashedPW = docs.password;
+
+				//If passwords match, the result is set to True
+				bcrypt.compare(req.body.password, hashedPW, (err, result) => {
+					if(result) {
+
+						//create a token
+						const token = jwt.sign(
+							{username: docs.username}, 
+							SecretKey,
+							{expiresIn: "90 minutes"},
+							);
+
+						//place token into the database
+						User.updateOne(filter, {$set: {'tokens': {token: token}}}, (err, result) => {
+								if(err){
+									console.log("There was an error inserting new token!");
+									return res.status(421).json({"error": "error updating token value"});
+								}
+								return res.status(200).json({token: token});
+							});
+					}
+					else{
+						return res.status(500).json({"error": "passwords did not match!"});
+					}
+				}); //end of bcrypt
 			}
-
-			console.log("found matching document with match username!");
-			const hashedPW = docs.password;
-
-
-
-			//If passwords match, the result is set to True
-			bcrypt.compare(req.body.password, hashedPW, (err, result) => {
-				if(result) {
-
-					//create a token
-					const token = jwt.sign(
-						{username: docs.username}, 
-						SecretKey,
-						{expiresIn: "90 minutes"},
-						);
-
-					//place token into the database
-					User.updateOne(filter, {$set: {'tokens': {token: token}}}, (err, result) => {
-							if(err){
-								console.log("There was an error inserting new token!");
-								return res.status(421).json({"error": "error updating token value"});
-							}
-							return res.status(200).json({token: token});
-						});
-				}
-				else{
-					return res.status(500).json({"error": "passwords did not match!"});
-				}
-			}); //end of bcrypt
-
 		}); //end of findOne
 	}
 	else{
