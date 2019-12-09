@@ -191,12 +191,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           color: Colors.white,
           fontSize: 38.0),
     ),
-     Text(
-       'Config',
-       style: TextStyle(
-           color: Colors.white,
-           fontSize: 38.0),
-     ),
   ];
 
 
@@ -324,83 +318,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
              automaticallyImplyLeading: false,
 
         ),
-           /*drawer: new Drawer(
 
-             child: new ListView(
-
-              children: <Widget>[
-              new UserAccountsDrawerHeader(
-
-                accountName: new Text(
-                'Jose Baca',
-                style: TextStyle(
-                color: Colors.black
-                ),
-                ),
-                accountEmail: new Text(
-                  'stud@hotmail.com',
-                    style: TextStyle(
-                    color: Colors.black
-                ),
-              ),
-                 currentAccountPicture: new GestureDetector(
-                   onTap: () => print('This is the current user'),
-                  child: new CircleAvatar(
-                  backgroundImage: new NetworkImage(mainProfilePicture),
-                ),
-              ),
-              otherAccountsPictures: <Widget>[
-                new GestureDetector(
-                  onTap: () => switchUser(),
-                  child: new CircleAvatar(
-                    backgroundImage:new NetworkImage(secondProfilePicture) ,
-                  ),
-                ),
-                new GestureDetector(
-                  onTap: () => switchUser(),
-                  child: new CircleAvatar(
-                    backgroundImage:new NetworkImage(thirdProfilePicture) ,
-                  ),
-                ),
-              ],
-
-              decoration:new BoxDecoration(
-                  image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new NetworkImage(mainProfilePicture),
-                  )
-              ),
-            ) ,
-
-              new ListTile(
-                title: new Text('Profile'),
-                trailing: new Icon(Icons.person),
-            ),
-              new ListTile(
-                title: new Text('Notifications'),
-                trailing: new Icon(Icons.notifications),
-            ),
-              new ListTile(
-                title: new Text('Settings'),
-                trailing: new Icon(Icons.settings),
-            ),
-              new ListTile(
-                title: new Text('Logoff'),
-                trailing: new Icon(Icons.lock),
-            ),
-              new Divider(),
-
-
-              new ListTile(
-                title: new Text('Close'),
-                trailing: new Icon(Icons.close),
-                onTap: () => Navigator.of(context).pop(),
-            ),
-          ],
-        ),
-      ),
-
-            */
 
           body: Center(
             child: ListView.builder(
@@ -455,12 +373,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           BottomNavigationBarItem(
             backgroundColor: Color(0xff202020),
             icon: Icon(Icons.local_florist), // Fourth Button
-            title: Text('Moisture'),
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Color(0xff202020),
-            icon: Icon(Icons.computer), // Fourth Button
-            title: Text('Configuration'),
+            title: Text('Ground Moisture'),
           ),
         ],
         currentIndex: _currentIndex,

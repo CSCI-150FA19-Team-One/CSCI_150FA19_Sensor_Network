@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c1997c6c-a97d-4728-9229-1175e0448147" name="Default Changelist" comment="added to nav bar">
+    <list default="true" id="c1997c6c-a97d-4728-9229-1175e0448147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="101" column="47" selection-start-line="101" selection-start-column="47" selection-end-line="101" selection-end-column="47" />
+            <state relative-caret-position="136">
+              <caret line="375" column="32" selection-start-line="375" selection-start-column="32" selection-end-line="375" selection-end-column="32" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -70,10 +70,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1356" />
-    <option name="y" value="-12" />
-    <option name="width" value="1394" />
-    <option name="height" value="1770" />
+    <option name="x" value="1358" />
+    <option name="width" value="1390" />
+    <option name="height" value="1756" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -215,7 +214,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575810522191</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="added symbol to appBar">
+      <created>1575851350322</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1575851350323</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView">
@@ -228,12 +234,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="678" y="-6" width="697" height="885" extended-state="0" />
+    <frame x="679" y="0" width="695" height="878" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Captures" order="0" sideWeight="0.5019841" side_tool="true" visible="true" weight="0.17370892" />
+      <window_info id="Captures" order="0" sideWeight="0.501006" side_tool="true" visible="true" weight="0.17425431" />
       <window_info id="Designer" order="1" />
-      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49801588" visible="true" weight="0.17370892" />
+      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49899396" visible="true" weight="0.17425431" />
       <window_info id="Structure" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
       <window_info id="Image Layers" order="5" />
@@ -241,12 +247,12 @@
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Favorites" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Dart Analysis" order="0" sideWeight="0.4976526" weight="0.32980132" />
-      <window_info active="true" anchor="bottom" id="Run" order="1" sideWeight="0.48356807" visible="true" weight="0.33245033" />
+      <window_info active="true" anchor="bottom" id="Run" order="1" sideWeight="0.48351648" visible="true" weight="0.33556148" />
       <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.49921754" weight="0.32980132" />
       <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Debug" order="4" />
       <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49811035" weight="0.32980132" />
-      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.5164319" side_tool="true" visible="true" weight="0.33245033" />
+      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.51648355" side_tool="true" visible="true" weight="0.33556148" />
       <window_info anchor="bottom" id="Flutter Performance" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4976526" weight="0.32980132" />
       <window_info anchor="bottom" id="Logcat" order="9" />
@@ -272,7 +278,8 @@
     <MESSAGE value="side bar updated" />
     <MESSAGE value="fixing merge error" />
     <MESSAGE value="adding a side bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding a side bar" />
+    <MESSAGE value="added symbol to appBar" />
+    <option name="LAST_COMMIT_MESSAGE" value="added symbol to appBar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -313,8 +320,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="101" column="47" selection-start-line="101" selection-start-column="47" selection-end-line="101" selection-end-column="47" />
+        <state relative-caret-position="136">
+          <caret line="375" column="32" selection-start-line="375" selection-start-column="32" selection-end-line="375" selection-end-column="32" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
