@@ -1,0 +1,49 @@
+{
+  "homepage": "./",
+  "name": "csci-150-webserver",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "bootstrap": "^4.3.1",
+    "bson": "^4.0.2",
+    "jquery": "^3.4.1",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.27",
+    "mongodb": "^3.3.5",
+    "mongoose": "^5.7.14",
+    "nan": "^2.14.0",
+    "prebuild-install": "^5.3.3",
+    "prop-types": "^15.7.2",
+    "python2": "0.0.1",
+    "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.12",
+    "react-dom": "^16.9.0",
+    "react-live-clock": "^3.1.0",
+    "react-scripts": "3.1.1",
+    "require_optional": "^1.0.1",
+    "safe-buffer": "^5.2.0",
+    "saslprep": "^1.0.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

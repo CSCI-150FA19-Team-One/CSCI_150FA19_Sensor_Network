@@ -4,8 +4,14 @@ import 'dart:io';
 //import 'package:sensor_network_monitor/widgets_test.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:sensor_network_monitor/Profile.dart';
+import 'package:sensor_network_monitor/login_screen.dart';
+import 'package:sensor_network_monitor/notification_screen.dart';
+import 'package:sensor_network_monitor/settings_page.dart';
 //import 'splash_screen_one.dart';
 //import 'package:intl/intl.dart';
+//import 'package:url_launcher/url_launcher.dart';
+//import './Profile.dart';
 
 //Create global query class variable q
 query q = new query();
@@ -17,17 +23,26 @@ class MyApp extends StatelessWidget {
   static const String _title = 'Sensor Node';
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return new MaterialApp(
       title: _title,
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xff606060),
         //primarySwatch: Colors.blueGrey,
       ),
+
       debugShowCheckedModeBanner: false,
       home: SplashScreenOne(),
-      //home: MyStatefulWidget(),
-    );
+      routes: <String, WidgetBuilder>{
+        "/a": (BuildContext) => new profilePage("new page"),
+        "/b": (BuildContext) => new notificationScreen("new page"),
+        "/c": (BuildContext) => new settingsPage("new page"),
+        "/d": (BuildContext) => new loginPage("new page"),
+
+
+  });
+      //home: MyStatefulWidget());
   }
+
 }
 
 class SplashScreenOne extends StatefulWidget {
@@ -107,12 +122,25 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
+  String mainProfilePicture = 'https://unsplash.com/photos/TdVGcGkb6C8';
+  String secondProfilePicture = 'http://www.solidbackgrounds.com/2880x1800-spanish-sky-blue-solid-color-background.html';
+  String thirdProfilePicture = 'http://www.solidbackgrounds.com/1920x1080-yellow-green-solid-color-background.html';
   String tempStr;
   String tempVal;
   //Create asynchronous auth and authreg variables
   Future<authReg> authreg;
   Future<Auth> auth;
 
+
+
+  void switchUser() {
+    String backupString = mainProfilePicture;
+    this.setState(() {
+      mainProfilePicture = secondProfilePicture;
+      secondProfilePicture = thirdProfilePicture;
+      thirdProfilePicture = backupString;
+    });
+  }
   //Create initial state for the authreg and reg variables
   @override
   void initState()
@@ -175,7 +203,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           fontSize: 38.0),
     ),
     Text(
-      'Ground Moisture',
+      'Moisture',
       style: TextStyle(
           color: Colors.white,
           fontSize: 38.0),
@@ -216,41 +244,60 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: AppBar(
-
-        title: new Center(child: new Text('Sensor Node', textAlign: TextAlign.center)),
-        backgroundColor: Color(0xff202020),
-        automaticallyImplyLeading: false,
-
-      ),
+    return Scaffold(
       drawer: new Drawer(
+
+
         child: new ListView(
+
+
           children: <Widget>[
             new UserAccountsDrawerHeader(
+
               accountName: new Text(
-              'Jose Baca',
-              style: TextStyle(
-              color: Colors.black
-              ),
+                'Jose Baca',
+                style: TextStyle(
+                    color: Colors.black
+                ),
               ),
               accountEmail: new Text(
-                  'stud@hotmail.com',
-                    style: TextStyle(
+                'stud@hotmail.com',
+                style: TextStyle(
                     color: Colors.black
                 ),
               ),
               currentAccountPicture: new GestureDetector(
                 onTap: () => print('This is the current user'),
                 child: new CircleAvatar(
-                  // backgroundImage: new NetworkImage(),
+                  backgroundColor: Colors.purple,
+                  child: new Text("J"),
+                 // backgroundImage: new NetworkImage(mainProfilePicture),
                 ),
               ),
+              otherAccountsPictures: <Widget>[
+                new GestureDetector(
+
+                  onTap: () => switchUser(),
+                  child: new CircleAvatar(
+                    backgroundColor: Colors.red,
+                   child: new Text("G"),
+                   // backgroundImage:new NetworkImage(secondProfilePicture) ,
+                  ),
+                ),
+                new GestureDetector(
+                  onTap: () => switchUser(),
+                  child: new CircleAvatar(
+                    backgroundColor: Colors.green,
+                    child: new Text("R"),
+                    //backgroundImage:new NetworkImage(thirdProfilePicture) ,
+                  ),
+                ),
+              ],
 
               decoration:new BoxDecoration(
                   image: new DecorationImage(
                     fit: BoxFit.fill,
-                    image: new NetworkImage('https://www.deviantart.com/thegameworld/art/Baby-Yoda-822454332'),
+                    image: new NetworkImage(mainProfilePicture),
                   )
               ),
             ) ,
@@ -258,24 +305,66 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             new ListTile(
               title: new Text('Profile'),
               trailing: new Icon(Icons.person),
+              onTap:() => Navigator.of(context).pushNamed("/a"),
             ),
             new ListTile(
               title: new Text('Notifications'),
               trailing: new Icon(Icons.notifications),
+              onTap:() => Navigator.of(context).pushNamed("/b"),
+             /* onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new profilePage("Notifications")));
+              },
+
+              */
             ),
             new ListTile(
               title: new Text('Settings'),
               trailing: new Icon(Icons.settings),
+                onTap:() => Navigator.of(context).pushNamed("/c")
+              /*onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new profilePage("Profile")));
+              },
+
+               */
             ),
             new ListTile(
-              title: new Text('Logout'),
+              title: new Text('Logoff'),
               trailing: new Icon(Icons.lock),
+                onTap:() => Navigator.of(context).pushNamed("/d")
+            ),
+            new Divider(),
+
+
+            new ListTile(
+              title: new Text('Close'),
+              trailing: new Icon(Icons.close),
+              onTap: () => Navigator.of(context).pop(),
             ),
           ],
         ),
       ),
+          appBar: new AppBar(
 
-      body: Center(
+
+            leading: Builder(
+              builder: (context) => IconButton(
+                icon: new Icon(Icons.view_headline),
+                onPressed: () => Scaffold.of(context).openDrawer(),
+              ),
+            ),
+
+            title: new Center(child: new Text("Sensor Node", textAlign: TextAlign.center)),
+            //title: new Padding(child: new Text('Sensor Node'),
+             //padding: const EdgeInsets.only(left: 75.0)),
+             backgroundColor: Color(0xff202020),
+             automaticallyImplyLeading: false,
+
+        ),
+
+
+          body: Center(
             child: ListView.builder(
               //child:_widgetOptions.elementAt(_currentIndex),
 
@@ -306,7 +395,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
 
 
-      bottomNavigationBar: BottomNavigationBar(
+          bottomNavigationBar: BottomNavigationBar(
 
         //},
         items: const <BottomNavigationBarItem>[
@@ -338,7 +427,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         onTap: _onItemTapped,
       ),
 
-    );
+
+      );
   }
 }
 
