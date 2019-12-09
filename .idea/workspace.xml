@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+
     <list default="true" id="c1997c6c-a97d-4728-9229-1175e0448147" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Asap/Asap-BoldItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Asap/Asap-Italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Asap/Asap-Medium.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Asap/Asap-MediumItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Asap/Asap-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Asap/Asap-SemiBold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Asap/Asap-SemiBoldItalic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Asap/OFL.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Cinzel/Cinzel-Black.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Cinzel/Cinzel-Bold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Cinzel/Cinzel-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/fonts/Cinzel/OFL.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.yaml" afterDir="false" />
-    </list>
-    <ignored path="$PROJECT_DIR$/out/" />
+
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +32,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1309">
-              <caret line="77" column="30" lean-forward="true" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
+
+            <state relative-caret-position="1666">
+              <caret line="185" column="19" lean-forward="true" selection-start-line="185" selection-start-column="19" selection-end-line="185" selection-end-column="19" />
+            <state relative-caret-position="383">
+              <caret line="369" column="30" selection-start-line="369" selection-start-column="30" selection-end-line="369" selection-end-column="30" />
+
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -44,14 +56,19 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.lock">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-510" />
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" selection-start-line="21" selection-end-line="21" />
+
+            <state relative-caret-position="170">
+              <caret line="28" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="187">
+              <caret line="29" column="3" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -70,7 +87,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="x" value="1358" />
     <option name="width" value="1390" />
     <option name="height" value="1756" />
@@ -81,8 +98,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -99,6 +114,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -173,7 +190,72 @@
       <option name="project" value="LOCAL" />
       <updated>1575273064491</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="resized splashed screen/ changed app bar">
+      <created>1575413713942</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1575413713944</updated>
+    </task>
+    <task id="LOCAL-00007" summary="adding a background color / changed nav bar">
+      <created>1575790083802</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1575790083802</updated>
+    </task>
+    <task id="LOCAL-00008" summary="working on a side bar">
+      <created>1575799177512</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1575799177514</updated>
+    </task>
+    <task id="LOCAL-00009" summary="working on a side bar">
+      <created>1575799238933</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1575799238933</updated>
+    </task>
+    <task id="LOCAL-00010" summary="fixing merge error">
+      <created>1575806127052</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1575806127053</updated>
+    </task>
+    <task id="LOCAL-00011" summary="adding a side bar">
+      <created>1575810522191</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1575810522191</updated>
+    </task>
+    <task id="LOCAL-00012" summary="added symbol to appBar">
+      <created>1575851350322</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1575851350323</updated>
+    </task>
+    <task id="LOCAL-00013" summary="deleted one option from nav bar">
+      <created>1575852078780</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1575852078781</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00012" summary="added to nav bar">
+      <created>1575839865532</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1575839865535</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView">
@@ -186,30 +268,30 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
+    <frame x="679" y="0" width="695" height="878" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
+      <window_info id="Captures" order="0" sideWeight="0.501006" side_tool="true" visible="true" weight="0.17425431" />
       <window_info id="Designer" order="1" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.08390023" />
+      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49899396" visible="true" weight="0.17425431" />
       <window_info id="Structure" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
       <window_info id="Image Layers" order="5" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Favorites" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Dart Analysis" order="0" sideWeight="0.49921754" weight="0.32980132" />
-      <window_info active="true" anchor="bottom" id="Run" order="1" sideWeight="0.49130765" visible="true" weight="0.32980132" />
+      <window_info anchor="bottom" id="Dart Analysis" order="0" sideWeight="0.4976526" weight="0.32980132" />
+      <window_info active="true" anchor="bottom" id="Run" order="1" sideWeight="0.48351648" visible="true" weight="0.33556148" />
       <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.49921754" weight="0.32980132" />
       <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Debug" order="4" />
       <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49811035" weight="0.32980132" />
-      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.5086924" side_tool="true" visible="true" weight="0.32980132" />
+      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.51648355" side_tool="true" visible="true" weight="0.33556148" />
       <window_info anchor="bottom" id="Flutter Performance" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4976526" weight="0.32980132" />
       <window_info anchor="bottom" id="Logcat" order="9" />
       <window_info anchor="bottom" id="Find" order="10" />
-      <window_info active="true" anchor="bottom" id="Messages" order="11" sideWeight="0.49659863" visible="true" weight="0.32980132" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.5086072" weight="0.3245033" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Theme Preview" order="2" />
@@ -224,7 +306,17 @@
     <MESSAGE value="color change" />
     <MESSAGE value="added splash screen" />
     <MESSAGE value="added splash screen/ with splash screen file" />
-    <option name="LAST_COMMIT_MESSAGE" value="added splash screen/ with splash screen file" />
+    <MESSAGE value="resized splashed screen/ changed app bar" />
+    <MESSAGE value="adding a background color / changed nav bar" />
+    <MESSAGE value="working on a side bar" />
+    <MESSAGE value="side bar updated" />
+    <MESSAGE value="fixing merge error" />
+    <MESSAGE value="adding a side bar" />
+    <MESSAGE value="added symbol to appBar" />
+    <MESSAGE value="deleted one option from nav bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted one option from nav bar" />
+    <MESSAGE value="added to nav bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="added to nav bar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -237,16 +329,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1309">
-          <caret line="77" column="30" lean-forward="true" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/splash_screen_one.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -254,13 +336,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/flutter/packages/flutter/lib/src/painting/_network_image_io.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="47" column="13" selection-start-line="47" selection-start-column="13" selection-end-line="47" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.lock">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-510" />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/pubspec.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
+
+        <state relative-caret-position="170">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="187">
+          <caret line="29" column="3" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="3" />
+
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart">
+      <provider selected="true" editor-type-id="text-editor">
+
+        <state relative-caret-position="1666">
+          <caret line="185" column="19" lean-forward="true" selection-start-line="185" selection-start-column="19" selection-end-line="185" selection-end-column="19" />
+        <state relative-caret-position="383">
+          <caret line="369" column="30" selection-start-line="369" selection-start-column="30" selection-end-line="369" selection-end-column="30" />
+
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

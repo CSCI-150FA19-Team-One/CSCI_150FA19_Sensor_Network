@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 //import 'package:sensor_network_monitor/widgets_test.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 //import 'splash_screen_one.dart';
 //import 'package:intl/intl.dart';
+//import 'package:url_launcher/url_launcher.dart';
 
 //Create global query class variable q
 query q = new query();
@@ -19,6 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _title,
       theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xff606060),
         primarySwatch: Colors.blueGrey,
       ),
       debugShowCheckedModeBanner: false,
@@ -105,10 +108,25 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
+  String mainProfilePicture = 'https://unsplash.com/photos/TdVGcGkb6C8';
+  String secondProfilePicture = 'http://www.solidbackgrounds.com/2880x1800-spanish-sky-blue-solid-color-background.html';
+  String thirdProfilePicture = 'http://www.solidbackgrounds.com/1920x1080-yellow-green-solid-color-background.html';
+  String tempStr;
+  String tempVal;
   //Create asynchronous auth and authreg variables
   Future<authReg> authreg;
   Future<Auth> auth;
 
+
+
+  void switchUser() {
+    String backupString = mainProfilePicture;
+    this.setState(() {
+      mainProfilePicture = secondProfilePicture;
+      secondProfilePicture = thirdProfilePicture;
+      thirdProfilePicture = backupString;
+    });
+  }
   //Create initial state for the authreg and reg variables
   @override
   void initState()
@@ -118,83 +136,255 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     auth = loginRequest();
   }
 
-  int _currentIndex = 0;
+  List<DataResults> list = List();
+  _dataResults() async
+  {
+    //Create token string
+    String token = "\"" + q.token + "\"";
+
+    //POST request & response collection
+    final response = await http.get(makePath(),
+        //Create token header
+        headers: {HttpHeaders.authorizationHeader: q.token},
+    );
+
+    list.length = 0;
+    if (response.statusCode == 200)
+    {
+      list = (json.decode(response.body) as List)
+      .map((data) => new DataResults.fromJson(data))
+      .toList();
+    }
+    else
+    {
+      throw Exception('Failed to Download Data');
+    }
+  }
+
+ int _currentIndex = 0;
    static const TextStyle optionStyle = TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold);
-   static const List<Widget> _widgetOptions = <Widget>[
+   List<Widget> _widgetOptions = <Widget>[
     Text(
       'Welcome',
-      style: optionStyle,
-
+      style: TextStyle(
+      color: Colors.white,
+      fontSize: 38.0),
+  //optionStyle,
 
     ),
     Text(
       'Temperature',
-      style: optionStyle,
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 38.0),
     ),
     Text(
       'Humidity',
-      style: optionStyle,
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 38.0),
     ),
     Text(
-      'Ground Moisture',
-      style: optionStyle,
+      'Moisture',
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 38.0),
     ),
   ];
+
 
   void _onItemTapped(int index) {
     setState(() {
       _currentIndex = index;
+      print(index);
+      if (index == 1)
+        {
+          q.device = "e00fce681c2671fc7b1680eb";
+          q.sensor = "tempF";
+          _dataResults();
+        }
+      else if (index == 2)
+        {
+          q.device = "e00fce686522d2441e1f693f";
+          q.sensor = "HumidityL";
+          _dataResults();
+        }
+      else if (index == 3)
+        {
+          q.device = "e00fce68b1b49ccf2e314c17";
+          q.sensor = "GMoistureP";
+          _dataResults();
+        }
+      else
+        {} //Empty Else
+      //String device=null; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
+      //String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT"
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      drawer: new Drawer(
 
-        title: new Center(child: new Text('Sensor Node', textAlign: TextAlign.center)),
-        automaticallyImplyLeading: false,
+        child: new ListView(
 
+          children: <Widget>[
+            new UserAccountsDrawerHeader(
+
+              accountName: new Text(
+                'Jose Baca',
+                style: TextStyle(
+                    color: Colors.black
+                ),
+              ),
+              accountEmail: new Text(
+                'stud@hotmail.com',
+                style: TextStyle(
+                    color: Colors.black
+                ),
+              ),
+              currentAccountPicture: new GestureDetector(
+                onTap: () => print('This is the current user'),
+                child: new CircleAvatar(
+                  backgroundImage: new NetworkImage(mainProfilePicture),
+                ),
+              ),
+              otherAccountsPictures: <Widget>[
+                new GestureDetector(
+                  onTap: () => switchUser(),
+                  child: new CircleAvatar(
+                    backgroundImage:new NetworkImage(secondProfilePicture) ,
+                  ),
+                ),
+                new GestureDetector(
+                  onTap: () => switchUser(),
+                  child: new CircleAvatar(
+                    backgroundImage:new NetworkImage(thirdProfilePicture) ,
+                  ),
+                ),
+              ],
+
+              decoration:new BoxDecoration(
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: new NetworkImage(mainProfilePicture),
+                  )
+              ),
+            ) ,
+
+            new ListTile(
+              title: new Text('Profile'),
+              trailing: new Icon(Icons.person),
+            ),
+            new ListTile(
+              title: new Text('Notifications'),
+              trailing: new Icon(Icons.notifications),
+            ),
+            new ListTile(
+              title: new Text('Settings'),
+              trailing: new Icon(Icons.settings),
+            ),
+            new ListTile(
+              title: new Text('Logoff'),
+              trailing: new Icon(Icons.lock),
+            ),
+            new Divider(),
+
+
+            new ListTile(
+              title: new Text('Close'),
+              trailing: new Icon(Icons.close),
+              onTap: () => Navigator.of(context).pop(),
+            ),
+          ],
+        ),
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_currentIndex),
+          appBar: new AppBar(
 
 
-      ),
-      bottomNavigationBar: BottomNavigationBar(
+            leading: Builder(
+              builder: (context) => IconButton(
+                icon: new Icon(Icons.view_headline),
+                onPressed: () => Scaffold.of(context).openDrawer(),
+              ),
+            ),
+
+
+            title: new Padding(child: new Text('Sensor Node'),
+             padding: const EdgeInsets.only(left: 75.0)),
+             backgroundColor: Color(0xff202020),
+             automaticallyImplyLeading: false,
+
+        ),
+
+
+          body: Center(
+            child: ListView.builder(
+              //child:_widgetOptions.elementAt(_currentIndex),
+
+
+              itemCount: list.length,
+             itemBuilder: (BuildContext context, int index)
+             {
+             tempStr = 'Time: ' + list[index].gatheredAt;
+             if (q.sensor=="tempC"||q.sensor=="tempF")
+             {
+              tempVal = "Temp: " + list[index].value.toStringAsFixed(4);
+              }
+              else
+              {
+                tempVal = "Value: " + list[index].value.toStringAsFixed(4);
+              }
+              return ListTile(
+               contentPadding: EdgeInsets.all(10.0),
+               title: new Text(tempStr),
+                trailing: new Text(
+                tempVal,
+              ),
+            );
+          }
+          ),
+
+        ),
+
+
+
+          bottomNavigationBar: BottomNavigationBar(
 
         //},
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.home),
             title: Text('Home'), // First Button
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.cloud_queue), //Second Button
             title: Text('Temperature'),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.invert_colors), // Third Button
             title: Text('Humidity'),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Color(0xff202020),
             icon: Icon(Icons.local_florist), // Fourth Button
             title: Text('Ground Moisture'),
           ),
         ],
         currentIndex: _currentIndex,
         //backgroundColor: Colors.blue[800],
-        unselectedItemColor: Colors.lightBlue,
+        unselectedItemColor: Colors.teal,
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
       ),
 
-    );
+
+      );
   }
 }
 
@@ -228,6 +418,7 @@ class Auth
 
   factory Auth.fromJson(Map<String, dynamic> json)
   {
+    q.token = json['token'];
     return new Auth._(
       token: json['token'],
       message: json['token'],
@@ -261,7 +452,6 @@ class DataResults
 {
   final String gatheredAt;
   final double value;
-  String valueStr;
 
   DataResults._({this.gatheredAt,this.value});
 
@@ -284,6 +474,8 @@ class query {
   String m;
   String d;
   String h;
+  String token;
+
 
   //Sensor Query Variables
   bool tempInF = true;
@@ -365,12 +557,11 @@ Future<authReg> regRequest() async
 {
   //Create Request
   var response = await
-  http.post(regURL(),
+  http.post("http://108.211.45.253:60005/user/register",
+    headers: {"Content-type": "application/json"},
     //Create Body Login Info
-    body: {'username': 'user333', 'password': '1234',}
+    body: '{"username": "onlyonce", "password": "1234"}'
   );
-  print(response.body); //Check console for response Sent
-  print(response.statusCode); //If status is 500: "Internal Server Error"
 
   if (response.statusCode == 200)
   {
@@ -387,12 +578,12 @@ Future<Auth> loginRequest() async
 {
   //Create Request
   var response = await
-  http.post(loginURL(),
+  http.post("http://108.211.45.253:60005/user/login",
+      headers: {"Content-type": "application/json"},
       //Create Body Login Info
-      body: {'username': 'user333', 'password': '1234',}
+      body: '{"username": "onlyonce", "password": "1234"}'
   );
   print(response.body); //Check console for response Sent
-  print(response.statusCode); //If status is 500: "Internal Server Error"
 
   if (response.statusCode == 200)
   {
@@ -402,16 +593,4 @@ Future<Auth> loginRequest() async
   {
     throw Exception('Failed to Download Data');
   }
-}
-
-//Creates the authorization path
-String regURL()
-{
-  return 'http://108.211.45.253:60005/user/register';
-}
-
-//Creates the login path for the token
-String loginURL()
-{
-  return 'http://108.211.45.253:60005/user/login';
 }
