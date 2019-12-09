@@ -15,35 +15,28 @@ const SecretKey = "nodesensor";
 //create a new user
 router.post('/register', jsonParser,  (req, res) => {
 
+	//check if body contains required fields
 	if( req.body.username != null && req.body.password != null){
+		//Gen salt
 		bcrypt.genSalt(Salts, (err, salt) => {
 			if(err) { return res.status(500).json({"error": "could not generate salt"});}
 			else{
+				//If no errors in generate salt, hash the input password
 				bcrypt.hash(req.body.password, salt, (err, hash) => {
 					if(err){ return res.status(500).json({"error": "could not hash password!"});}
 					else{
 
+						//Upon successful hash, create new user and save to db
 						const user = new User({
 							username: req.body.username,
 							password: hash
 						}).save( (err,docs) => {
 							if(err){ return res.status(500).json({
-								"error": "username already exists!",
+								"error": "username already exists or too short / long username!",
 								"errorMessage": err});}
 							return res.status(200).send(docs);			
 						});
 
-						/*
-						const user = new User({
-							username: req.body.username,
-							password: hash
-						});
-
-						user.save((err, docs) => {
-							if(err){ return res.status(500).json({"error": "username already exists!"});}
-							return res.status(200).send(docs);
-						});
-						*/
 					}
 				}); //end of bcrypt hash
 			}
