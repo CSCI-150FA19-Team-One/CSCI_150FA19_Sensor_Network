@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 
-class profilePage extends StatelessWidget {
+class notificationScreen extends StatelessWidget {
 
   final String title;
 
-  profilePage(this.title);
+  notificationScreen(this.title);
 
   @override
   Widget build(BuildContext context){
@@ -13,14 +13,14 @@ class profilePage extends StatelessWidget {
       appBar: new AppBar(
         leading: Builder(
           builder: (context) => IconButton(
-            icon: new Icon(Icons.arrow_back),
+              icon: new Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.pop(context);
               }
           ),
         ),
-        title: new Padding(child: new Text('Profile'),
-            padding: const EdgeInsets.only(left: 100.0)),
+        title: new Padding(child: new Text('Notifications'),
+            padding: const EdgeInsets.only(left: 80.0)),
         backgroundColor: Color(0xff202020),
         automaticallyImplyLeading: false,
 
@@ -34,5 +34,3 @@ class profilePage extends StatelessWidget {
   }
 
 }
-
-
