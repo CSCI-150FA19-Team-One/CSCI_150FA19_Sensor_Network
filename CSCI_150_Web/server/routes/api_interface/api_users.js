@@ -27,7 +27,9 @@ router.post('/register', jsonParser,  (req, res) => {
 							username: req.body.username,
 							password: hash
 						}).save( (err,docs) => {
-							if(err){ return res.status(500).json({"error": "username already exists!"});}
+							if(err){ return res.status(500).json({
+								"error": "username already exists!",
+								"errorMessage": err});}
 							return res.status(200).send(docs);			
 						});
 
