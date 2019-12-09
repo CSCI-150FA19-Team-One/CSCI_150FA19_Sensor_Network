@@ -118,8 +118,19 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   void initState()
   {
     super.initState();
+    q.user = 'user333';
+    q.password = '1234';
     authreg = regRequest();
     auth = loginRequest();
+    /*print(q.message);
+    print(q.token);
+    if(q.message != null)
+      {
+        print('TESTINHERE');
+        authreg = regRequest();
+        q.message = null;
+        auth = loginRequest();
+      }*/
   }
 
   List<DataResults> list = List();
@@ -146,19 +157,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       throw Exception('Failed to Download Data');
     }
   }
-
  int _currentIndex = 0;
    static const TextStyle optionStyle = TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold);
    List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Welcome',
-      style: TextStyle(
-      color: Colors.white,
-      fontSize: 38.0),
-  //optionStyle,
-
-    ),
+    welcomePage(),
     Text(
       'Temperature',
       style: TextStyle(
@@ -203,7 +206,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           _dataResults();
         }
       else
-        {} //Empty Else
+        {
+          welcomePage();
+        } //Empty Else
       //String device=null; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
       //String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT"
     });
@@ -358,6 +363,7 @@ class authReg
   }
 }//END AuthReg CLASS
 
+//Auth login class, which will collect the token
 class Auth
 {
   final String token;
@@ -368,9 +374,10 @@ class Auth
   factory Auth.fromJson(Map<String, dynamic> json)
   {
     q.token = json['token'];
+    q.message = json['message'];
     return new Auth._(
       token: json['token'],
-      message: json['token'],
+      message: json['message'],
     );
   }
 }//END Auth CLASS
@@ -382,16 +389,19 @@ class Data
   final String deviceID;
   final String name;
   final String version;
+  final String message;
 
-  Data._({this.userID, this.deviceID, this.name, this.version});
+  Data._({this.userID, this.deviceID, this.name, this.version, this.message});
 
   factory Data.fromJson(Map<String, dynamic> json)
   {
+    q.message = json['message'];
     return new Data._(
       userID: json['_id'],
       deviceID: json['deviceID'],
       name: json['title'],
       version: json['_v'],
+      message: json['message'],
     );
   }
 } //END DATA CLASS
@@ -406,6 +416,7 @@ class DataResults
 
   factory DataResults.fromJson(Map<String, dynamic> json)
   {
+    q.message = json['message'];
     return new DataResults._(
       gatheredAt: json['gatheredAt'],
       value: json['value'].toDouble(),
@@ -423,7 +434,6 @@ class query {
   String m;
   String d;
   String h;
-  String token;
 
 
   //Sensor Query Variables
@@ -433,6 +443,12 @@ class query {
 //Device Query Variables
   String device=null; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
   String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT"
+
+  //Other Variables
+  String token=null;
+  String message=null;
+  String user = 'user 333';
+  String password = '1234';
 }//END QUERY CLASS
 
 
@@ -504,12 +520,13 @@ String makePath()
 //Asynchronous approach to send a post request to the server to register the device
 Future<authReg> regRequest() async
 {
+  String bodyText = '{"username": "' + q.user + '", "password": "' + q.password + '"}';
   //Create Request
   var response = await
   http.post("http://108.211.45.253:60005/user/register",
     headers: {"Content-type": "application/json"},
     //Create Body Login Info
-    body: '{"username": "onlyonce", "password": "1234"}'
+    body: bodyText
   );
 
   if (response.statusCode == 200)
@@ -525,12 +542,13 @@ Future<authReg> regRequest() async
 //Asynchronous post request to receive a token from the server
 Future<Auth> loginRequest() async
 {
+  String bodyText = '{"username": "' + q.user + '", "password": "' + q.password + '"}';
   //Create Request
   var response = await
   http.post("http://108.211.45.253:60005/user/login",
       headers: {"Content-type": "application/json"},
       //Create Body Login Info
-      body: '{"username": "onlyonce", "password": "1234"}'
+      body: bodyText
   );
   print(response.body); //Check console for response Sent
 
@@ -542,4 +560,18 @@ Future<Auth> loginRequest() async
   {
     throw Exception('Failed to Download Data');
   }
+}
+
+class welcomePage extends MyStatefulWidget
+{
+  @override
+  static const TextStyle optionStyle = TextStyle(
+      fontSize: 30, fontWeight: FontWeight.bold);
+  List<Widget> _widgetOptions = <Widget>[
+  Text(
+  'Welcome',
+  style: TextStyle(
+  color: Colors.white,
+  fontSize: 38.0),)];
+//optionStyle,
 }
