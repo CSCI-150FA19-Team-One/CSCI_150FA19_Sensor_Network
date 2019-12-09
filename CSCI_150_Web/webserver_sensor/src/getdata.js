@@ -6,10 +6,17 @@ const url = "mongodb://108.211.45.253:60003";
 mongoose.connect(url, {useNewUrlParser: true,useUnifiedTopology: true});
 
 //Getting the DB object
-const db = mongoose.connection;
+const connection = mongoose.connection;
 
 //If couldn't connect to database, output error
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
+connection.on('error', console.error.bind(console, 'connection error:'));
+connection.once('open', function() {
     console.log("Connected to mongodb!");
+    connection.db.collection("devicesdatas", function(err, collection){
+        collection.find({year_timestamp:"2019" , deviceID:"e00fce681c2671fc7b1680eb",name:"tempF"}).toArray(function(err, data){
+            console.log(data); // it will print your collection data
+        })
+    });
+    console.log("done!")
 });
+
