@@ -1,24 +1,33 @@
-import React from "react";
+import React, {Component} from 'react';
 import ReactDOM from "react-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Clock from "react-live-clock";
-import DynamicMultiSeriesChart from "./displayCharts"
+import CanvasJSReact from './canvasjs.react';
+
+//import DynamicMultiSeriesChart from "./displayCharts"
 
 // Importing the Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
 
 require("./navbar.css");
+const settings = require('./config.json');
 
+//graph variables
+const CanvasJSChart = CanvasJSReact.CanvasJSChart;
+var dataPoints1 = [];
+var dataPoints2 = [];
+var updateInterval = 2000;
+//initial values
+var yValue1 = 408;
+var yValue2 = 350;
+var xValue = 5;
 
+const test = 20
 
 window.onload = function () {
-
-
-    //
-
 // Get the container element
 var menuContainer = document.getElementById("btnSelect");
 
@@ -74,7 +83,103 @@ for (var i = 0; i < selected.length; i++) {
     };
 };
 
-const App = () => (
+
+
+class DynamicMultiSeriesChart extends Component {
+	constructor() {
+		super();
+		this.updateChart = this.updateChart.bind(this);		
+	}
+	componentDidMount(){
+		this.updateChart(test);
+		setInterval(this.updateChart, updateInterval);
+	}
+	
+	updateChart(count) {
+		count = count || 1;		
+		for (var i = 0; i < count; i++) {
+			xValue += 2;
+			yValue1 = Math.floor(Math.random()*(408-400+1)+400);
+			yValue2 = Math.floor(Math.random()*(350-340+1)+340);
+			dataPoints1.push({
+			  x: xValue,
+			  y: yValue1
+			});
+			dataPoints2.push({
+			  x: xValue,
+			  y: yValue2
+			});
+		}
+		this.chart.options.data[0].legendText = "Current " + yValue1 + " km/h";
+		this.chart.options.data[1].legendText = null//" Lamborghini Aventador - " + yValue2 + " km/h";
+		this.chart.render();
+	}
+	render() {
+		const options = {
+			zoomEnabled: true,
+			theme: "light2",
+			title: {
+				text: "Sensor Node Network"
+			},
+			axisX: {
+				title: "chart updates every 2 secs"
+			},
+			axisY:{
+				suffix: " km/h",
+				includeZero: false
+			},
+			toolTip: {
+				shared: true
+			},
+			legend: {
+				cursor:"pointer",
+				verticalAlign: "top",
+				fontSize: 18,
+				fontColor: "dimGrey",
+				itemclick : function(e){
+					if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+						e.dataSeries.visible = false;
+					}
+					else {
+						e.dataSeries.visible = true;
+					}
+					e.chart.render();
+				}
+			},
+			data: [
+				{
+					type: "stepLine",
+					xValueFormatString: "#,##0 seconds",
+					yValueFormatString: "#,##0 km/h",
+					showInLegend: true,
+					name: "Bugatti Veyron",
+					dataPoints: dataPoints1
+				},
+				{
+					type: "stepLine",
+					xValueFormatString: "#,##0 seconds",
+					yValueFormatString: "#,##0 km/h",
+					showInLegend: true,
+					name: "Lamborghini Aventador" ,
+					dataPoints: dataPoints2
+				}
+			]
+		}
+		
+		return (
+		<div>
+			<CanvasJSChart options = {options} 
+				onRef={ref => this.chart = ref}
+			/>
+			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
+		</div>
+		);
+	}
+}
+
+
+
+const App = () =>
     <>
         <Navbar bg="light">
             <Navbar.Brand href="#home">Sensor Network Project</Navbar.Brand>
@@ -130,6 +235,5 @@ const App = () => (
             </Row>
         </Container>
     </>
-);
 
 ReactDOM.render(<App />, document.getElementById("root"));
