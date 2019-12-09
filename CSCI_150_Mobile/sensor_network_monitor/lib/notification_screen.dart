@@ -19,15 +19,21 @@ class notificationScreen extends StatelessWidget {
               }
           ),
         ),
-        title: new Padding(child: new Text('Notifications'),
-            padding: const EdgeInsets.only(left: 80.0)),
+        title: new Center(child: new Text("Notifications", textAlign: TextAlign.center)),
+        //title: new Padding(child: new Text('Notifications'),
+           // padding: const EdgeInsets.only(left: 75.0)),
         backgroundColor: Color(0xff202020),
         automaticallyImplyLeading: false,
 
         //title: new Text("new page"),
       ),
       body: new Center(
-        child:  new Text("new page"),
+        child:  new Text(
+            "left on read",
+            style: TextStyle(
+            color: Colors.white,
+            fontSize: 25.0),
+      ),
       ),
 
     );

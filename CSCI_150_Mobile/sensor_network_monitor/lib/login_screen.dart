@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 
-class settingsPage extends StatelessWidget {
+class loginPage extends StatelessWidget {
 
   final String title;
 
-  settingsPage(this.title);
+  loginPage(this.title);
 
   @override
   Widget build(BuildContext context){
@@ -19,21 +19,19 @@ class settingsPage extends StatelessWidget {
               }
           ),
         ),
-        title: new Center(child: new Text("Settings", textAlign: TextAlign.center)),
-        //title: new Padding(child: new Text('Settings'),
-          //  padding: const EdgeInsets.only(left: 90.0)),
+        title: new Center(child: new Text("Login", textAlign: TextAlign.center)),
+        //title: new Padding(child: new Text('Login'),
+          //  padding: const EdgeInsets.only(left: 110.0)),
         backgroundColor: Color(0xff202020),
         automaticallyImplyLeading: false,
 
-        //title: new Text("new page"),
       ),
       body: new Center(
         child:  new Text(
             "",
               style: TextStyle(
               color: Colors.white,
-              fontSize: 25.0),
-        ),
+              fontSize: 38.0),),
       ),
 
     );
