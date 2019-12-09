@@ -12,16 +12,31 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 require("./navbar.css");
 
-//test chartcode
-const chart = require("./displayCharts")
-
 
 
 window.onload = function () {
 
 
-
     //
+
+// Get the container element
+var menuContainer = document.getElementById("btnSelect");
+
+// Get all buttons with class="btn" inside the container
+var selected = menuContainer.getElementsByClassName("btn");
+
+// Loop through the buttons and add the active class to the current/clicked button
+for (var i = 0; i < selected.length; i++) {
+  selected[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+    // console.log(current[0].attributes.name)
+    // var graphName = current[0].attrubutes.name
+  });
+}
+
+
     document.getElementById("showtempC").checked = false;
 
     document.getElementById("showtempC").onclick = function () {
@@ -106,10 +121,10 @@ const App = () => (
                 </Col>
                 <Col className="text-center" align="right" md="auto">
                     <h5>Sensor Node Select</h5>
-                    <div class="vertical-menu">
-                        <a href="#" class="active">Sensor Node 1</a>
-                        <a href="#">Sensor Node 2</a>
-                        <a href="#">Sensor Node 3</a>
+                    <div class="vertical-menu" id="btnSelect">
+                        <button class="btn active" name="Sensor Node 1">Sensor Node 1</button>
+                        <button class="btn" name="Sensor Node 2">Sensor Node 2</button>
+                        <button class="btn" name="Sensor Node 3">Sensor Node 3</button>
                     </div>
                 </Col>
             </Row>
