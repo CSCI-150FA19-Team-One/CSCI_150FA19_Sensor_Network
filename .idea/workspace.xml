@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c1997c6c-a97d-4728-9229-1175e0448147" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/CSCI_150_Mobile/sensor_network_monitor/lib/main.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -221,7 +220,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575851350323</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="deleted one option from nav bar">
+      <created>1575852078780</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1575852078781</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView">
@@ -279,7 +285,8 @@
     <MESSAGE value="fixing merge error" />
     <MESSAGE value="adding a side bar" />
     <MESSAGE value="added symbol to appBar" />
-    <option name="LAST_COMMIT_MESSAGE" value="added symbol to appBar" />
+    <MESSAGE value="deleted one option from nav bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted one option from nav bar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
