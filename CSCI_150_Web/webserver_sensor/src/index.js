@@ -22,7 +22,7 @@ window.onload = function () {
     var dps = []; // dataPoints
     const chart = new CanvasJS.Chart("chartContainer", {
         title: {
-            text: ("Sensor Node " + id) 
+            text: ("Sensor Node") 
         },
         axisY: {
             includeZero: true
@@ -67,10 +67,21 @@ window.onload = function () {
 
 
     //
-    document.getElementById("1").active = true;
-    document.getElementById("2").active = false;
-    document.getElementById("3").active = false;
 
+    // Get the container element
+var menuContainer = document.getElementById("btnSelect");
+
+// Get all buttons with class="btn" inside the container
+var selected = menuContainer.getElementsByClassName("btn");
+
+// Loop through the buttons and add the active class to the current/clicked button
+for (var i = 0; i < selected.length; i++) {
+  selected[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
     document.getElementById("showtempC").checked = false;
 
     document.getElementById("showtempC").onclick = function () {
@@ -155,10 +166,10 @@ const App = () => (
                 </Col>
                 <Col className="text-center" align="right" md="auto">
                     <h5>Sensor Node Select</h5>
-                    <div class="vertical-menu">
-                        <a href="#" class="active" id='1'>Sensor Node 1</a>
-                        <a href="#" id='2'>Sensor Node 2</a>
-                        <a href="#" id='3'>Sensor Node 3</a>
+                    <div class="vertical-menu" id="btnSelect">
+                        <button class="btn active">Sensor Node 1</button>
+                        <button class="btn">Sensor Node 2</button>
+                        <button class="btn">Sensor Node 3</button>
                     </div>
                 </Col>
             </Row>
