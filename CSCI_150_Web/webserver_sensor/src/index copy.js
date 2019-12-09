@@ -4,8 +4,9 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+//import CanvasJS from "./canvasjs.min.js";
+import CanvasJSReact from './canvasjs.react';
 import Clock from "react-live-clock";
-import DynamicMultiSeriesChart from "./displayCharts"
 
 // Importing the Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,12 +14,59 @@ import "bootstrap/dist/css/bootstrap.min.css";
 require("./navbar.css");
 
 //test chartcode
-const chart = require("./displayCharts")
+const testchart = require("./displayCharts")
 
-
+const CanvasJS = CanvasJSReact.CanvasJS;
+//const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 window.onload = function () {
 
+    //start of chart code
+    var dps = []; // dataPoints
+    const chart = new CanvasJS.Chart("chartContainer", {
+        title: {
+            text: "Sensor Node 1"
+        },
+        axisY: {
+            includeZero: true
+        },
+        data: [
+            {
+                type: "line",
+                dataPoints: dps
+            }
+        ]
+    });
+
+    var xVal = 0;
+    var yVal = 100;
+    var updateInterval = 12000;
+    var dataLength = 20; // number of dataPoints visible at any point
+
+    var updateChart = function (count) {
+        count = count || 1;
+
+        for (var j = 0; j < count; j++) {
+            yVal = yVal + Math.round(5 + Math.random() * (-5 - 5));
+            dps.push({
+                x: xVal,
+                y: yVal
+            });
+            xVal++;
+        }
+
+        if (dps.length > dataLength) {
+            dps.shift();
+        }
+
+        chart.render();
+    };
+
+    updateChart(dataLength);
+    setInterval(function () {
+        updateChart();
+    }, updateInterval);
+    //end of chart code
 
 
     //
@@ -102,7 +150,7 @@ const App = () => (
                         />
                     </h3>
                     {/* chart is displayed here */}
-                    <DynamicMultiSeriesChart/>
+                    <div class="chartSize" id="chartContainer"></div>
                 </Col>
                 <Col className="text-center" align="right" md="auto">
                     <h5>Sensor Node Select</h5>

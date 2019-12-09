@@ -3,7 +3,6 @@
   "name": "csci-150-webserver",
   "version": "0.1.0",
   "private": true,
-  "type": "module"
   "dependencies": {
     "bindings": "^1.5.0",
     "bootstrap": "^4.3.1",
