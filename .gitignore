@@ -1,6 +1,7 @@
 
 /CSCI_150_Mobile/sensor_network_monitor/ios/Flutter/flutter_export_environment.sh
 
+
 .idea/
 .vscode/*
 !.vscode/settings.json
@@ -12,9 +13,10 @@
 /CSCI_150_Hardware/Node_Sensor_Drivers/.vscode
 /CSCI_150_Web/webserver_sensor/node_modules
 /CSCI_150_Web/webserver_sensor/build
-#/CSCI_150_Web/webserver_sensor/package-lock.json
+
+/CSCI_150_Web/webserver_sensor/package-lock.json
 /CSCI_150_Web/server/node_modules/
-#/CSCI_150_Web/server/package-lock.json
+/CSCI_150_Web/server/package-lock.json
 /CSCI_150_Web/.vs/
 /CSCI_150_Web/.vscode/
 
