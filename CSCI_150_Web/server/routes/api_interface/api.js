@@ -45,6 +45,8 @@ router.get('/find/:year', authCheck, (req, res) => {
 		return;
 	}
 
+	if(req.params.year != 2019) return res.send(400);
+
 	var query = {
 		year_timestamp: req.params.year,
 		deviceID: req.query.deviceID,
@@ -56,8 +58,11 @@ router.get('/find/:year', authCheck, (req, res) => {
 			res.sendStatus(500);
 			return;
 		}
-
-		res.json(docs);	
+		if(docs){
+			res.json(docs);		
+		}else{
+			res.send(400);
+		}
 	});
 });
 
@@ -71,6 +76,8 @@ router.get('/find/:year/:month', authCheck, (req, res) => {
 		return;
 	}
 
+	if(req.params.year != 2019 || req.params.month > 12 || req.params.month < 1) return res.send(400); 
+
 	var query = {
 		year_timestamp: req.params.year,
 		deviceID: req.query.deviceID,
@@ -83,7 +90,11 @@ router.get('/find/:year/:month', authCheck, (req, res) => {
 			res.sendStatus(500);
 			return;
 		}
-	res.json(docs.results.month[month_number].day);	
+		if(docs){
+			res.json(docs.results.month[month_number].day);
+		}else{
+			res.send(400);
+		}	
 	});
 });
 
@@ -96,6 +107,7 @@ router.get('/find/:year/:month/:day', authCheck, (req, res) => {
 		return;
 	}
 
+	if(req.params.year != 2019 || req.params.month > 12 || req.params.month < 1 || req.params.day > 31 || req.params.day < 1) return res.send(400);
 	var query = {
 		year_timestamp: req.params.year,
 		deviceID: req.query.deviceID,
@@ -109,8 +121,11 @@ router.get('/find/:year/:month/:day', authCheck, (req, res) => {
 			res.sendStatus(500);
 			return;
 		}
-
-	res.json(docs.results.month[month_number].day[day_number]);	
+		if(docs){
+			res.json(docs.results.month[month_number].day[day_number]);
+		}else{
+			res.send(400);
+		}	
 
 	});
 

@@ -16,7 +16,7 @@ const settings = require('./config.json');
 
 app.use('/', routes);
 app.use('/user', userRoutes);
-app.use('/local_api', localRoutes);
+app.use('/frontend', localRoutes);
 
 
 
