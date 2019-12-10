@@ -1,8 +1,8 @@
 const MongoClient = require('mongodb').MongoClient;
-const BSON = require('bson')
+//const BSON = require('bson')
 const settings = require('./config.json');
 const _ = require('lodash');
-var bson = new BSON([BSON.Binary, BSON.Code, BSON.DBRef, BSON.Decimal128, BSON.Double, BSON.Int32, BSON.Long, BSON.Map, BSON.MaxKey, BSON.MinKey, BSON.ObjectId, BSON.BSONRegExp, BSON.Symbol, BSON.Timestamp]);
+//var bson = new BSON([BSON.Binary, BSON.Code, BSON.DBRef, BSON.Decimal128, BSON.Double, BSON.Int32, BSON.Long, BSON.Map, BSON.MaxKey, BSON.MinKey, BSON.ObjectId, BSON.BSONRegExp, BSON.Symbol, BSON.Timestamp]);
 
 
 // Connection URL
@@ -65,13 +65,11 @@ const url = 'mongodb://108.211.45.253:60003'
 
 const filter = {
     deviceID: settings.device_ID[0], //0-2
-    name: settings.sensor[0], //0-4
+    name: settings.sensor[3], //0-4
     year_timestamp: '2019'
 }
 
-dataDaseAccess(url, {}).then(values => {
+dataDaseAccess(url, filter).then(values => {
     //console.log(_.filter(values, {'deviceID': settings.device_ID[0] ,name: settings.sensor[0]})[0])
     console.log(myfilterdata(values, filter))
 })
-
-//export{dataDaseAccess, myfilterdata}

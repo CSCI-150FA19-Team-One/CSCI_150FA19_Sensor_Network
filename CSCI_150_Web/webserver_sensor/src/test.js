@@ -1,4 +1,4 @@
-const mymodule = require('./dataGet_MongoDB')
+//const mymodule = require('./dataGet_MongoDB')
 const settings = require('./config.json');
 
 const filter = {

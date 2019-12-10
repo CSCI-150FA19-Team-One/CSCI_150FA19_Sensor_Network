@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+//imports
+import React, { Component } from 'react';
 import ReactDOM from "react-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
@@ -7,62 +8,91 @@ import Col from "react-bootstrap/Col";
 import Clock from "react-live-clock";
 import CanvasJSReact from './canvasjs.react';
 import "bootstrap/dist/css/bootstrap.min.css";
-//import {dataDaseAccess,myfilterdata} from './dataGet_MongoDB'
 
 //requires
 require("./navbar.css");
-//const MongoClient = require('mongodb').MongoClient;
-
 const settings = require('./config.json');
+const DG = require('./dataGet_Fetch')
 //const _ = require('lodash');
+
+
 
 //graph variables
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
-var dataPoints1 = [];
-var dataPoints2 = [];
-var updateInterval = 180000; //3min
-//initial values
-var yValue1 = 408;
-var yValue2 = 350;
-var xValue = 5;
+
+const current_date = new Date();
+const number_year = current_date.getFullYear()-1;
+const number_month = current_date.getMonth() + 1;
+const number_day = current_date.getDate();
+var d = new Date(number_year+1,number_month-1,number_day,0,0)
+
+var currentNode = 0 //node 1 selected first
+var dataPointsTempC = [{x:d,y: 0}]; //sensor 0
+var dataPointsTempF = [{x:d,y: 0}]; // sensor 1
+var dataPointsHumidity = [{x:d,y: 0}]; //sensor 3
+var dataPointsGroundMoisture = [{x:d,y: 0}]; //sensor 4
+const updateInterval = settings.updateInterval; //3min
+let myrefer = null;
 
 
-const filter = {
-    deviceID: settings.device_ID[0], //0-2
-    name: settings.sensor[0], //0-4
-    year_timestamp: '2019'
+function insertData(currentSensor) {
+    //note sensornodes = 0-2                  //for readability
+    DG.dataRequest(settings.baseurl, currentSensor, "tempC").then(data => {
+        dataPointsTempC = data
+        //console.log('first')
+        //console.log(dataPointsTempC)
+    })
+    DG.dataRequest(settings.baseurl, currentSensor, "tempF").then(data => {
+        dataPointsTempF = data
+    })
+    DG.dataRequest(settings.baseurl, currentSensor, "HumidityT").then(data => {
+        dataPointsHumidity = data
+    })
+    DG.dataRequest(settings.baseurl, currentSensor, "GMoistureP").then(data => {
+        dataPointsGroundMoisture = data
+        console.log("data got")
+
+    })
+    
 }
 
-// const url = 'mongodb://108.211.45.253:60003' //temp
-// dataDaseAccess(url, {}).then(values => {
-//     console.log(myfilterdata(values, filter))
-// })
 
 //after page has loaded//
 window.onload = function () {
-// Get the container element
-var menuContainer = document.getElementById("btnSelect");
+    console.log('ready')
+    setTimeout(function(){console.log("delay done"); myrefer.updateChart(0)}, 2500)
+    console.log('ready ready')
+    // Get the container element
+    var menuContainer = document.getElementById("btnSelect");
 
-// Get all buttons with class="btn" inside the container
-var selected = menuContainer.getElementsByClassName("btn");
+    // Get all buttons with class="btn" inside the container
+    var selected = menuContainer.getElementsByClassName("btn");
 
-// Loop through the buttons and add the active class to the current/clicked button
-for (var i = 0; i < selected.length; i++) {
-  selected[i].addEventListener("click", function() {
-    var current = document.getElementsByClassName("active");
-    current[0].className = current[0].className.replace(" active", "");
-    this.className += " active";
-    // console.log(current[0].attributes.name)
-    // var graphName = current[0].attrubutes.name
-  });
-}
+    // Loop through the buttons and add the active class to the current/clicked button
+    for (var i = 0; i < selected.length; i++) {
+        selected[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+            console.log(current[0].attributes.name)
+            myrefer.chart.options.title.text = current[0].attributes.name.value
+            myrefer.updateChart(0)
+        });
+    }
 
-
-    document.getElementById("showtempC").checked = false;
+    document.getElementById("showtempC").checked = true;
 
     document.getElementById("showtempC").onclick = function () {
         const showTempCVal = document.getElementById("showtempC").checked;
-        console.log(showTempCVal);
+        myrefer.chart.options.data[0].visible = false
+            // if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+            //     e.dataSeries.visible = false;
+            // }
+            // else {
+            //     e.dataSeries.visible = true;
+            // }
+            // //console.log(e)
+            // e.chart.render();
     };
 
     document.getElementById("showtempF").checked = true;
@@ -79,7 +109,7 @@ for (var i = 0; i < selected.length; i++) {
         console.log(showTempCVal);
     };
 
-    document.getElementById("showgroundmoisture").checked = false;
+    document.getElementById("showgroundmoisture").checked = true;
 
     document.getElementById("showgroundmoisture").onclick = function () {
         const showTempCVal = document.getElementById("showgroundmoisture").checked;
@@ -98,97 +128,110 @@ for (var i = 0; i < selected.length; i++) {
 //classes
 
 class DynamicMultiSeriesChart extends Component {
-	constructor() {
-		super();
-		this.updateChart = this.updateChart.bind(this);		
-	}
-	componentDidMount(){
-		this.updateChart(0);
-		setInterval(this.updateChart, updateInterval);
-	}
-	
-	updateChart(count) {
-		count = count || 1;		
-		for (var i = 0; i < count; i++) {
-			xValue += 2;
-			yValue1 = Math.floor(Math.random()*(408-400+1)+400);
-			yValue2 = Math.floor(Math.random()*(350-340+1)+340);
-			dataPoints1.push({
-			  x: xValue,
-			  y: yValue1
-			});
-			dataPoints2.push({
-			  x: xValue,
-			  y: yValue2
-			});
-		}
-		this.chart.options.data[0].legendText = "Current " + yValue1 + " km/h";
-		this.chart.options.data[1].legendText = null//" Lamborghini Aventador - " + yValue2 + " km/h";
-		this.chart.render();
-	}
-	render() {
-		const options = {
-			zoomEnabled: true,
-			theme: "light2",
-			title: {
-				text: "Sensor Node Network"
-			},
-			axisX: {
-				title: "chart updates every 2 secs"
-			},
-			axisY:{
-				suffix: " km/h",
-				includeZero: true
-			},
-			toolTip: {
-				shared: true
-			},
-			legend: {
-				cursor:"pointer",
-				verticalAlign: "top",
-				fontSize: 18,
-				fontColor: "dimGrey",
-				itemclick : function(e){
-					if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-						e.dataSeries.visible = false;
-					}
-					else {
-						e.dataSeries.visible = true;
-					}
-					e.chart.render();
-				}
-			},
-			data: [
-				{
-					type: "stepLine",
-					xValueFormatString: "#,##0 seconds",
-					yValueFormatString: "#,##0 km/h",
-					showInLegend: true,
-					name: "Bugatti Veyron",
-					dataPoints: dataPoints1
-				},
-				{
-					type: "stepLine",
-					xValueFormatString: "#,##0 seconds",
-					yValueFormatString: "#,##0 km/h",
-					showInLegend: true,
-					name: "Lamborghini Aventador" ,
-					dataPoints: dataPoints2
-				}
-			]
-		}
-		
-		return (
-		<div>
-			<CanvasJSChart options = {options} 
-				onRef={ref => this.chart = ref}
-			/>
-			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-		</div>
-		);
-	}
-}
+    constructor() {
+        super();
+        this.updateChart = this.updateChart.bind(this);
+        myrefer = this;
+        //console.log(myrefer)
+    }
+    componentDidMount() {
+        this.updateChart(0);
+        setInterval(this.updateChart, updateInterval);
+    }
 
+    updateChart(count) {
+        count = count || 1;
+        insertData(currentNode)
+
+        this.chart.options.data[0].dataPoints = dataPointsTempC
+        this.chart.options.data[1].dataPoints = dataPointsTempF
+        this.chart.options.data[2].dataPoints = dataPointsHumidity
+        this.chart.options.data[3].dataPoints = dataPointsGroundMoisture
+        //this.chart.options.data[0].legendText = null//"Current " + yValue1 + " km/h";
+        //this.chart.options.data[1].legendText = null//" Lamborghini Aventador - " + yValue2 + " km/h";
+        this.chart.render();
+    }
+    render() {
+        const options = {
+            zoomEnabled: true,
+            theme: "light2",
+            title: {
+                text: "Sensor Node 1"
+            },
+            axisX: {
+                title: "Time",
+                includeZero: true
+            },
+            axisY: {
+                suffix: " C°/F°/%",
+                includeZero: true
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor: "pointer",
+                verticalAlign: "top",
+                fontSize: 15,
+                fontColor: "dimGrey",
+                itemclick: function (e) {
+                    if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                        e.dataSeries.visible = false;
+                    }
+                    else {
+                        e.dataSeries.visible = true;
+                    }
+                    console.log(e)
+                    e.chart.render();
+                }
+            },
+            data: [
+                {
+                    type: "line",
+                    xValueType: "dateTime",
+                    xValueFormatString: '',
+                    yValueFormatString: "#,##0 C°",
+                    showInLegend: true,
+                    name: "TempC",
+                    dataPoints: dataPointsTempC
+                },
+                {
+                    type: "line",
+                    xValueFormatString: "#,##0 seconds",
+                    yValueFormatString: "#,##0 F°",
+                    showInLegend: true,
+                    name: "TempF",
+                    dataPoints: dataPointsTempF
+                },
+                {
+                    type: "line",
+                    xValueFormatString: "#,##0 seconds",
+                    yValueFormatString: "#,##0 '%'",
+                    showInLegend: true,
+                    name: "Humidity",
+                    dataPoints: dataPointsHumidity
+                },
+                {
+                    type: "line",
+                    xValueFormatString: "#,##0 seconds",
+                    yValueFormatString: "#,##0 '%'",
+                    showInLegend: true,
+                    name: "GroundMoisture",
+                    dataPoints: dataPointsGroundMoisture
+                },
+            ]
+        }
+
+        return (
+            <div>
+                <CanvasJSChart  options={options}
+                    onRef={ref => this.chart = ref}
+                />
+                {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
+            </div>
+        );
+    }
+}
 
 
 const App = () =>
@@ -203,7 +246,7 @@ const App = () =>
         {/* Side nav setup */}
         <div id="mySidenav" class="sidenav">
             <h2 id="sideNavTitle">Config</h2>
-            <a href="javascript:void(0)" class="closebtn" id="closeNav"> &times;</a>
+            <a href="" class="closebtn" id="closeNav"> &times;</a>
             <div>
                 <input type="checkbox" id="showtempC" name="showtempC" />
                 <label for="showtempC">TempC</label>
@@ -217,7 +260,7 @@ const App = () =>
                 <label for="showhumidity">Humidity</label>
             </div>
             <div>
-                <input type="checkbox" id="showgroundmoisture" name="showgroundmoisture" checked='false' />
+                <input type="checkbox" id="showgroundmoisture" name="showgroundmoisture" />
                 <label for="showgroundmoisture">Ground Moisture</label>
             </div>
         </div>
@@ -234,7 +277,7 @@ const App = () =>
                         />
                     </h3>
                     {/* chart is displayed here */}
-                    <DynamicMultiSeriesChart/>
+                    <DynamicMultiSeriesChart id = "test"/>
                 </Col>
                 <Col className="text-center" align="right" md="auto">
                     <h5>Sensor Node Select</h5>
