@@ -190,7 +190,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
    static const TextStyle optionStyle = TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold);
    List<Widget> _widgetOptions = <Widget>[
-    welcomePage(),
+    Text(''),
     Text(
       'Temperature',
       style: TextStyle(
@@ -236,7 +236,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         }
       else
         {
-          welcomePage();
+          q.sensor = null;
+          list.clear();
+          //welcomePage();
         } //Empty Else
       //String device=null; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
       //String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT"
@@ -347,9 +349,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         ),
       ),
           appBar: new AppBar(
-
-
-
             leading: Builder(
               builder: (context) => IconButton(
                 icon: new Icon(Icons.view_headline),
@@ -383,11 +382,60 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           body: Center(
             child: ListView.builder(
               //child:_widgetOptions.elementAt(_currentIndex),
-
-
-              itemCount: list.length,
-             itemBuilder: (BuildContext context, int index)
+              itemCount: list == null ? 1 : list.length + 1,
+             itemBuilder: (BuildContext context, int index) {
+               if (index == 0 && q.sensor == "tempF")
              {
+               return Align(
+                 alignment: Alignment.center,
+                   child: Text('TEMPERATURE in °F',
+                  style: TextStyle(
+                     fontSize: 18,
+                     color: Colors.white,
+                 ),));
+             } else if (index == 0 && q.sensor == "tempC")
+               {
+                 return Align(
+                     alignment: Alignment.center,
+                     child: Text('TEMPERATURE in °C',
+                       style: TextStyle(
+                         fontSize: 18,
+                         color: Colors.white,
+                       ),));
+               }
+               else if (index == 0 && (q.sensor == "HumidityL" || q.sensor == "HumidityT"))
+               {
+                 return Align(
+                     alignment: Alignment.center,
+                     child: Text('HUMIDITY',
+                       style: TextStyle(
+                         fontSize: 18,
+                         color: Colors.white,
+                       ),));
+               }
+               else if (index == 0 && q.sensor == "GMoistureP")
+               {
+                 return Align(
+                     alignment: Alignment.center,
+                     child: Text('GROUND MOISTURE',
+                       style: TextStyle(
+                         fontSize: 18,
+                         color: Colors.white,
+                       ),));
+               }
+               else if (index == 0)
+               {
+                 return Align(
+               alignment: Alignment.bottomCenter,
+               child: Text('\n\n\n\nWELCOME',
+               style: TextStyle(
+               fontSize: 40,
+               fontFamily: 'Roboto',
+               color: Colors.white,
+               ),));
+               }
+               else{
+                 index -= 1;
              tempStr = 'Time: ' + list[index].gatheredAt;
              if (q.sensor=="tempC"||q.sensor=="tempF")
              {
@@ -403,13 +451,20 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               }
               else
               {
-                tempVal = "Value: " + list[index].value.toStringAsFixed(4);
+                if (q.sensor == "GMoistureP")
+                  {
+                    tempVal = "Value: " + list[index].value.toStringAsFixed(0) + "%";
+                  }
+                else
+                  {
+                  tempVal = "Value: " + list[index].value.toStringAsFixed(3) + "%";
+                  }
               }
               return ListTile(
                contentPadding: EdgeInsets.all(10.0),
                title: new Text(tempStr,
                  style: TextStyle(
-                   fontSize: 18,
+                   fontSize: 16,
                      color: Colors.white
                  ),),
                 trailing: new Text(
@@ -419,16 +474,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   ),
               ),
             );
-          }
+          }}
           ),
 
         ),
-
-
-
           bottomNavigationBar: BottomNavigationBar(
-
-        //},
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             backgroundColor: Color(0xff202020),
@@ -457,8 +507,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
       ),
-
-
       );
   }
   void choiceAction(String choice){
@@ -468,11 +516,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       print('Node Two');
     }else if(choice == Constants.NodeThree){
       print('Node Three');
-    }else if(choice == Constants.NodeFour){
-      print('Node Four');
     }
-
-}
+  }
 }
 
 //Collects auth token Registration information
@@ -641,7 +686,7 @@ String makePath()
   else
   {
     q.device = "e00fce681c2671fc7b1680eb"; //Default Case
-    q.sensor = "tempF";
+    q.sensor = "GMoistureP";
   }
 
   //Build the path with all the class variables
@@ -696,7 +741,7 @@ Future<Auth> loginRequest() async
     throw Exception('Failed to Download Data');
   }
 }
-
+/*
 class welcomePage extends MyStatefulWidget
 {
   @override
@@ -709,4 +754,4 @@ class welcomePage extends MyStatefulWidget
   color: Colors.white,
   fontSize: 38.0),)];
 //optionStyle,
-}
+}*/
