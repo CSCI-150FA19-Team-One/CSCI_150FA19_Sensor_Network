@@ -4,6 +4,7 @@ import 'dart:io';
 //import 'package:sensor_network_monitor/widgets_test.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:sensor_network_monitor/Constants.dart';
 import 'package:sensor_network_monitor/Profile.dart';
 import 'package:sensor_network_monitor/login_screen.dart';
 import 'package:sensor_network_monitor/notification_screen.dart';
@@ -239,7 +240,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new Scaffold(
       drawer: new Drawer(
 
 
@@ -343,6 +344,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           appBar: new AppBar(
 
 
+
             leading: Builder(
               builder: (context) => IconButton(
                 icon: new Icon(Icons.view_headline),
@@ -355,6 +357,21 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
              //padding: const EdgeInsets.only(left: 75.0)),
              backgroundColor: Color(0xff202020),
              automaticallyImplyLeading: false,
+            actions: <Widget>[
+              PopupMenuButton<String>(
+                onSelected: choiceAction,
+                itemBuilder: (BuildContext context){
+                  return Constants.choices.map((String choice){
+                    return PopupMenuItem<String>(
+                      value: choice,
+                      child: Text(choice),
+                    );
+                  }).toList();
+                },
+              )
+            ],
+
+
 
         ),
 
@@ -425,6 +442,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
       );
   }
+  void choiceAction(String choice){
+    if(choice == Constants.NodeOne){
+      print('Node One');
+    }else if(choice == Constants.NodeTwo){
+      print('Node Two');
+    }else if(choice == Constants.NodeThree){
+      print('Node Three');
+    }else if(choice == Constants.NodeFour){
+      print('Node Four');
+    }
+
+}
 }
 
 //Collects auth token Registration information
