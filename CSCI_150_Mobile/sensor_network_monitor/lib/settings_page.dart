@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 
-class settingsPage extends StatelessWidget {
+class settingsPage extends StatelessWidget
+{
 
   final String title;
 
