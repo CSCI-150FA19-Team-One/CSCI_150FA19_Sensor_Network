@@ -145,9 +145,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   void initState()
   {
-    super.initState();
-    q.user = 'user333';
+    q.user = 'User 333';
     q.password = '1234';
+    super.initState();
     authreg = regRequest();
     auth = loginRequest();
     /*print(q.message);
@@ -255,13 +255,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             new UserAccountsDrawerHeader(
 
               accountName: new Text(
-                'Jose Baca',
+                q.user,
                 style: TextStyle(
                     color: Colors.black
                 ),
               ),
               accountEmail: new Text(
-                'stud@hotmail.com',
+                '',
                 style: TextStyle(
                     color: Colors.black
                 ),
@@ -274,7 +274,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                  // backgroundImage: new NetworkImage(mainProfilePicture),
                 ),
               ),
-              otherAccountsPictures: <Widget>[
+              /*otherAccountsPictures: <Widget>[
                 new GestureDetector(
 
                   onTap: () => switchUser(),
@@ -292,7 +292,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     //backgroundImage:new NetworkImage(thirdProfilePicture) ,
                   ),
                 ),
-              ],
+              ],*/
 
               decoration:new BoxDecoration(
                   image: new DecorationImage(
@@ -363,7 +363,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
         ),
 
-
           body: Center(
             child: ListView.builder(
               //child:_widgetOptions.elementAt(_currentIndex),
@@ -376,6 +375,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
              if (q.sensor=="tempC"||q.sensor=="tempF")
              {
               tempVal = "Temp: " + list[index].value.toStringAsFixed(4);
+              if(q.tempInF)
+                {
+                  tempVal = tempVal + ' °F';
+                }
+              else
+                {
+                  tempVal = tempVal + ' °C';
+                }
               }
               else
               {
@@ -383,9 +390,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               }
               return ListTile(
                contentPadding: EdgeInsets.all(10.0),
-               title: new Text(tempStr),
+               title: new Text(tempStr,
+                 style: TextStyle(
+                   fontSize: 18,
+                     color: Colors.white
+                 ),),
                 trailing: new Text(
                 tempVal,
+                  style: TextStyle(
+                      color: Colors.white
+                  ),
               ),
             );
           }
@@ -444,6 +458,7 @@ class authReg
 
   factory authReg.fromJson(Map<String, dynamic> json)
   {
+    q.id = json['id'];
     return new authReg._(
       id: json['id'],
       username: json['username'],
@@ -539,6 +554,7 @@ class query {
   String message=null;
   String user = 'user 333';
   String password = '1234';
+  String id = null;
 }//END QUERY CLASS
 
 
