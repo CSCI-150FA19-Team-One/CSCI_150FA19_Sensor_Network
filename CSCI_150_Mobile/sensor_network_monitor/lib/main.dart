@@ -4,9 +4,15 @@ import 'dart:io';
 //import 'package:sensor_network_monitor/widgets_test.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:sensor_network_monitor/Constants.dart';
+import 'package:sensor_network_monitor/Profile.dart';
+import 'package:sensor_network_monitor/login_screen.dart';
+import 'package:sensor_network_monitor/notification_screen.dart';
+import 'package:sensor_network_monitor/settings_page.dart';
 //import 'splash_screen_one.dart';
 //import 'package:intl/intl.dart';
 //import 'package:url_launcher/url_launcher.dart';
+//import './Profile.dart';
 
 //Create global query class variable q
 query q = new query();
@@ -18,17 +24,26 @@ class MyApp extends StatelessWidget {
   static const String _title = 'Sensor Node';
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return new MaterialApp(
       title: _title,
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xff606060),
-        primarySwatch: Colors.blueGrey,
+        //primarySwatch: Colors.blueGrey,
       ),
+
       debugShowCheckedModeBanner: false,
       home: SplashScreenOne(),
-      //home: MyStatefulWidget(),
-    );
+      routes: <String, WidgetBuilder>{
+        "/a": (BuildContext) => new profilePage("new page"),
+        "/b": (BuildContext) => new notificationScreen("new page"),
+        "/c": (BuildContext) => new settingsPage("new page"),
+        "/d": (BuildContext) => new loginPage("new page"),
+
+
+  });
+      //home: MyStatefulWidget());
   }
+
 }
 
 class SplashScreenOne extends StatefulWidget {
@@ -131,9 +146,20 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   void initState()
   {
+    q.user = 'User 333';
+    q.password = '1234';
     super.initState();
     authreg = regRequest();
     auth = loginRequest();
+    /*print(q.message);
+    print(q.token);
+    if(q.message != null)
+      {
+        print('TESTINHERE');
+        authreg = regRequest();
+        q.message = null;
+        auth = loginRequest();
+      }*/
   }
 
   List<DataResults> list = List();
@@ -160,19 +186,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       throw Exception('Failed to Download Data');
     }
   }
-
  int _currentIndex = 0;
    static const TextStyle optionStyle = TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold);
    List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Welcome',
-      style: TextStyle(
-      color: Colors.white,
-      fontSize: 38.0),
-  //optionStyle,
-
-    ),
+    welcomePage(),
     Text(
       'Temperature',
       style: TextStyle(
@@ -217,7 +235,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           _dataResults();
         }
       else
-        {} //Empty Else
+        {
+          welcomePage();
+        } //Empty Else
       //String device=null; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
       //String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT"
     });
@@ -225,22 +245,24 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new Scaffold(
       drawer: new Drawer(
 
+
         child: new ListView(
+
 
           children: <Widget>[
             new UserAccountsDrawerHeader(
 
               accountName: new Text(
-                'Jose Baca',
+                q.user,
                 style: TextStyle(
                     color: Colors.black
                 ),
               ),
               accountEmail: new Text(
-                'stud@hotmail.com',
+                '',
                 style: TextStyle(
                     color: Colors.black
                 ),
@@ -248,23 +270,30 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               currentAccountPicture: new GestureDetector(
                 onTap: () => print('This is the current user'),
                 child: new CircleAvatar(
-                  backgroundImage: new NetworkImage(mainProfilePicture),
+                  backgroundColor: Colors.purple,
+                  child: new Text("J"),
+                 // backgroundImage: new NetworkImage(mainProfilePicture),
                 ),
               ),
-              otherAccountsPictures: <Widget>[
+              /*otherAccountsPictures: <Widget>[
                 new GestureDetector(
+
                   onTap: () => switchUser(),
                   child: new CircleAvatar(
-                    backgroundImage:new NetworkImage(secondProfilePicture) ,
+                    backgroundColor: Colors.red,
+                   child: new Text("G"),
+                   // backgroundImage:new NetworkImage(secondProfilePicture) ,
                   ),
                 ),
                 new GestureDetector(
                   onTap: () => switchUser(),
                   child: new CircleAvatar(
-                    backgroundImage:new NetworkImage(thirdProfilePicture) ,
+                    backgroundColor: Colors.green,
+                    child: new Text("R"),
+                    //backgroundImage:new NetworkImage(thirdProfilePicture) ,
                   ),
                 ),
-              ],
+              ],*/
 
               decoration:new BoxDecoration(
                   image: new DecorationImage(
@@ -277,18 +306,34 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             new ListTile(
               title: new Text('Profile'),
               trailing: new Icon(Icons.person),
+              onTap:() => Navigator.of(context).pushNamed("/a"),
             ),
             new ListTile(
               title: new Text('Notifications'),
               trailing: new Icon(Icons.notifications),
+              onTap:() => Navigator.of(context).pushNamed("/b"),
+             /* onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new profilePage("Notifications")));
+              },
+
+              */
             ),
             new ListTile(
               title: new Text('Settings'),
               trailing: new Icon(Icons.settings),
+                onTap:() => Navigator.of(context).pushNamed("/c")
+              /*onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new profilePage("Profile")));
+              },
+
+               */
             ),
             new ListTile(
               title: new Text('Logoff'),
               trailing: new Icon(Icons.lock),
+                onTap:() => Navigator.of(context).pushNamed("/d")
             ),
             new Divider(),
 
@@ -304,6 +349,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           appBar: new AppBar(
 
 
+
             leading: Builder(
               builder: (context) => IconButton(
                 icon: new Icon(Icons.view_headline),
@@ -311,14 +357,28 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               ),
             ),
 
-
-            title: new Padding(child: new Text('Sensor Node'),
-             padding: const EdgeInsets.only(left: 75.0)),
+            title: new Center(child: new Text("Sensor Node", textAlign: TextAlign.center)),
+            //title: new Padding(child: new Text('Sensor Node'),
+             //padding: const EdgeInsets.only(left: 75.0)),
              backgroundColor: Color(0xff202020),
              automaticallyImplyLeading: false,
+            actions: <Widget>[
+              PopupMenuButton<String>(
+                onSelected: choiceAction,
+                itemBuilder: (BuildContext context){
+                  return Constants.choices.map((String choice){
+                    return PopupMenuItem<String>(
+                      value: choice,
+                      child: Text(choice),
+                    );
+                  }).toList();
+                },
+              )
+            ],
+
+
 
         ),
-
 
           body: Center(
             child: ListView.builder(
@@ -332,6 +392,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
              if (q.sensor=="tempC"||q.sensor=="tempF")
              {
               tempVal = "Temp: " + list[index].value.toStringAsFixed(4);
+              if(q.tempInF)
+                {
+                  tempVal = tempVal + ' °F';
+                }
+              else
+                {
+                  tempVal = tempVal + ' °C';
+                }
               }
               else
               {
@@ -339,9 +407,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               }
               return ListTile(
                contentPadding: EdgeInsets.all(10.0),
-               title: new Text(tempStr),
+               title: new Text(tempStr,
+                 style: TextStyle(
+                   fontSize: 18,
+                     color: Colors.white
+                 ),),
                 trailing: new Text(
                 tempVal,
+                  style: TextStyle(
+                      color: Colors.white
+                  ),
               ),
             );
           }
@@ -386,6 +461,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
       );
   }
+  void choiceAction(String choice){
+    if(choice == Constants.NodeOne){
+      print('Node One');
+    }else if(choice == Constants.NodeTwo){
+      print('Node Two');
+    }else if(choice == Constants.NodeThree){
+      print('Node Three');
+    }else if(choice == Constants.NodeFour){
+      print('Node Four');
+    }
+
+}
 }
 
 //Collects auth token Registration information
@@ -400,6 +487,7 @@ class authReg
 
   factory authReg.fromJson(Map<String, dynamic> json)
   {
+    q.id = json['id'];
     return new authReg._(
       id: json['id'],
       username: json['username'],
@@ -409,6 +497,7 @@ class authReg
   }
 }//END AuthReg CLASS
 
+//Auth login class, which will collect the token
 class Auth
 {
   final String token;
@@ -419,9 +508,10 @@ class Auth
   factory Auth.fromJson(Map<String, dynamic> json)
   {
     q.token = json['token'];
+    q.message = json['message'];
     return new Auth._(
       token: json['token'],
-      message: json['token'],
+      message: json['message'],
     );
   }
 }//END Auth CLASS
@@ -433,16 +523,19 @@ class Data
   final String deviceID;
   final String name;
   final String version;
+  final String message;
 
-  Data._({this.userID, this.deviceID, this.name, this.version});
+  Data._({this.userID, this.deviceID, this.name, this.version, this.message});
 
   factory Data.fromJson(Map<String, dynamic> json)
   {
+    q.message = json['message'];
     return new Data._(
       userID: json['_id'],
       deviceID: json['deviceID'],
       name: json['title'],
       version: json['_v'],
+      message: json['message'],
     );
   }
 } //END DATA CLASS
@@ -457,6 +550,7 @@ class DataResults
 
   factory DataResults.fromJson(Map<String, dynamic> json)
   {
+    q.message = json['message'];
     return new DataResults._(
       gatheredAt: json['gatheredAt'],
       value: json['value'].toDouble(),
@@ -474,7 +568,6 @@ class query {
   String m;
   String d;
   String h;
-  String token;
 
 
   //Sensor Query Variables
@@ -484,6 +577,13 @@ class query {
 //Device Query Variables
   String device=null; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
   String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT"
+
+  //Other Variables
+  String token=null;
+  String message=null;
+  String user = 'user 333';
+  String password = '1234';
+  String id = null;
 }//END QUERY CLASS
 
 
@@ -555,12 +655,13 @@ String makePath()
 //Asynchronous approach to send a post request to the server to register the device
 Future<authReg> regRequest() async
 {
+  String bodyText = '{"username": "' + q.user + '", "password": "' + q.password + '"}';
   //Create Request
   var response = await
   http.post("http://108.211.45.253:60005/user/register",
     headers: {"Content-type": "application/json"},
     //Create Body Login Info
-    body: '{"username": "onlyonce", "password": "1234"}'
+    body: bodyText
   );
 
   if (response.statusCode == 200)
@@ -576,12 +677,13 @@ Future<authReg> regRequest() async
 //Asynchronous post request to receive a token from the server
 Future<Auth> loginRequest() async
 {
+  String bodyText = '{"username": "' + q.user + '", "password": "' + q.password + '"}';
   //Create Request
   var response = await
   http.post("http://108.211.45.253:60005/user/login",
       headers: {"Content-type": "application/json"},
       //Create Body Login Info
-      body: '{"username": "onlyonce", "password": "1234"}'
+      body: bodyText
   );
   print(response.body); //Check console for response Sent
 
@@ -593,4 +695,18 @@ Future<Auth> loginRequest() async
   {
     throw Exception('Failed to Download Data');
   }
+}
+
+class welcomePage extends MyStatefulWidget
+{
+  @override
+  static const TextStyle optionStyle = TextStyle(
+      fontSize: 30, fontWeight: FontWeight.bold);
+  List<Widget> _widgetOptions = <Widget>[
+  Text(
+  'Welcome',
+  style: TextStyle(
+  color: Colors.white,
+  fontSize: 38.0),)];
+//optionStyle,
 }
