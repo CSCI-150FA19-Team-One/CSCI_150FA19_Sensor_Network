@@ -168,7 +168,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     //Create token string
     String token = "\"" + q.token + "\"";
 
-    //POST request & response collection
+    //GET request & response collection
     final response = await http.get(makePath(),
         //Create token header
         headers: {HttpHeaders.authorizationHeader: q.token},
@@ -709,7 +709,9 @@ String makePath()
 //Asynchronous approach to send a post request to the server to register the device
 Future<authReg> regRequest() async
 {
+  //Create String for Body Text w/ UN & PW
   String bodyText = '{"username": "' + q.user + '", "password": "' + q.password + '"}';
+
   //Create Request
   var response = await
   http.post("http://108.211.45.253:60005/user/register",
@@ -731,7 +733,9 @@ Future<authReg> regRequest() async
 //Asynchronous post request to receive a token from the server
 Future<Auth> loginRequest() async
 {
+  //Create String for Body Text w/ UN & PW
   String bodyText = '{"username": "' + q.user + '", "password": "' + q.password + '"}';
+
   //Create Request
   var response = await
   http.post("http://108.211.45.253:60005/user/login",
