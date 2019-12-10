@@ -218,20 +218,20 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       print(index);
       if (index == 1)
         {
-          q.device = "e00fce681c2671fc7b1680eb";
           q.sensor = "tempF";
+          q.sensorTHG = 0;
           _dataResults();
         }
       else if (index == 2)
         {
-          q.device = "e00fce686522d2441e1f693f";
           q.sensor = "HumidityL";
+          q.sensorTHG = 1;
           _dataResults();
         }
       else if (index == 3)
         {
-          q.device = "e00fce68b1b49ccf2e314c17";
           q.sensor = "GMoistureP";
+          q.sensorTHG = 2;
           _dataResults();
         }
       else
@@ -509,13 +509,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ),
       );
   }
+  //String device=null; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
   void choiceAction(String choice){
     if(choice == Constants.NodeOne){
       print('Node One');
+      q.device = "e00fce681c2671fc7b1680eb";
     }else if(choice == Constants.NodeTwo){
       print('Node Two');
+      q.device = "e00fce686522d2441e1f693f";
     }else if(choice == Constants.NodeThree){
       print('Node Three');
+      q.device = "e00fce68b1b49ccf2e314c17";
     }
   }
 }
@@ -618,10 +622,11 @@ class query {
   //Sensor Query Variables
   bool tempInF = true;
   bool humidityInT = true;
+  int sensorTHG = 0;
 
 //Device Query Variables
   String device=null; //"e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17"
-  String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT"
+  String sensor=null; //"tempC", "tempF", "HumidityL", "HumidityT", "GMoistureP"
 
   //Other Variables
   String token=null;
@@ -667,26 +672,30 @@ String makePath()
   }
 
   //Build Sensor and Device Variables
-  if(q.tempInF && q.device == "e00fce681c2671fc7b1680eb")
+  if(q.tempInF && q.sensorTHG == 0)
   {
     q.sensor = "tempF";
   }
-  else if(q.device == "e00fce681c2671fc7b1680eb")
+  else
   {
     q.sensor = "tempC";
   }
-  else if(q.humidityInT && q.device == "e00fce686522d2441e1f693f")
+  if(q.humidityInT && q.sensorTHG == 1)
   {
     q.sensor = "HumidityT";
   }
-  else if(q.device == "e00fce686522d2441e1f693f")
+  else if(q.sensorTHG == 1)
   {
     q.sensor = "HumidityL";
+  }
+  else if (q.sensorTHG == 2)
+  {
+    q.sensor = "GMoistureP";
   }
   else
   {
     q.device = "e00fce681c2671fc7b1680eb"; //Default Case
-    q.sensor = "GMoistureP";
+    q.sensor = "tempF";
   }
 
   //Build the path with all the class variables
@@ -741,17 +750,3 @@ Future<Auth> loginRequest() async
     throw Exception('Failed to Download Data');
   }
 }
-/*
-class welcomePage extends MyStatefulWidget
-{
-  @override
-  static const TextStyle optionStyle = TextStyle(
-      fontSize: 30, fontWeight: FontWeight.bold);
-  List<Widget> _widgetOptions = <Widget>[
-  Text(
-  'Welcome',
-  style: TextStyle(
-  color: Colors.white,
-  fontSize: 38.0),)];
-//optionStyle,
-}*/
