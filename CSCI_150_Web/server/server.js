@@ -10,14 +10,13 @@ const bodyParser = require('body-parser');
 const fetch = require('./data_fetch.js');
 const routes = require('./routes/api_interface/api.js');
 const userRoutes = require('./routes/api_interface/api_users.js');
+const localRoutes = require('./routes/api_interface/api_local.js');
 const settings = require('./config.json');
 
 
 app.use('/', routes);
 app.use('/user', userRoutes);
-
-
-app.use('/', routes)
+app.use('/local_api', localRoutes);
 
 
 
