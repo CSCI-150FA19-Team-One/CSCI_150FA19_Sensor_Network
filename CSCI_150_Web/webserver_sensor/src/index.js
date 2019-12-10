@@ -74,9 +74,13 @@ window.onload = function () {
             var current = document.getElementsByClassName("active");
             current[0].className = current[0].className.replace(" active", "");
             this.className += " active";
-            console.log(current[0].attributes.name)
+            //console.log(current[0].attributes)
             myrefer.chart.options.title.text = current[0].attributes.name.value
-            myrefer.updateChart(0)
+            //console.log(Number(current[0].attributes.idnum.value))
+            currentNode = Number(current[0].attributes.idnum.value)
+            //console.log(currentNode)
+            insertData(currentNode)
+            setTimeout(myrefer.updateChart(0),1000)
         });
     }
 
@@ -84,7 +88,9 @@ window.onload = function () {
 
     document.getElementById("showtempC").onclick = function () {
         const showTempCVal = document.getElementById("showtempC").checked;
-        myrefer.chart.options.data[0].visible = false
+        myrefer.chart.options.data[0].visible = showTempCVal
+        myrefer.chart.render()
+        //console.log(showTempCVal)
             // if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
             //     e.dataSeries.visible = false;
             // }
@@ -98,22 +104,25 @@ window.onload = function () {
     document.getElementById("showtempF").checked = true;
 
     document.getElementById("showtempF").onclick = function () {
-        const showTempCVal = document.getElementById("showtempF").checked;
-        console.log(showTempCVal);
+        const showTempFVal = document.getElementById("showtempF").checked;
+        myrefer.chart.options.data[1].visible = showTempFVal
+        myrefer.chart.render()
     };
 
     document.getElementById("showhumidity").checked = true;
 
     document.getElementById("showhumidity").onclick = function () {
-        const showTempCVal = document.getElementById("showhumidity").checked;
-        console.log(showTempCVal);
+        const showhumidityVal = document.getElementById("showhumidity").checked;
+        myrefer.chart.options.data[2].visible = showhumidityVal
+        myrefer.chart.render()
     };
 
     document.getElementById("showgroundmoisture").checked = true;
 
     document.getElementById("showgroundmoisture").onclick = function () {
-        const showTempCVal = document.getElementById("showgroundmoisture").checked;
-        console.log(showTempCVal);
+        const showgroundmoistureVal = document.getElementById("showgroundmoisture").checked;
+        myrefer.chart.options.data[3].visible = showgroundmoistureVal
+        myrefer.chart.render()
     };
 
     document.getElementById("openNav").onclick = function () {
@@ -181,7 +190,7 @@ class DynamicMultiSeriesChart extends Component {
                     else {
                         e.dataSeries.visible = true;
                     }
-                    console.log(e)
+                    //console.log(e)
                     e.chart.render();
                 }
             },
@@ -246,7 +255,7 @@ const App = () =>
         {/* Side nav setup */}
         <div id="mySidenav" class="sidenav">
             <h2 id="sideNavTitle">Config</h2>
-            <a href="" class="closebtn" id="closeNav"> &times;</a>
+            <a class="closebtn" id="closeNav"> &times;</a>
             <div>
                 <input type="checkbox" id="showtempC" name="showtempC" />
                 <label for="showtempC">TempC</label>
@@ -282,9 +291,9 @@ const App = () =>
                 <Col className="text-center" align="right" md="auto">
                     <h5>Sensor Node Select</h5>
                     <div class="vertical-menu" id="btnSelect">
-                        <button class="btn active" name="Sensor Node 1">Sensor Node 1</button>
-                        <button class="btn" name="Sensor Node 2">Sensor Node 2</button>
-                        <button class="btn" name="Sensor Node 3">Sensor Node 3</button>
+                        <button class="btn active" IDnum ="0" name="Sensor Node 1">Sensor Node 1</button>
+                        <button class="btn" IDnum ="1" name="Sensor Node 2">Sensor Node 2</button>
+                        <button class="btn" IDnum ="2" name="Sensor Node 3">Sensor Node 3</button>
                     </div>
                 </Col>
             </Row>
