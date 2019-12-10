@@ -6,27 +6,39 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Clock from "react-live-clock";
 import CanvasJSReact from './canvasjs.react';
-
-//import DynamicMultiSeriesChart from "./displayCharts"
-
-// Importing the Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
+//import {dataDaseAccess,myfilterdata} from './dataGet_MongoDB'
 
+//requires
 require("./navbar.css");
+//const MongoClient = require('mongodb').MongoClient;
+
 const settings = require('./config.json');
+//const _ = require('lodash');
 
 //graph variables
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 var dataPoints1 = [];
 var dataPoints2 = [];
-var updateInterval = 2000;
+var updateInterval = 180000; //3min
 //initial values
 var yValue1 = 408;
 var yValue2 = 350;
 var xValue = 5;
 
-const test = 20
 
+const filter = {
+    deviceID: settings.device_ID[0], //0-2
+    name: settings.sensor[0], //0-4
+    year_timestamp: '2019'
+}
+
+// const url = 'mongodb://108.211.45.253:60003' //temp
+// dataDaseAccess(url, {}).then(values => {
+//     console.log(myfilterdata(values, filter))
+// })
+
+//after page has loaded//
 window.onload = function () {
 // Get the container element
 var menuContainer = document.getElementById("btnSelect");
@@ -83,7 +95,7 @@ for (var i = 0; i < selected.length; i++) {
     };
 };
 
-
+//classes
 
 class DynamicMultiSeriesChart extends Component {
 	constructor() {
@@ -91,7 +103,7 @@ class DynamicMultiSeriesChart extends Component {
 		this.updateChart = this.updateChart.bind(this);		
 	}
 	componentDidMount(){
-		this.updateChart(test);
+		this.updateChart(0);
 		setInterval(this.updateChart, updateInterval);
 	}
 	
@@ -126,7 +138,7 @@ class DynamicMultiSeriesChart extends Component {
 			},
 			axisY:{
 				suffix: " km/h",
-				includeZero: false
+				includeZero: true
 			},
 			toolTip: {
 				shared: true

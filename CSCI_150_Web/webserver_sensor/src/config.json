@@ -1,6 +1,6 @@
 {
 	"device_ID": ["e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17" ],
 	"mongoDB_path": "mongodb://127.0.0.1:27017",
-	"sensor": ["tempC", "tempF", "HumidityL", "HumidityT"],
+	"sensor": ["tempC", "tempF", "HumidityL", "HumidityT","GMoistureP"],
 	"dbName": "admin"
 }
