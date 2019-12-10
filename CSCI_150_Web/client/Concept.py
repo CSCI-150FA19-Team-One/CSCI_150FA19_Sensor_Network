@@ -4,7 +4,7 @@ import matplotlib.animation as animation
 from matplotlib import style
 
 targetDate = "2019/11/19"
-URL = "http://108.211.45.253:60005/find/" + targetDate
+URL = "http://108.211.45.253:60005/frontend/find/" + targetDate
 
 deviceID = 'e00fce681c2671fc7b1680eb'
 sensor = 'tempF'

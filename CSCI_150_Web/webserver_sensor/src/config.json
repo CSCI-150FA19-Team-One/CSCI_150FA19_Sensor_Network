@@ -1,0 +1,6 @@
+{
+	"device_ID": ["e00fce681c2671fc7b1680eb", "e00fce686522d2441e1f693f", "e00fce68b1b49ccf2e314c17" ],
+	"sensor": ["tempC", "tempF", "HumidityL", "HumidityT","GMoistureP"],
+	"baseurl": "http://localhost:3000/frontend/find/2019?",
+	"updateInterval": 100000
+}
